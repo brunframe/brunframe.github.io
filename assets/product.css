@@ -1,0 +1,182 @@
+/* Breslev Gang — fiche produit : galerie glissable, choix, accordéons.
+   Variables globales (couleurs, polices, gouttières) : assets/theme.css. Rien n'est redéfini ici. */
+
+/* ---------- Photos : une bande glissable au doigt, miniatures dessous ---------- */
+.product__media { order: 1; }
+.product__summary { order: 2; }
+.product__details { order: 4; padding-top: 48px; }
+
+.product__track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.product__track::-webkit-scrollbar { display: none; }
+.product__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: min(100vw, 56svh);
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.product__slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  transition: opacity 0.25s var(--ease);
+}
+.product__slide img.is-entering { opacity: 0; }
+.product__slide img.is-leaving { opacity: 0; }
+
+.product__thumbs {
+  display: flex;
+  gap: 8px;
+  padding: 10px var(--gutter) 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.product__thumbs::-webkit-scrollbar { display: none; }
+.product__thumbs[data-count='1'] { display: none; }
+.product__thumb {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  opacity: 0.4;
+  transition: opacity 0.3s var(--ease);
+}
+.product__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.product__thumb::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--black);
+  transform: scaleX(0);
+  transition: transform 0.3s var(--ease);
+}
+.product__thumb[aria-current='true'] { opacity: 1; }
+.product__thumb[aria-current='true']::after { transform: scaleX(1); }
+
+/* ---------- Choix ---------- */
+.product__availability { margin-top: 12px; font-size: 13px; color: var(--grey); }
+.picker__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.picker__guide { min-height: 44px; font-size: 11px; }
+.picker__hint { margin-top: 10px; font-size: 13px; color: var(--black); }
+@media (hover: hover) and (pointer: fine) {
+  .swatches .swatch { transition: transform 0.3s var(--ease); }
+  .swatches .swatch:hover { transform: scale(1.08); }
+}
+
+/* ---------- Sous le bouton ---------- */
+.product__ship { margin-top: 14px; font-size: 13px; color: var(--grey); max-width: 44ch; }
+.product__desc { margin-top: 24px; max-width: 46ch; font-size: 15px; line-height: 1.55; }
+.product__desc p + p { margin-top: 6px; }
+
+/* ---------- Accordéons ---------- */
+.acc { border-top: 1px solid var(--rule); }
+.acc:last-child { border-bottom: 1px solid var(--rule); }
+.acc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 0;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+.acc__head::-webkit-details-marker { display: none; }
+.acc__head::marker { content: ''; }
+.acc__head::after {
+  content: '';
+  flex: none;
+  width: 11px;
+  height: 11px;
+  background:
+    linear-gradient(var(--black), var(--black)) center / 11px 1px no-repeat,
+    linear-gradient(var(--black), var(--black)) center / 1px 11px no-repeat;
+  transition: transform 0.35s var(--ease);
+}
+.acc[open] .acc__head::after { transform: rotate(45deg); }
+.acc__body { padding: 0 0 22px; font-size: 14px; line-height: 1.55; max-width: 52ch; }
+.acc__body p + p { margin-top: 8px; }
+.acc__rows { display: grid; gap: 8px; }
+.acc__row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 16px; }
+.acc__row dt { color: var(--grey); }
+.acc__row dd { margin: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .acc[open] .acc__body { animation: acc-in 0.35s var(--ease); }
+}
+@keyframes acc-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* Petek : le parchemin, en hébreu, de droite à gauche. */
+.parchemin {
+  font-family: 'Frank Ruhl Libre', 'Times New Roman', 'Noto Serif Hebrew', serif;
+  font-weight: 400;
+  font-size: clamp(30px, 8vw, 46px);
+  line-height: 1.25;
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: isolate;
+  padding: 6px 0 10px;
+}
+.parchemin + p { margin-top: 8px; }
+
+/* ---------- Guide des tailles (plein écran, comme le nuancier) ---------- */
+.guide {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: var(--header-h) var(--gutter) 48px;
+  border: 0;
+  background: var(--white);
+  color: var(--black);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.guide::backdrop { background: var(--white); }
+.guide[open] { animation: fade-in 0.35s var(--ease); }
+.guide__head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.guide__title { font-size: clamp(28px, 8vw, 64px); }
+.guide__sizes { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); margin-bottom: 20px; }
+.guide__body { max-width: 56ch; font-size: 15px; line-height: 1.55; }
+.guide__body p + p { margin-top: 10px; }
+
+/* ---------- Carte du catalogue : bouton d'ajout discret ---------- */
+.card__add { margin-top: 2px; min-height: 36px; font-size: 11px; }
+.card__add:disabled { color: var(--grey); text-decoration: none; cursor: default; }
+
+/* ---------- Ordinateur : photos empilées à gauche, infos fixes à droite ---------- */
+@media (min-width: 990px) {
+  .product__track {
+    display: grid;
+    gap: 8px;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .product__slide { height: calc(100vh - var(--header-h)); }
+  .product__slide + .product__slide { height: auto; aspect-ratio: 1 / 1; }
+  .product__thumbs { display: none; }
+  .product__details { padding-top: 56px; }
+}

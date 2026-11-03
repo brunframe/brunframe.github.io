@@ -1,0 +1,65 @@
+{
+ "source": "data/catalogue.json du thème (export Shopify de breslevgang.com). Prix et noms : lus, jamais inventés. Les liens visent les fiches regroupées du thème ; legacy = adresse sur la boutique actuelle.",
+ "produits": [
+  {
+   "n": 1,
+   "nom": "Collier Bad Bear",
+   "ref": "Collier Bad Bear",
+   "prix": 90,
+   "fiche": "collier-bad-bear",
+   "couleur": null,
+   "legacy": "collier-bad-bear",
+   "alt": "Collier Bad Bear : chaîne et pendentif ourson, posés sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 2,
+   "nom": "Collier Pendentif Mezouza",
+   "ref": "Collier Pendentif Mezouza",
+   "prix": 80,
+   "fiche": "collier-mezouza",
+   "couleur": null,
+   "legacy": "collier-mezouza",
+   "alt": "Collier Pendentif Mezouza : chaîne et tube Mezouza argenté ciselé, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 3,
+   "nom": "Petek Blue Tiger",
+   "ref": "Petek blue Tiger",
+   "prix": 110,
+   "fiche": "petek-leopard-tigre",
+   "couleur": "blue-tiger",
+   "legacy": "petek-blue-tiger",
+   "alt": "Petek Blue Tiger : deux rangs de perles bleues et noires, chaînettes et pochette bleue, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 4,
+   "nom": "Flamme Diamant Or rose",
+   "ref": "Flamme diamant couleur or rose",
+   "prix": 115,
+   "fiche": "flamme-diamant",
+   "couleur": "or-rose",
+   "legacy": "flamme-diamant-couleur-or-rose",
+   "alt": "Flamme Diamant or rose : chaîne et pendentif flamme couleur or rose serti de strass, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 5,
+   "nom": "Flamme Diamant Or",
+   "ref": "Flamme diamant couleur or",
+   "prix": 115,
+   "fiche": "flamme-diamant",
+   "couleur": "or",
+   "legacy": "flamme-diamant-couleur-or",
+   "alt": "Flamme Diamant or : chaîne et pendentif flamme couleur or serti de strass, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 6,
+   "nom": "Collier Breslev Fire Petek",
+   "ref": "Collier Breslev Fire Petek",
+   "prix": 90,
+   "fiche": "collier-fire-petek",
+   "couleur": "collier-breslev-fire-petek-2",
+   "legacy": "jewel-breslev-necklace-fire-petek-jewish",
+   "alt": "Collier Breslev Fire Petek : chaîne et plaque gravée d'une flamme, sur un buste dans une vitrine en verre."
+  }
+ ]
+}

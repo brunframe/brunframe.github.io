@@ -1,0 +1,31 @@
+/* Breslev Gang — panier : compléments au tiroir et à la page panier (le socle est dans theme.css).
+   Chargé par sections/cart-drawer.liquid et sections/main-cart.liquid. */
+
+/* Ligne qui vient d'être ajoutée : entre en fondu, la photo de la couleur choisie en premier. */
+.line.is-new { animation: cart-line-in 0.6s var(--ease) both; }
+@keyframes cart-line-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Message sous le bouton d'ajout (taille non choisie, erreur de l'API). */
+.cart-add__error { margin-top: 10px; font-size: 13px; color: var(--black); }
+.cart-add__error[hidden] { display: none; }
+
+/* Mode démo : le paiement est désactivé, le bouton le dit. */
+[data-checkout-demo],
+[data-checkout-demo]:hover { cursor: not-allowed; }
+
+/* Page panier rendue par cart.js : mêmes lignes que le tiroir. */
+.cart-page__inner { max-width: 720px; }
+.cart-page__inner .ship { padding-top: 0; }
+.cart-page__form .lines { margin-top: 8px; }
+.cart-page__form .line:last-child { border-bottom: 1px solid var(--rule); }
+
+/* Compteur de l'en-tête : le chiffre change sans saut. */
+[data-cart-count] { display: inline-block; min-width: 1ch; transition: opacity 0.3s var(--ease); }
+
+/* Tant que le mode n'est pas connu, le bouton de paiement du rendu Liquid reste visible : aucun saut. */
+@media (prefers-reduced-motion: reduce) {
+  .line.is-new { animation: none; }
+}

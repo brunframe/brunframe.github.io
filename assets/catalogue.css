@@ -1,0 +1,162 @@
+/* Breslev Gang — catalogue : sélection de l'accueil, catégories, liste paginée, filtres (panneau mobile), « Voir plus ».
+   Complète theme.css (grille .catalogue__grid, .filters, .filter, .card). Fond blanc, texte noir, gris #767676. */
+
+/* Barre : compte à gauche, bouton « Filtrer » à droite (mobile) */
+.catalogue__bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  margin: 0 calc(-1 * var(--gutter)) 24px;
+  padding: 0 var(--gutter);
+  background: var(--white);
+}
+.catalogue__bar .catalogue__count { margin: 0; }
+.catalogue__filter-btn {
+  position: relative;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 0 0 16px;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.catalogue__filter-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--black); }
+.js .catalogue__filter-btn { display: inline-flex; }
+@media (min-width: 750px) {
+  .catalogue__bar { position: static; margin-bottom: 0; }
+  .js .catalogue__filter-btn { display: none; }
+}
+
+/* Filtres : liens. Sur grand écran, la rangée reste en ligne (theme.css). */
+.catalogue--liste .filters { position: static; margin-top: 0; }
+.filters__head { display: none; }
+.filters__backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
+a.filter { display: inline-flex; align-items: center; }
+a.filter:not(.is-active):hover { color: var(--black); }
+@media (min-width: 750px) {
+  .catalogue--liste .filters { margin-bottom: 40px; }
+  .catalogue--liste .filters + .filters__backdrop { display: none; }
+}
+
+/* Mobile avec JavaScript : panneau qui monte du bas de l'écran */
+@media (max-width: 749px) {
+  .js .catalogue--liste .filters {
+    position: fixed;
+    top: auto; left: 0; right: 0; bottom: 0;
+    z-index: 41;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s 0.45s;
+  }
+  .js .catalogue--liste .filters__panel {
+    background: var(--white);
+    border-top: 1px solid var(--rule);
+    padding: 0 var(--gutter) max(24px, env(safe-area-inset-bottom));
+    max-height: 80svh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateY(100%);
+    transition: transform 0.45s var(--ease);
+  }
+  .js .catalogue--liste .filters.is-open { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+  .js .catalogue--liste .filters.is-open .filters__panel { transform: none; }
+  .js .catalogue--liste .filters__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    margin-bottom: 8px;
+  }
+  .filters__title { font-size: 28px; }
+  .filters__close { min-height: 44px; min-width: 44px; justify-content: flex-end; }
+  .js .catalogue--liste .filters__row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .js .catalogue--liste .filters__row .filter {
+    min-height: 52px;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    white-space: normal;
+  }
+  .js .catalogue--liste .filters__row .filter::after { display: none; }
+  .js .catalogue--liste .filters__row .filter.is-active::before { content: '—'; order: 2; margin-left: 12px; }
+  .js .catalogue--liste .filters__row--sub { margin-top: 20px; }
+  .js .catalogue--liste .filters__row--sub::before {
+    content: attr(aria-label);
+    display: block;
+    padding: 0 0 8px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .catalogue--liste .filters, .js .catalogue--liste .filters__panel { transition-duration: 0.01s; }
+}
+
+/* Cartes : ratio fixé, aucun décalage de mise en page */
+.catalogue__grid .card__media { aspect-ratio: 1 / 1; }
+
+/* Voir plus et pagination */
+.catalogue__more { display: grid; justify-items: center; gap: 24px; margin-top: clamp(56px, 10vw, 96px); }
+.catalogue__more-btn { min-width: min(100%, 280px); }
+.catalogue__pagination { margin: 0; align-items: center; justify-content: center; color: var(--grey); font-size: 13px; }
+.catalogue__pagination a { color: var(--black); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+.pagination__state { font-variant-numeric: tabular-nums; }
+.js .catalogue__more-btn + .catalogue__pagination a { display: none; }
+.catalogue--liste { padding-bottom: var(--space-section); }
+
+/* Accueil : sélection puis catégories */
+.catalogue--accueil .catalogue__grid { row-gap: 48px; }
+.catalogue__subtitle {
+  margin-top: clamp(96px, 16vw, 200px);
+  margin-bottom: clamp(24px, 5vw, 48px);
+  font-size: clamp(28px, 7vw, 64px);
+}
+.categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 40px;
+}
+@media (min-width: 750px) { .categories { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; row-gap: 64px; } }
+.categories__link { display: block; }
+.categories__media { margin-bottom: 12px; aspect-ratio: 1 / 1; }
+.categories__media img { transition: transform 0.8s var(--ease); }
+@media (hover: hover) { .categories__link:hover img { transform: scale(1.03); } }
+.categories__name {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.collections.categories .categories__name {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 4.6vw, 26px);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.catalogue__all { margin-top: clamp(48px, 8vw, 80px); padding-bottom: var(--space-section); }
+@media (prefers-reduced-motion: reduce) {
+  .categories__link:hover img { transform: none; }
+}
