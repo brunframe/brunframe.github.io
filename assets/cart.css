@@ -29,3 +29,9 @@
 @media (prefers-reduced-motion: reduce) {
   .line.is-new { animation: none; }
 }
+
+/* Suggestions sous le panier : 2 colonnes sur téléphone, 4 dès la tablette */
+.cart-page__suggest { padding-top: 56px; }
+@media (min-width: 768px) {
+  .cart-page__suggest .suggest-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

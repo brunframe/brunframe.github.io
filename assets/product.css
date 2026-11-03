@@ -2,7 +2,8 @@
    Variables globales (couleurs, polices, gouttières) : assets/theme.css. Rien n'est redéfini ici. */
 
 /* ---------- Photos : une bande glissable au doigt, miniatures dessous ---------- */
-.product__media { order: 1; }
+/* le fond de soie déborde de 12 px pour son flou : coupé ici, sinon la fiche glisse de côté sur téléphone */
+.product__media { order: 1; overflow: hidden; }
 .product__summary { order: 2; }
 .product__details { order: 4; padding-top: 48px; }
 
@@ -16,11 +17,16 @@
   scrollbar-width: none;
 }
 .product__track::-webkit-scrollbar { display: none; }
+/* Chaque photo à sa vraie proportion (--ratio, donné par Shopify), en entier : toute la largeur sur téléphone et tablette
+   en hauteur, jamais plus haute que l'écran ; sur ordinateur, toute la hauteur de l'écran (voir plus bas).
+   Ni bandes vides sur les côtés, ni recadrage, et le pendentif est visible dès l'arrivée. */
 .product__slide {
   position: relative;
   flex: 0 0 100%;
   width: 100%;
-  height: min(100vw, 56svh);
+  height: auto;
+  aspect-ratio: var(--ratio, 0.72);
+  max-height: calc(100svh - var(--header-h));
   margin: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -167,7 +173,8 @@
 .card__add { margin-top: 2px; min-height: 36px; font-size: 11px; }
 .card__add:disabled { color: var(--grey); text-decoration: none; cursor: default; }
 
-/* ---------- Ordinateur : photos empilées à gauche, infos fixes à droite ---------- */
+/* ---------- Ordinateur et tablette en paysage : photos empilées à gauche, infos fixes à droite ----------
+   Chaque photo a la hauteur de l'écran et la largeur de sa proportion (58 % de la largeur au plus). */
 @media (min-width: 990px) {
   .product__track {
     display: grid;
@@ -175,8 +182,12 @@
     overflow: visible;
     scroll-snap-type: none;
   }
-  .product__slide { height: calc(100vh - var(--header-h)); }
-  .product__slide + .product__slide { height: auto; aspect-ratio: 1 / 1; }
+  .product__slide {
+    width: min(calc((100svh - var(--header-h)) * var(--ratio, 0.72)), 58vw);
+    max-height: none;
+  }
+  /* la première photo donne la largeur de la colonne ; les suivantes la remplissent, à leur proportion */
+  .product__slide + .product__slide { width: 100%; }
   .product__thumbs { display: none; }
   .product__details { padding-top: 56px; }
 }

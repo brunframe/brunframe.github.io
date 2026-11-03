@@ -344,7 +344,7 @@
       const token = ++this.loadToken;
       const next = document.createElement('img');
       next.alt = this.alt;
-      next.sizes = '(min-width: 990px) 58vw, 100vw';
+      next.sizes = '(min-width: 990px) 50vw, 100vw';
       next.srcset = srcsetOf(image);
       next.src = sized(image.src, Math.min(1600, image.w));
       next.dataset.pos = String(image.pos);
@@ -382,7 +382,9 @@
         const fig = document.createElement('figure');
         fig.className = 'product__slide media media--product';
         fig.setAttribute('data-slide', '');
-        fig.innerHTML = `<img src="${sized(img.src, 1000)}" srcset="${srcsetOf(img)}" sizes="(min-width: 990px) 58vw, 100vw" alt="${escapeAttr(this.alt)}" loading="lazy" width="${img.w}" height="${img.h}">`;
+        // le cadre prend la proportion de la photo (dimensions données par Shopify) : rien ne bouge au chargement
+        if (img.w && img.h) fig.style.setProperty('--ratio', String(img.w / img.h));
+        fig.innerHTML = `<img src="${sized(img.src, 1000)}" srcset="${srcsetOf(img)}" sizes="(min-width: 990px) 50vw, 100vw" alt="${escapeAttr(this.alt)}" loading="lazy" width="${img.w}" height="${img.h}">`;
         frag.appendChild(fig);
       });
       this.track.appendChild(frag);

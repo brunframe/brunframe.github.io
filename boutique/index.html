@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Breslev Gang — Entrez dans la boutique</title>
-  <meta name="description" content="Entrez dans la boutique Breslev Gang : six vitrines, six pièces, une flamme à porter.">
+  <meta name="description" content="Entrez dans la boutique Breslev Gang : sept vitrines, sept pièces, une flamme à porter.">
   <meta name="robots" content="noindex">
   <base target="_top">
   <meta name="theme-color" content="#1b1510">
@@ -24,21 +24,12 @@
   <main id="stage" class="stage" aria-label="La boutique Breslev Gang">
     <div class="cadre" id="cadre">
       <!-- La salle recréée : une image fixe à chaque arrêt, une vidéo de marche (4K, 60 images/s) entre deux arrêts.
-           Le dernier plan de chaque vidéo est identique à l'image de l'arrêt suivant : le relais est invisible. -->
+           Le dernier plan de chaque vidéo est identique à l'image de l'arrêt suivant : le relais est invisible.
+           La visite finit face au grand logo Breslev Gang, au fond de la salle. -->
       <div class="respire">
         <img class="arret arret--a" alt="" decoding="async" fetchpriority="high">
         <img class="arret arret--b" alt="" decoding="async">
         <div class="marches"></div>
-      </div>
-      <div class="scene" data-scene="salon">
-        <picture>
-          <source media="(max-aspect-ratio: 9/10)" srcset="assets/img/scene-salon-9x16.webp">
-          <img src="assets/img/scene-salon-16x9.webp" width="2560" height="1440" decoding="async" loading="lazy"
-               alt="Salon privé : fauteuils en velours, table en marbre et, au fond, le cercle des six vitrines.">
-        </picture>
-      </div>
-      <div class="projection" aria-hidden="true">
-        <video class="projection__video" muted playsinline loop preload="none" crossorigin="anonymous" src="https://cdn.shopify.com/videos/c/vp/cf1608d983f8495fa50cb0a5a7968a63/cf1608d983f8495fa50cb0a5a7968a63.HD-1080p-7.2Mbps-66037766.mp4"></video>
       </div>
       <div class="reflet" aria-hidden="true"></div>
       <div class="balayage" aria-hidden="true"></div>
@@ -55,14 +46,14 @@
 
     <section class="ouverture" aria-live="off">
       <h1 class="titre-ouverture">Entrez</h1>
-      <p class="sous-titre">Six vitrines. Une flamme à porter.</p>
+      <p class="sous-titre">Sept vitrines. Une flamme à porter.</p>
       <p class="invite" aria-hidden="true"><span>Défilez pour entrer</span><i></i></p>
     </section>
 
-    <p class="arrivee" aria-hidden="true"><span>Six vitrines.</span> <span>Choisissez la vôtre.</span></p>
+    <p class="arrivee" aria-hidden="true"><span>Sept vitrines.</span> <span>Choisissez la vôtre.</span></p>
 
     <aside class="fiche" id="fiche" aria-live="polite" aria-label="La pièce présentée">
-      <p class="fiche-num"><span data-f="num">01</span> / 06</p>
+      <p class="fiche-num"><span data-f="num">01</span> / <span data-f="total">07</span></p>
       <h2 class="fiche-nom" data-f="nom"></h2>
       <p class="fiche-ref">Réf. <span data-f="ref"></span></p>
       <p class="fiche-prix" data-f="prix"></p>
@@ -77,10 +68,9 @@
       </div>
     </aside>
 
-    <section class="fin" id="fin" aria-label="Le film et toute la collection">
-      <button type="button" class="son" data-son aria-pressed="false" aria-label="Activer le son du film">Son</button>
+    <section class="fin" id="fin" aria-label="Toute la collection">
       <h2 class="fin-titre">Votre pièce vous attend</h2>
-      <a class="bouton bouton-clair" data-lien="collection" href="/catalogue.html">Choisir ma pièce</a>
+      <a class="bouton" data-lien="collection" href="/catalogue.html">Choisir ma pièce</a>
     </section>
 
     <nav class="points" aria-label="Progression dans la boutique"></nav>
@@ -88,7 +78,7 @@
   </main>
 
   <!-- Version statique : mouvement réduit, ou JavaScript absent -->
-  <section class="diaporama" id="diaporama" aria-label="Les six pièces">
+  <section class="diaporama" id="diaporama" aria-label="Les sept pièces">
     <h1>La boutique</h1>
     <ol class="diaporama-liste"></ol>
     <p class="diaporama-fin"><a class="bouton" data-lien="collection" href="/catalogue.html">Choisir ma pièce</a></p>

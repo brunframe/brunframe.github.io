@@ -153,7 +153,7 @@
     </h1><p class="hero__phrase display" data-anim="hero-phrase">Pas qu'un collier. Une protection.</p></div><button type="button" class="hero__toggle" data-hero-toggle aria-pressed="false" hidden>Pause</button></section>
 
 
-</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html" title="La boutique en six vitrines" loading="lazy" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
+</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html" title="La boutique en sept vitrines" loading="lazy" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
 </section>
 <style>
   .boutique-immersive { position: relative; height: 100vh; height: 100svh; min-height: 520px; background: #1b1510 var(--attente) center / cover no-repeat; }
@@ -166,12 +166,47 @@
     var root = document.querySelector('[data-boutique-immersive]');
     var frame = root && root.querySelector('iframe');
     if (!frame) return;
+    var aligne = null, attente = 0;
+    function dire(msg) { try { frame.contentWindow.postMessage(msg, '*'); } catch (e) { /* sans effet */ } }
+    function vers(y) {
+      y = Math.max(0, Math.round(y));
+      var lenis = window.BG && window.BG.lenis;
+      if (lenis && lenis.scrollTo) lenis.scrollTo(y, { duration: 0.8 });
+      else window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+    // la section remplit l'écran quand son haut est en haut de la fenêtre
+    function etat(toujours) {
+      var a = Math.abs(root.getBoundingClientRect().top) < 4;
+      if (a !== aligne || toujours) { aligne = a; dire({ boutique: 'cadre', aligne: a }); }
+    }
+    function visible(r) { return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / window.innerHeight; }
+    function caler() { vers(window.scrollY + root.getBoundingClientRect().top); }
+    function quitter(dir) {
+      var r = root.getBoundingClientRect();
+      vers(dir > 0 ? window.scrollY + r.bottom : window.scrollY + r.top - window.innerHeight);
+    }
+    window.addEventListener('scroll', function () {
+      etat(false);
+      // défilement arrêté avec la boutique sur plus de la moitié de l'écran : elle se cale en entier
+      clearTimeout(attente);
+      attente = setTimeout(function () {
+        var r = root.getBoundingClientRect();
+        if (Math.abs(r.top) >= 4 && visible(r) >= 0.5) caler();
+      }, 180);
+    }, { passive: true });
+    window.addEventListener('resize', function () { etat(false); });
+    frame.addEventListener('load', function () { etat(true); });
     window.addEventListener('message', function (e) {
       var d = e.data;
-      if (!d || d.boutique !== 'bord' || e.source !== frame.contentWindow) return;
+      if (!d || e.source !== frame.contentWindow) return;
       var r = root.getBoundingClientRect();
-      var y = d.dir > 0 ? window.scrollY + r.bottom : window.scrollY + r.top - window.innerHeight;
-      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      if (d.boutique === 'pret') etat(true);
+      else if (d.boutique === 'aligner') {
+        if (Math.abs(r.top) < 4) { etat(true); return; }
+        // vers la boutique (ou elle couvre déjà la moitié de l'écran) : elle vient en entier ; dans l'autre sens, on la quitte
+        if (!d.dir || visible(r) >= 0.5 || (d.dir > 0) === (r.top > 0)) caler();
+        else quitter(d.dir);
+      } else if (d.boutique === 'bord') quitter(d.dir);
     });
   })();
 </script>
@@ -561,7 +596,7 @@
   aria-modal="true"
   aria-labelledby="CartDrawerTitle"
   aria-hidden="true"
-  data-suggest-title="À ajouter"
+  data-suggest-title="Pour compléter"
   data-suggest-add="Ajouter"
   data-label-checkout="Paiement"
   data-label-view-cart="Voir le panier"

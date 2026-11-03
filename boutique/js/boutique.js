@@ -1,8 +1,8 @@
 /* La boutique immersive Breslev Gang : on entre dans la salle recréée et, d'une seule traite, on passe devant les deux
- * premières vitrines jusqu'à la première pièce ; puis on marche de vitrine en vitrine autour du cercle, jusqu'au salon
- * privé où passe le film de la marque.
+ * premières vitrines jusqu'à la première pièce ; puis on marche de vitrine en vitrine autour du cercle, et la visite
+ * finit face au grand logo Breslev Gang, au fond de la salle (le film de la marque est déjà en haut de l'accueil).
  *
- * Arrêts : 0 entrée · 1 à 6 les six vitrines · 7 salon privé (film).
+ * Arrêts : 0 entrée · 1 à 7 les sept vitrines (une par pièce de data/products.json) · 8 le mur au logo.
  * À chaque arrêt, une image fixe ; entre deux arrêts (en avançant), une vidéo de marche calculée en 4K à 60 images/s,
  * lue par le décodeur matériel du navigateur (fluide, aucune image à décoder par le script). Le dernier plan d'une vidéo
  * est identique à l'image de l'arrêt suivant : le relais est invisible. En reculant, fondu enchaîné entre les arrêts.
@@ -39,9 +39,12 @@
     if (f === '16x9') return Math.max(innerWidth * dpr, innerHeight * dpr * 16 / 9) >= 2200 ? '2160' : '1080';
     return Math.max(innerHeight * dpr, innerWidth * dpr * 16 / 9) >= 2200 ? '2560' : '1920';
   }
-  const SEGMENTS = ['i', 'v2', 'v3', 'v4', 'v5', 'v6'];               // segment i : de l'arrêt i à l'arrêt i + 1
-  const SALON = SEGMENTS.length + 1;                                  // 7 : le salon privé (après la dernière vitrine)
-  const DERNIER = SEGMENTS.length;                                    // 6 : dernière vitrine (dernière image fixe)
+  const NV = PRODUITS.length;                                         // vitrines, une pièce chacune
+  // segment i : de l'arrêt i à l'arrêt i + 1 (i : l'entrée ; v2… : d'une vitrine à la suivante ; f : vers le logo)
+  const SEGMENTS = ['i'].concat(PRODUITS.slice(1).map((p, k) => `v${k + 2}`), ['f']);
+  const FIN = SEGMENTS.length;                                        // dernier arrêt : le mur au logo
+  const DERNIER = NV;                                                 // dernière vitrine
+  const deux = (n) => String(n).padStart(2, '0');
   const arretSrc = (f, i) => `assets/salle/${f}/arret-${i}.webp`;
   const videoSrc = (f, n, i) => `assets/salle/${f}/${n}/${SEGMENTS[i]}.mp4`;
 
@@ -51,7 +54,7 @@
     const li = document.createElement('li');
     li.innerHTML = `<figure><picture><source media="(max-aspect-ratio: 9/10)" srcset="${arretSrc('9x16', p.n)}">
       <img src="${arretSrc('16x9', p.n)}" alt="${p.alt}" width="1920" height="1080" loading="lazy" decoding="async"></picture>
-      <figcaption><span class="d-num">0${p.n} / 06</span><span class="d-nom">${p.nom}</span><span class="d-ref">Réf. ${p.ref}</span>
+      <figcaption><span class="d-num">${deux(p.n)} / ${deux(NV)}</span><span class="d-nom">${p.nom}</span><span class="d-ref">Réf. ${p.ref}</span>
       <span class="d-prix">${prixTexte(p.prix)}</span><a class="bouton" href="${lienProduit(p)}">Découvrir la pièce</a></figcaption></figure>`;
     liste.appendChild(li);
   });
@@ -64,30 +67,25 @@
   const stage = $('#stage');
   const stills = [$('.arret--a'), $('.arret--b')];
   const marches = $('.marches');
-  const salon = $('.scene[data-scene="salon"]');
   const fiche = $('#fiche');
   const ouverture = $('.ouverture');
   const arrivee = $('.arrivee');
   const fin = $('#fin');
   const chargement = $('.chargement');
-  const projection = $('.projection');
-  const film = $('.projection__video');
-  const sonBtn = $('[data-son]');
   const cvs = $('.eclats');
   const ctx = cvs.getContext('2d');
   const F = {};
   $$('[data-f]', fiche).forEach((el) => { F[el.dataset.f] = el; });
-  salon.style.opacity = 0;
-  salon.style.visibility = 'hidden';
+  if (F.total) F.total.textContent = deux(NV);
 
   const points = $('.points');
-  const LIBELLES = ['L’entrée'].concat(PRODUITS.map((p) => `Vitrine ${p.n} : ${p.nom}`), ['Salon privé']);
+  const LIBELLES = ['L’entrée'].concat(PRODUITS.map((p) => `Vitrine ${p.n} : ${p.nom}`), ['Le logo Breslev Gang']);
   LIBELLES.forEach((txt, i) => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'point' + (i === 0 || i === SALON ? ' salle' : '');
+    b.className = 'point' + (i === 0 || i === FIN ? ' salle' : '');
     b.setAttribute('aria-label', `Aller à : ${txt}`);
-    b.addEventListener('click', () => goTo(i));
+    b.addEventListener('click', () => { if (!pris()) aligner(0); goTo(i); });
     points.appendChild(b);
   });
   const dots = $$('.point', points);
@@ -100,7 +98,7 @@
   let enAttente = 0;          // pas demandés pendant une marche (+1 / -1)
   let fondu = null;           // { de, vers, t0, dur } : fondu enchaîné entre deux arrêts
   let actif = 0;              // index de l'image d'arrêt visible
-  let ficheIdx = -1, projectionOn = false;
+  let ficheIdx = -1;
   const videos = [];          // une balise <video> par segment (format courant)
 
   function creeVideos() {
@@ -154,7 +152,7 @@
     v.src = videoSrc(F_, N_, i);
   }
   function precharge(i) {
-    if (i < 0 || i > DERNIER) return;
+    if (i < 0 || i > FIN) return;
     const im = new Image();
     im.decoding = 'async';
     im.src = arretSrc(F_, i);
@@ -212,13 +210,13 @@
     arrive();
   }
   function sautVers(n) {                    // fondu enchaîné (en reculant, ou pour un saut de plusieurs arrêts)
-    n = clamp(n, 0, SALON);
+    n = clamp(n, 0, FIN);
     if (n === at) return;
     if (lecture) { lecture.v.pause(); lecture.v.classList.remove('is-on'); lecture = null; }
     const de = at;
     at = n;
     fondu = { de, vers: n, t0: performance.now(), dur: 750 };
-    if (n <= DERNIER) montreArret(n, true);
+    montreArret(n, true);
     arrive();
     wake();
   }
@@ -228,17 +226,16 @@
     if (enAttente) { const d = enAttente; enAttente = 0; setTimeout(() => step(d), 120); }
   }
   function goTo(n, immediat) {
-    n = clamp(Math.round(n), 0, SALON);
+    n = clamp(Math.round(n), 0, FIN);
     if (immediat) {
       if (lecture) { lecture.v.pause(); lecture.v.classList.remove('is-on'); lecture = null; }
       at = n; pos = n; fondu = null;
-      if (n <= DERNIER) montreArret(n, false);
+      montreArret(n, false);
       arrive(); wake();
       return;
     }
     if (lecture) { enAttente = clamp(n - (lecture.i + 1), -1, 1); return; }
-    if (n === at + 1 && at < DERNIER && VIDEO_OK) marcher(at);
-    else if (n === SALON && at === DERNIER) sautVers(SALON);
+    if (n === at + 1 && at < FIN && VIDEO_OK) marcher(at);
     else sautVers(n);
   }
   function step(d) {
@@ -251,7 +248,7 @@
     const p = PRODUITS[idx];
     if (!p) return;
     ficheIdx = idx;
-    F.num.textContent = `0${p.n}`;
+    F.num.textContent = deux(p.n);
     F.nom.textContent = p.nom;
     F.ref.textContent = p.ref;
     F.prix.textContent = prixTexte(p.prix);
@@ -269,24 +266,15 @@
   }
   function render() {
     const p = pos;
-    const s = clamp(p - DERNIER, 0, 1);
-    salon.style.opacity = s;
-    salon.style.visibility = s < 0.01 ? 'hidden' : 'visible';
-    const auSalon = at === SALON && !fondu;
-    if (auSalon !== projectionOn) {
-      projectionOn = auSalon;
-      projection.classList.toggle('is-on', auSalon);
-      if (auSalon) { film.preload = 'auto'; const pr = film.play(); if (pr && pr.catch) pr.catch(() => {}); }
-      else { film.pause(); film.muted = true; sonBtn.setAttribute('aria-pressed', 'false'); sonBtn.setAttribute('aria-label', 'Activer le son du film'); }
-    }
     const ouv = 1 - smooth(p, 0, 0.12);
     ouverture.style.opacity = ouv;
     ouverture.style.visibility = ouv < 0.01 ? 'hidden' : 'visible';
-    // « Six vitrines. Choisissez la vôtre. » : pendant l'entrée, quand on passe devant les deux premières vitrines
+    // « Sept vitrines. Choisissez la vôtre. » : pendant l'entrée, quand on passe devant les deux premières vitrines
     const arr = lecture && lecture.i === 0 ? smooth(p, 0.18, 0.34) * (1 - smooth(p, 0.62, 0.8)) : 0;
     arrivee.style.opacity = arr;
     arrivee.style.visibility = arr < 0.01 ? 'hidden' : 'visible';
-    const fo = smooth(p, SALON - 0.45, SALON);
+    // la fin (« Votre pièce vous attend ») monte pendant la dernière marche, vers le logo
+    const fo = smooth(p, FIN - 0.45, FIN);
     fin.style.opacity = fo;
     fin.classList.toggle('visible', fo > 0.6);
     fin.style.visibility = fo < 0.01 ? 'hidden' : 'visible';
@@ -401,6 +389,23 @@
       try { window.parent.postMessage({ boutique: 'bord', dir: 1 }, '*'); } catch (err) { /* sans effet */ }
     }));
   }
+  // Sur l'accueil, la boutique ne prend la molette et le doigt que lorsqu'elle remplit l'écran : le site le lui dit
+  // (message « cadre »). À moitié visible, un geste la fait d'abord venir en entier (message « aligner ») au lieu
+  // d'avancer ; dans l'autre sens, il la quitte. Un site qui ne répond pas (ancienne version) : la boutique garde la main.
+  let aligne = !embarque, parentRepond = false;
+  const pris = () => aligne || !parentRepond;
+  function aligner(dir) {
+    try { window.parent.postMessage({ boutique: 'aligner', dir }, '*'); } catch (e) { /* sans effet */ }
+  }
+  if (embarque) {
+    addEventListener('message', (e) => {
+      if (e.source !== window.parent || !e.data || e.data.boutique !== 'cadre') return;
+      parentRepond = true;
+      aligne = !!e.data.aligne;
+      stage.style.touchAction = pris() ? 'none' : 'pan-y';   // à moitié visible, le doigt fait défiler le site
+    });
+    try { window.parent.postMessage({ boutique: 'pret' }, '*'); } catch (e) { /* sans effet */ }
+  }
   let bordTemps = 0;
   function bord(dir) {
     if (!embarque || Date.now() - bordTemps < 900) return;
@@ -409,7 +414,7 @@
   }
   function avance(dir) {
     const cible = (lecture ? lecture.i + 1 : at) + dir;
-    if (cible < 0 || cible > SALON) { bord(dir); return; }
+    if (cible < 0 || cible > FIN) { bord(dir); return; }
     step(dir);
   }
   let wheelGesture = false, wheelTimer = 0, wheelAcc = 0;
@@ -420,7 +425,11 @@
     wheelTimer = setTimeout(() => { wheelGesture = false; wheelAcc = 0; }, 180);
     if (wheelGesture) return;
     wheelAcc += dy;
-    if (Math.abs(wheelAcc) >= 24) { wheelGesture = true; avance(wheelAcc > 0 ? 1 : -1); wheelAcc = 0; }
+    if (Math.abs(wheelAcc) >= 24) {
+      wheelGesture = true;
+      if (pris()) avance(wheelAcc > 0 ? 1 : -1); else aligner(wheelAcc > 0 ? 1 : -1);
+      wheelAcc = 0;
+    }
   }, { passive: false });
   addEventListener('keydown', (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
@@ -430,34 +439,32 @@
       case 'ArrowUp': case 'ArrowLeft': case 'PageUp': e.preventDefault(); avance(-1); break;
       case ' ': if (!onControl) { e.preventDefault(); avance(e.shiftKey ? -1 : 1); } break;
       case 'Home': e.preventDefault(); goTo(0); break;
-      case 'End': e.preventDefault(); goTo(SALON); break;
+      case 'End': e.preventDefault(); goTo(FIN); break;
       default: break;
     }
   });
-  stage.style.touchAction = 'none';
+  stage.style.touchAction = pris() ? 'none' : 'pan-y';
   let t0 = null;
   stage.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1 || (e.target.closest && e.target.closest('a,button'))) { t0 = null; return; }
-    t0 = { y: e.touches[0].clientY, x: e.touches[0].clientX };
+    const t = e.touches[0];
+    // la boutique ne tient pas encore le doigt : le site défile sous lui ; on mesure alors le geste sur l'écran
+    t0 = pris() ? { y: t.clientY, x: t.clientX, pris: true } : { y: t.screenY, x: t.screenX, pris: false };
   }, { passive: true });
-  stage.addEventListener('touchmove', (e) => { if (t0) e.preventDefault(); }, { passive: false });
+  stage.addEventListener('touchmove', (e) => { if (t0 && t0.pris) e.preventDefault(); }, { passive: false });
   stage.addEventListener('touchend', (e) => {
     if (!t0) return;
     const t = e.changedTouches[0];
-    const dy = t.clientY - t0.y, dx = t.clientX - t0.x;
+    const tenu = t0.pris;
+    const dy = (tenu ? t.clientY : t.screenY) - t0.y, dx = (tenu ? t.clientX : t.screenX) - t0.x;
     t0 = null;
     const d = Math.abs(dy) >= Math.abs(dx) ? dy : dx;
     if (Math.abs(d) < 36) return;
-    avance(d < 0 ? 1 : -1);                 // glisser vers le haut (ou vers la gauche) : on avance
+    const dir = d < 0 ? 1 : -1;             // glisser vers le haut (ou vers la gauche) : on avance
+    if (tenu) avance(dir); else aligner(dir);
   }, { passive: true });
-  $$('[data-nav]').forEach((b) => b.addEventListener('click', () => avance(b.dataset.nav === 'next' ? 1 : -1)));
-  sonBtn.addEventListener('click', () => {
-    const on = film.muted;
-    film.muted = !on;
-    sonBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    sonBtn.setAttribute('aria-label', on ? 'Couper le son du film' : 'Activer le son du film');
-    if (film.paused) { const pr = film.play(); if (pr && pr.catch) pr.catch(() => {}); }
-  });
+  // un bouton touché quand la boutique n'est qu'à moitié visible : elle vient en entier et le bouton agit
+  $$('[data-nav]').forEach((b) => b.addEventListener('click', () => { if (!pris()) aligner(0); avance(b.dataset.nav === 'next' ? 1 : -1); }));
   addEventListener('resize', layout);
   portraitMQ.addEventListener && portraitMQ.addEventListener('change', layout);
   document.addEventListener('visibilitychange', () => {
@@ -467,7 +474,7 @@
 
   // ---------------------------------------------------------------- démarrage
   const depart = parseInt(new URLSearchParams(location.search).get('arret'), 10);
-  if (depart >= 0 && depart <= SALON) { at = depart; pos = depart; }
+  if (depart >= 0 && depart <= FIN) { at = depart; pos = depart; }
   layout();
 
   window.__boutique = {
@@ -479,6 +486,7 @@
     get format() { return F_; },
     get niveau() { return N_; },
     get enCours() { return !!lecture || !!fondu; },
+    get prend() { return pris(); },
     get chargees() { return videos.filter((v) => v.readyState >= 3).length; },
   };
 })();

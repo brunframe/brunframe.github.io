@@ -681,6 +681,11 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .swatch--lg img { width: 72px !important; height: 72px !important; }
 .swatch--lg::after { inset: 0; }
 .swatch.is-unavailable img { opacity: 0.5; }
+/* Pastilles en couleur (nom de la couleur ou réglage Shopify) : un disque net au lieu de la photo du collier */
+.swatch__teinte { position: absolute; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16); }
+.swatch--lg .swatch__teinte { inset: 6px; }
+.swatch--sm .swatch__teinte { inset: 8px; }
+.swatch--teinte.is-unavailable .swatch__teinte { opacity: 0.4; }
 .swatch.is-unavailable::before,
 .opt.is-unavailable::before {
   content: '';
@@ -838,9 +843,9 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .details dt { color: var(--grey); padding-top: 2px; }
 .details dd { font-size: 14px; }
 
-@media (min-width: 990px) {
+@media (min-width: 990px) {   /* fiche en deux colonnes : la photo à gauche, à la hauteur de l'écran ; l'achat centré à droite */
   .product {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: auto minmax(0, 1fr);
     column-gap: clamp(32px, 4vw, 80px);
     padding: 0 var(--gutter) 0 0;
   }
@@ -849,6 +854,8 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
     position: sticky;
     top: var(--header-h);
     align-self: start;
+    justify-self: center;
+    width: min(100%, 540px);
     padding: clamp(32px, 6vh, 72px) 0 48px;
   }
   .product__summary, .product__details { padding-left: 0; padding-right: 0; }
@@ -984,7 +991,9 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .drawer__suggest-title { font-family: var(--font-text); font-weight: 400; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; color: var(--grey); }
 .suggest-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
 .suggest { display: grid; gap: 4px; align-content: start; }
-.suggest__media { margin-bottom: 8px; }
+/* la photo d'une suggestion remplit sa case (portrait 3:4, comme les photos de la marque) : aucun vide sur les côtés */
+.suggest__media { margin-bottom: 8px; aspect-ratio: 3 / 4; }
+.suggest__media img { object-fit: cover; }
 .suggest__name { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.15; font-size: 15px; }
 .suggest__price { font-size: 13px; }
 .suggest__add { justify-self: start; }

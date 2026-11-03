@@ -48,6 +48,8 @@
   const config = window.themeConfig || { routes: {}, strings: {} };
   const routes = config.routes || {};
   const STORAGE_KEY = 'bg-cart-demo';
+  // adresse de ce fichier : le fichier des suggestions de la démo est à côté (assets/)
+  const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || '';
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -367,7 +369,7 @@
       lock();
       const close = $('[data-cart-close].link-btn', this.el);
       if (close) close.focus({ preventScroll: true });
-      if (mode === 'shopify' && state.items.length && !Suggest.shownFor) Suggest.load(state.items[0]);
+      if (state.items.length && !Suggest.shownFor) Suggest.load(state.items[0]);
     },
     close() {
       if (!this.el || !this.isOpen()) return;
@@ -388,29 +390,49 @@
     }
   };
 
-  /* ---------- Suggestions (mode Shopify seulement : recommandations et recherche Shopify) ---------- */
+  /* ---------- Suggestions : recommandations Shopify (mode Shopify) ou fichier de la démo (mode démo) ---------- */
+  // Le tiroir et la page panier ont chacun leur boîte [data-cart-suggestions] ; 4 pièces, jamais une pièce déjà au panier.
   const Suggest = {
     token: 0,
     shownFor: null,
-    box() { return Drawer.el ? $('[data-cart-suggestions]', Drawer.el) : null; },
+    demo: null,
+    donnees: null,
+    boxes() { return $$('[data-cart-suggestions]'); },
+    // Produits du panier ; en démo, une carte n'envoie que la variante : le fichier de la démo donne le produit.
+    inCart(data) {
+      const ids = new Set();
+      state.items.forEach((i) => {
+        if (i.productId) ids.add(String(i.productId));
+        const p = data && data.parVariante.get(Number(i.variantId));
+        if (p) ids.add(String(p.id));
+      });
+      return ids;
+    },
     filter() {
-      const box = this.box();
-      if (!box) return;
-      const ids = new Set(state.items.map((i) => String(i.productId)));
-      $$('[data-suggest-item]', box).forEach((el) => { if (ids.has(el.dataset.productId)) el.remove(); });
-      if (!$('[data-suggest-item]', box)) box.hidden = true;
+      const ids = this.inCart(this.donnees);
+      this.boxes().forEach((box) => {
+        $$('[data-suggest-item]', box).forEach((el) => { if (ids.has(el.dataset.productId)) el.remove(); });
+        if (!state.items.length || !$('[data-suggest-item]', box)) box.hidden = true;
+      });
     },
     async load(item) {
-      const box = this.box();
-      if (!box || mode !== 'shopify' || !item || !item.productId || !routes.recommendations) return;
-      this.shownFor = item.productId;
+      const boxes = this.boxes();
+      if (!boxes.length || !item) return;
+      this.shownFor = item.variantId;
       const token = (this.token += 1);
+      let picked = [];
+      try { picked = mode === 'shopify' ? await this.fromShopify(item) : await this.fromDemo(item); } catch (e) { picked = []; }
+      if (token !== this.token) return;
+      boxes.forEach((box) => this.fill(box, picked));
+    },
+    async fromShopify(item) {
+      if (!item.productId || !routes.recommendations) return [];
       const base = `${routes.recommendations}?product_id=${item.productId}&limit=10&section_id=cart-suggestions`;
       const urls = [`${base}&intent=complementary`, `${base}&intent=related`];
       if (item.productType && routes.search) {
         urls.push(`${routes.search}?q=${encodeURIComponent(`product_type:"${item.productType}"`)}&type=product&section_id=cart-suggestions`);
       }
-      const seen = new Set(state.items.map((i) => String(i.productId)));
+      const seen = this.inCart(null);
       const picked = [];
       for (const url of urls) {
         if (picked.length >= 4) break;
@@ -425,25 +447,73 @@
           });
         } catch (e) { /* source suivante */ }
       }
-      if (token !== this.token) return;
-      if (!picked.length) { box.hidden = true; box.innerHTML = ''; return; }
-      const label = Drawer.el.dataset.suggestAdd || '';
+      return picked;
+    },
+    // Démo : assets/suggestions-demo.json (écrit par l'export statique), une liste de pièces à proposer par pièce,
+    // d'abord pour la pièce ajoutée, puis pour les autres pièces du panier, puis les meilleures ventes.
+    async fromDemo(item) {
+      if (!this.demo) {
+        const url = new URL('suggestions-demo.json', SCRIPT_SRC || window.location.href);
+        this.demo = fetch(url).then((r) => (r.ok ? r.json() : null)).then((data) => {
+          if (!data || !Array.isArray(data.produits)) return null;
+          data.parVariante = new Map();
+          data.produits.forEach((p) => p.vs.forEach((v) => data.parVariante.set(v, p)));
+          data.base = url;
+          return data;
+        }).catch(() => null);
+      }
+      const data = (this.donnees = await this.demo);
+      if (!data) return [];
+      const seen = this.inCart(data);
+      const order = [];
+      [item, ...state.items.filter((i) => i.variantId !== item.variantId)].forEach((i) => {
+        const p = data.parVariante.get(Number(i.variantId));
+        if (p) order.push(...p.r);
+      });
+      order.push(...(data.phares || []));
+      const picked = [];
+      order.forEach((k) => {
+        const p = data.produits[k];
+        if (!p || picked.length >= 4 || seen.has(String(p.id))) return;
+        seen.add(String(p.id));
+        picked.push(this.demoItem(p, data.base));
+      });
+      return picked;
+    },
+    demoItem(p, base) {
+      const url = escapeHtml(new URL(`../products/${p.h}.html`, base).href);
+      const img = p.i ? `<img src="${escapeHtml(sized(p.i, 360))}" alt="" width="360" height="360" loading="lazy">` : '';
+      const el = document.createElement('div');
+      el.className = 'suggest';
+      el.setAttribute('data-suggest-item', '');
+      el.dataset.productId = p.id;
+      el.innerHTML = `<a class="suggest__media media media--square" href="${url}" tabindex="-1" aria-hidden="true">${img}</a>
+        <a class="suggest__name" href="${url}">${escapeHtml(p.t)}</a>
+        <p class="suggest__price">${money(p.p, state.currency)}</p>
+        <button type="button" class="link-btn suggest__add" data-suggest-variant="${p.v}" data-title="${escapeHtml(p.t)}" data-name="${escapeHtml(p.t)}" data-variant="${escapeHtml(p.vt)}" data-price="${p.p}" data-image="${escapeHtml(p.i)}" data-url="${url}" data-product-id="${p.id}"></button>`;
+      return el;
+    },
+    fill(box, picked) {
       box.innerHTML = '';
-      if (Drawer.el.dataset.suggestTitle) {
+      if (!picked.length || !state.items.length) { box.hidden = true; return; }
+      const titre = box.dataset.suggestTitle || (Drawer.el && Drawer.el.dataset.suggestTitle) || '';
+      const label = box.dataset.suggestAdd || (Drawer.el && Drawer.el.dataset.suggestAdd) || '';
+      if (titre) {
         const title = document.createElement('h3');
         title.className = 'drawer__suggest-title';
-        title.textContent = Drawer.el.dataset.suggestTitle;
+        title.textContent = titre;
         box.appendChild(title);
       }
       const list = document.createElement('div');
       list.className = 'suggest-list';
       picked.forEach((el) => {
-        const button = $('[data-suggest-variant]', el);
+        const node = document.importNode(el, true);
+        const button = $('[data-suggest-variant]', node);
         if (button) {
           button.textContent = label;
           button.setAttribute('aria-label', `${label} ${button.dataset.title || ''}`.trim());
         }
-        list.appendChild(document.importNode(el, true));
+        list.appendChild(node);
       });
       box.appendChild(list);
       box.hidden = false;
@@ -584,7 +654,7 @@
       if (status) { status.textContent = ''; status.textContent = text('added'); }
       Drawer.open();
       const added = state.items.find((it) => it.variantId === variantId);
-      if (mode === 'shopify' && added) Suggest.load(added);
+      if (added) Suggest.load(added);
       document.dispatchEvent(new CustomEvent('cart:added', { detail: { item: added } }));
       return state;
     },
@@ -647,6 +717,8 @@
     render();
     emit();
     resolveReady(state);
+    // page panier : les suggestions sont là dès l'arrivée
+    if (state.items.length && $('[data-cart-page] [data-cart-suggestions]')) Suggest.load(state.items[0]);
   }
 
   /* ---------- Écouteurs ---------- */

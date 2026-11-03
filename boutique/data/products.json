@@ -60,6 +60,16 @@
    "couleur": "collier-breslev-fire-petek-2",
    "legacy": "jewel-breslev-necklace-fire-petek-jewish",
    "alt": "Collier Breslev Fire Petek : chaîne et plaque gravée d'une flamme, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 7,
+   "nom": "Collier Fire Or rose",
+   "ref": "Collier necklace Fire or rose",
+   "prix": 90,
+   "fiche": "collier-fire",
+   "couleur": "or-rose",
+   "legacy": "collier-necklace-fire-or-rose",
+   "alt": "Collier Fire or rose : chaîne et pendentif flamme couleur or rose, sur un buste dans une vitrine en verre."
   }
  ]
 }
