@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr" class="no-js" data-theme="blanc">
+<html lang="fr" dir="ltr" class="no-js" data-theme="blanc">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +9,12 @@
       <meta name="description" content="">
 
     <meta property="og:site_name" content="Breslev Gang">
-<meta property="og:url" content="https://breslev-gang-2100-demo.netlify.app/">
+<meta property="og:url" content="https://m769csn5ry-del.github.io/">
 <meta property="og:title" content="Breslev Gang">
 <meta property="og:type" content="website">
-<meta property="og:description" content="Breslev Gang">
+<meta property="og:description" content="Breslev Gang"><meta property="og:image" content="https:/assets/partage.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Breslev Gang">
 <meta name="twitter:description" content="Breslev Gang">
@@ -21,7 +23,7 @@
         var html = document.documentElement;
         html.classList.replace('no-js', 'js');
         var mode = 'blanc';
-        var defaut = "auto";
+        var defaut = "blanc";
         var memo = null;
         try { memo = window.localStorage.getItem('bg-mode'); } catch (e) {}
         if (memo === 'blanc' || memo === 'noir') mode = memo;
@@ -51,6 +53,8 @@
   @font-face { font-family: 'Inter Tight'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/inter-tight-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
 </style>
 
+    <link rel="icon" href="assets/logo-flamme.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icone-180.png">
     <link href="assets/theme.css" rel="stylesheet" type="text/css" media="all" />
     <style>
       :root { --soie-image: url(/assets/fond-soie-ivoire.jpg); --soie-image-noir: url(/assets/fond-soie-ivoire-noir.jpg); }
@@ -73,6 +77,14 @@
           toBlanc: "Passer en mode blanc",
           toNoir: "Passer en mode noir"
         },
+        chabbat: {
+          actif: false,
+          message: "Fermé pendant Chabbat",
+          lat: "48.8566",
+          lng: "2.3522",
+          avant: 18,
+          apres: 42
+        },
         strings: {
           soldOut: "Épuisé",
           available: "Disponible",
@@ -82,6 +94,7 @@
         }
       };
     </script>
+    <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
 
@@ -114,7 +127,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav><div class="menu__foot">
           <span class="menu__label">Affichage</span>
           <button type="button" class="mode-toggle mode-toggle--menu" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">
@@ -131,7 +144,7 @@
 
     <main id="main" class="main" tabindex="-1">
       <div id="shopify-section-template--1__hero" class="shopify-section section-hero"><section class="hero fond-soie" id="accueil" data-hero data-anim="hero" style="--hero-veil: 0.2;">
-  <div class="hero__media" aria-hidden="true"><video
+  <div class="hero__media" aria-hidden="true"><img class="hero__poster" src="assets/accueil-affiche.webp" alt="" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async"><video
         class="hero__video"
         muted
         loop
@@ -139,8 +152,8 @@
         preload="none"
         disablepictureinpicture
         data-hero-video
-        data-src-large="https://cdn.shopify.com/videos/c/vp/cf1608d983f8495fa50cb0a5a7968a63/cf1608d983f8495fa50cb0a5a7968a63.HD-1080p-7.2Mbps-66037766.mp4"
-        data-src-small="https://cdn.shopify.com/videos/c/vp/cf1608d983f8495fa50cb0a5a7968a63/cf1608d983f8495fa50cb0a5a7968a63.HD-1080p-7.2Mbps-66037766.mp4"
+        data-src-large="/assets/accueil-1080.mp4"
+        data-src-small="/assets/accueil-720.mp4"
         data-anim="hero-video"
       ></video><div class="hero__veil"></div>
   </div>
@@ -210,6 +223,40 @@
     });
   })();
 </script>
+
+
+</div><div id="shopify-section-template--1__chapitres" class="shopify-section section-chapitres"><section class="chapitres" id="collections" data-anim="chapitres" aria-label="Les collections"><article class="chapitre chapitre--gauche"  data-reveal>
+      <a class="chapitre__media" href="categorie-univers-flamme.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-aech-cheli.webp" alt="Collier Flamme Diamant couleur or sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
+      <div class="chapitre__texte"><p class="chapitre__surtitre" lang="he" dir="rtl">אש שלי</p><h2 class="display chapitre__titre">Aech cheli</h2><p class="chapitre__phrase">« Mon feu brûlera jusqu'à la venue du Machia'h. »</p><a class="link-btn chapitre__lien" href="categorie-univers-flamme.html">Les flammes</a></div>
+    </article><article class="chapitre chapitre--droite"  data-reveal>
+      <a class="chapitre__media" href="categorie-cat-petek.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-petek.webp" alt="Petek Blue Tiger sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
+      <div class="chapitre__texte"><p class="chapitre__surtitre" lang="he" dir="rtl">פתק</p><h2 class="display chapitre__titre">Le Petek</h2><p class="chapitre__phrase">Le billet du 17 Tamouz 1922.</p><a class="link-btn chapitre__lien" href="categorie-cat-petek.html">Les Petek</a></div>
+    </article><article class="chapitre chapitre--gauche"  data-reveal>
+      <a class="chapitre__media" href="categorie-univers-mezouza.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-mezouza.webp" alt="Collier Pendentif Mezouza sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
+      <div class="chapitre__texte"><h2 class="display chapitre__titre">Mezouza</h2><p class="chapitre__phrase">Le rappel des portes, porté sur soi.</p><a class="link-btn chapitre__lien" href="categorie-univers-mezouza.html">Les Mezouza</a></div>
+    </article><article class="chapitre chapitre--droite"  data-reveal>
+      <a class="chapitre__media" href="categorie-cat-bracelets.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-bracelets.webp" alt="Six bracelets sous cloches de verre, sur des colonnes de travertin et de marbre noir." width="1200" height="1500" loading="lazy" decoding="async"></a>
+      <div class="chapitre__texte"><h2 class="display chapitre__titre">Les bracelets</h2><p class="chapitre__phrase">Le chant du Petek, au poignet.</p><a class="link-btn chapitre__lien" href="categorie-cat-bracelets.html">Les bracelets</a></div>
+    </article></section>
+
+<style>
+  .chapitres { padding: var(--space-section) 0 0; display: grid; gap: clamp(56px, 10vw, 160px); }
+  .chapitre { display: grid; gap: 22px; }
+  .chapitre__media { display: block; overflow: hidden; background: var(--media-bg); aspect-ratio: 4 / 5; }
+  .chapitre__img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.001); transition: transform 1.2s var(--ease); }
+  @media (hover: hover) { .chapitre__media:hover .chapitre__img { transform: scale(1.03); } }
+  .chapitre__texte { padding: 0 var(--gutter); }
+  .chapitre__surtitre { margin: 0 0 10px; font-size: 18px; color: var(--grey); text-align: left; }   /* hébreu lu de droite à gauche, aligné avec le titre */
+  .chapitre__titre { font-size: clamp(44px, 12vw, 120px); line-height: 1; margin: 0 0 14px; }
+  .chapitre__phrase { margin: 0 0 22px; max-width: 34ch; font-weight: 300; font-size: 17px; line-height: 1.5; }
+  @media (min-width: 990px) {
+    .chapitre { grid-template-columns: 7fr 5fr; align-items: center; gap: clamp(40px, 5vw, 96px); padding: 0 var(--gutter); }
+    .chapitre--droite { grid-template-columns: 5fr 7fr; }
+    .chapitre--droite .chapitre__media { order: 2; }
+    .chapitre__texte { padding: 0; }
+    .chapitre__media { aspect-ratio: 4 / 5; max-height: calc(100svh - 120px); }
+  }
+</style>
 
 
 </div><div id="shopify-section-template--1__catalogue" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" />

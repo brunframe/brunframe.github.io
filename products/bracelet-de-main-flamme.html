@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr" class="no-js" data-theme="blanc">
+<html lang="fr" dir="ltr" class="no-js" data-theme="blanc">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
       <meta name="description" content="">
 
     <meta property="og:site_name" content="Breslev Gang">
-<meta property="og:url" content="https://breslev-gang-2100-demo.netlify.app/products/bracelet-de-main-flamme">
+<meta property="og:url" content="https://m769csn5ry-del.github.io/products/bracelet-de-main-flamme">
 <meta property="og:title" content="Bracelet de main Flamme">
 <meta property="og:type" content="product">
 <meta property="og:description" content="Breslev Gang">
@@ -25,7 +25,7 @@
         var html = document.documentElement;
         html.classList.replace('no-js', 'js');
         var mode = 'blanc';
-        var defaut = "auto";
+        var defaut = "blanc";
         var memo = null;
         try { memo = window.localStorage.getItem('bg-mode'); } catch (e) {}
         if (memo === 'blanc' || memo === 'noir') mode = memo;
@@ -55,6 +55,8 @@
   @font-face { font-family: 'Inter Tight'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/inter-tight-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
 </style>
 
+    <link rel="icon" href="../assets/logo-flamme.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../assets/icone-180.png">
     <link href="../assets/theme.css" rel="stylesheet" type="text/css" media="all" />
     <style>
       :root { --soie-image: url(/assets/fond-soie-ivoire.jpg); --soie-image-noir: url(/assets/fond-soie-ivoire-noir.jpg); }
@@ -77,6 +79,14 @@
           toBlanc: "Passer en mode blanc",
           toNoir: "Passer en mode noir"
         },
+        chabbat: {
+          actif: false,
+          message: "Fermé pendant Chabbat",
+          lat: "48.8566",
+          lng: "2.3522",
+          avant: 18,
+          apres: 42
+        },
         strings: {
           soldOut: "Épuisé",
           available: "Disponible",
@@ -86,6 +96,7 @@
         }
       };
     </script>
+    <script src="../assets/chabbat.js" defer></script>
     <script src="../assets/mode.js" defer></script>
     <script src="../assets/theme.js" defer></script>
 
@@ -118,7 +129,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../index.html#catalogue">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../index.html#catalogue">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../createur-petek.html">Créer son Petek</a><a class="menu__link display" href="../trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="../panier.html">Panier</a>
       </nav><div class="menu__foot">
           <span class="menu__label">Affichage</span>
           <button type="button" class="mode-toggle mode-toggle--menu" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">

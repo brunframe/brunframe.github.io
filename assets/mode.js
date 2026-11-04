@@ -26,6 +26,8 @@
       if (meta) meta.setAttribute('content', mode === 'noir' ? '#111010' : '#F6F4F0');
       if (remember) { try { window.localStorage.setItem(this.key, mode); } catch (e) {} }
       this.paint();
+      // la boutique immersive (iframe, parfois sur une autre adresse) s'allume ou s'éteint avec le site
+      $$('[data-boutique-immersive] iframe').forEach((f) => { try { f.contentWindow.postMessage({ boutique: 'mode', mode }, '*'); } catch (e) {} });
       document.dispatchEvent(new CustomEvent('mode:change', { detail: { mode } }));
     },
 
