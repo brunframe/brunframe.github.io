@@ -1,0 +1,142 @@
+/* Breslev Gang — Trouve ta flamme (sections/main-trouve-ta-flamme.liquid, assets/trouve-ta-flamme.js).
+   Chargé seulement sur cette page. Variables (couleurs, polices, gouttières, courbes) : assets/theme.css, rien n'est
+   redéfini : le mode Blanc / Noir suit tout seul. Classes reprises du thème : .display, .btn, .link-btn, et pour les
+   pièces la grille .reco__grid et la carte .card (.card__media, .card__name, .card__price), comme le catalogue.
+   Une question à la fois : réponses en lignes fines, une vraie photo de pièce à droite de chaque réponse.
+   Ordinateur (990 px et plus) : le titre reste à gauche, les questions et les pièces à droite. */
+
+.ttf {
+  padding: calc(var(--header-h) + clamp(32px, 7vw, 96px)) var(--gutter) var(--space-section);
+}
+
+/* ---------- Titre ---------- */
+.ttf__tete { margin-bottom: clamp(40px, 8vw, 88px); }
+.ttf__titre { font-size: clamp(46px, 13.5vw, 128px); max-width: 8.5ch; }
+.ttf__intro { margin-top: 14px; font-size: 15px; color: var(--grey); }
+
+/* ---------- Une question ---------- */
+.ttf__parcours { max-width: 760px; }
+.ttf__etape {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: var(--grey);
+  font-variant-numeric: tabular-nums;
+}
+.ttf__question { margin-top: 12px; font-size: clamp(30px, 8vw, 60px); }
+.ttf__question:focus, .ttf__titre-resultat:focus { outline: none; }
+.ttf__reponses { margin-top: clamp(24px, 4vw, 40px); border-top: 1px solid var(--line); }
+.ttf__reponse {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 76px;
+  padding: 10px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  -webkit-tap-highlight-color: transparent;
+}
+/* le filet noir sous la réponse choisie (et au survol sur ordinateur) */
+.ttf__reponse::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.ttf__reponse[aria-pressed='true']::after,
+.ttf__reponse.is-choisie::after { transform: scaleX(1); }
+.ttf__texte {
+  font-size: clamp(20px, 5.4vw, 28px);
+  font-weight: 300;
+  line-height: 1.2;
+  transition: transform 0.45s var(--ease);
+}
+.ttf__vignette { flex: none; width: 56px; height: 56px; overflow: hidden; background: var(--media-bg); }
+:root[data-theme='blanc'] .ttf__vignette { background: transparent; }
+.ttf__vignette img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+/* photo introuvable : cadre vide, jamais l'icône d'image cassée */
+.ttf img.is-cassee { visibility: hidden; }
+@media (hover: hover) and (pointer: fine) {
+  .ttf__reponse:hover::after { transform: scaleX(1); }
+  .ttf__reponse:hover .ttf__texte { transform: translateX(6px); }
+  .ttf__reponse:hover .ttf__vignette img { transform: scale(1.06); }
+}
+.ttf__retour { margin-top: 20px; }
+
+/* ---------- Passage d'une question à l'autre ---------- */
+.ttf__parcours.is-sortie,
+.ttf__resultat.is-sortie {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.18s var(--ease), transform 0.18s var(--ease);
+}
+.ttf__parcours.is-entree .ttf__etape,
+.ttf__parcours.is-entree .ttf__question { animation: ttf-monte 0.5s var(--ease) both; }
+.ttf__parcours.is-entree .ttf__item { animation: ttf-monte 0.5s var(--ease) both; animation-delay: calc(60ms + var(--i, 0) * 45ms); }
+.ttf__resultat.is-entree .ttf__resultat-tete { animation: ttf-monte 0.5s var(--ease) both; }
+.ttf__resultat.is-entree .ttf__carte { animation: ttf-monte 0.6s var(--ease) both; animation-delay: calc(80ms + var(--i, 0) * 70ms); }
+@keyframes ttf-monte { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Résultat ---------- */
+.ttf__resultat-tete { margin-bottom: clamp(32px, 5vw, 56px); }
+.ttf__titre-resultat { font-size: clamp(30px, 8vw, 60px); }
+.ttf__choix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.ttf__critere + .ttf__critere::before { content: '·'; margin: 0 10px; text-decoration: none; display: inline-block; }
+.ttf__critere.is-retire { text-decoration: line-through; text-decoration-thickness: 1px; }
+.ttf__note { margin-top: 10px; font-size: 13px; color: var(--grey); max-width: 46ch; }
+
+.ttf__carte .card__media { margin-bottom: 14px; }
+.ttf__ligne { margin-top: 6px; line-height: 1.5; overflow-wrap: anywhere; }
+.ttf__ajout { margin-top: 2px; min-height: 40px; font-size: 11px; }
+.ttf__ajout:disabled { color: var(--grey); text-decoration: none; cursor: default; }
+
+.ttf__actions { display: grid; gap: 14px; justify-items: start; margin-top: clamp(48px, 8vw, 88px); }
+.ttf__partager { width: 100%; max-width: 360px; }
+.ttf__liens { display: flex; flex-wrap: wrap; gap: 0 28px; }
+.ttf__statut { min-height: 1.5em; font-size: 13px; color: var(--grey); overflow-wrap: anywhere; }
+.ttf__vide { color: var(--grey); max-width: 44ch; }
+.ttf__vide .link-btn { margin-left: 6px; }
+
+/* ---------- Ordinateur : le titre à gauche, le parcours à droite ---------- */
+@media (min-width: 990px) {
+  .ttf {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: clamp(48px, 6vw, 120px);
+    align-items: start;
+  }
+  .ttf__tete { position: sticky; top: calc(var(--header-h) + 40px); margin: 0; }
+  .ttf__titre { font-size: clamp(64px, 7.4vw, 128px); }
+  .ttf__parcours, .ttf__resultat, .ttf__vide { grid-column: 2; }
+  .ttf > noscript { grid-column: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ttf__parcours.is-sortie, .ttf__resultat.is-sortie { transform: none; transition: none; }
+  .ttf__parcours.is-entree .ttf__etape,
+  .ttf__parcours.is-entree .ttf__question,
+  .ttf__parcours.is-entree .ttf__item,
+  .ttf__resultat.is-entree .ttf__resultat-tete,
+  .ttf__resultat.is-entree .ttf__carte { animation: none; }
+  .ttf__reponse::after, .ttf__texte, .ttf__vignette img { transition: none; }
+  .ttf__reponse:hover .ttf__texte, .ttf__reponse:hover .ttf__vignette img { transform: none; }
+}

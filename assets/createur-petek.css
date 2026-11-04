@@ -1,0 +1,251 @@
+/* Breslev Gang — Créateur de Petek (sections/main-createur-petek.liquid, assets/createur-petek.js).
+   Chargé seulement sur cette page. Variables (couleurs, polices, gouttières, courbes) : assets/theme.css, rien n'est
+   redéfini : le mode Blanc / Noir suit tout seul. Classes reprises du thème : .display, .picker__legend, .swatches,
+   .swatch--lg (pastilles), .btn, .link-btn.
+   Téléphone : la scène (photo, nom, prix) reste collée sous l'en-tête pendant qu'on choisit ; bouton d'ajout fixé en bas.
+   Ordinateur (990 px et plus) : photo à gauche à la hauteur de l'écran, choix à droite, comme la fiche produit. */
+
+.cp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: calc(var(--header-h) + clamp(20px, 5vw, 56px)) var(--gutter) calc(var(--space-section) + 72px);
+}
+
+/* ---------- Titre ---------- */
+.cp__tete { margin-bottom: 18px; }
+.cp__titre { font-size: clamp(32px, 9vw, 76px); max-width: 14ch; }
+.cp__intro { margin-top: 10px; font-size: 14px; color: var(--grey); }
+
+/* ---------- Scène : la photo de la variante choisie, son nom, son prix ---------- */
+.cp__scene {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 4;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter) 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transition: background-color var(--dur) var(--ease);
+}
+@media (max-height: 559px) {
+  .cp__scene { position: relative; top: auto; }
+}
+
+.cp__photo {
+  position: relative;
+  height: clamp(240px, 46svh, 560px);
+  margin: 0;
+  overflow: hidden;
+}
+/* la photo occupe toute la hauteur, à sa vraie proportion (--ratio, donnée par Shopify), centrée ;
+   fond des photos comme partout dans le thème : transparent en mode Blanc, blanc (--media-bg) en mode Noir */
+.cp__calque {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: var(--ratio, 0.72);
+  object-fit: contain;
+  transform: translateX(-50%);
+  background: var(--media-bg);
+}
+:root[data-theme='blanc'] .cp__calque { background: transparent; }
+.cp__calque--fond { z-index: 0; }
+.cp__calque--net { z-index: 1; opacity: 1; transition: opacity 0.22s var(--ease); }
+.cp__calque--net.is-attente { opacity: 0; transition: none; }
+/* photo introuvable : cadre vide, jamais l'icône d'image cassée */
+.cp img.is-cassee { visibility: hidden; }
+
+/* filet de chargement : n'apparaît que si la grande photo tarde (plus de 150 ms) */
+.cp__charge {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--text);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+.cp__photo.is-charge .cp__charge {
+  opacity: 0.6;
+  transform: scaleX(0.9);
+  transition: opacity 0.2s linear 0.15s, transform 1.6s var(--ease) 0.15s;
+}
+
+.cp__infos { display: grid; gap: 4px; padding-top: 12px; }
+.cp__nom { font-size: clamp(20px, 5.6vw, 34px); line-height: 1.05; overflow-wrap: anywhere; }
+.cp__ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  font-size: 13px;
+  color: var(--grey);
+  font-variant-numeric: tabular-nums;
+}
+.cp__couleur { color: var(--text); }
+.cp__couleur:empty { display: none; }
+.cp__etat {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.cp__epuise { color: var(--text); }
+
+/* ---------- Choix ---------- */
+.cp__choix { display: grid; gap: 32px; align-content: start; padding-top: 28px; }
+.cp__etape { min-width: 0; }
+.cp__legende { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; width: 100%; margin-bottom: 14px; }
+.cp__nombre { margin-left: auto; color: var(--grey); }
+.cp__nombre:empty { display: none; }
+
+/* Étape 1 : les matières, une bande glissable au doigt (seule la bande défile, jamais la page) */
+.cp__modeles {
+  display: flex;
+  gap: 12px;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 4px var(--gutter) 8px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.cp__modeles::-webkit-scrollbar { display: none; }
+.cp__modele {
+  flex: 0 0 auto;
+  width: 88px;
+  display: grid;
+  gap: 9px;
+  align-content: start;
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+.cp__modele-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--media-bg);
+  outline: 1px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color var(--dur) var(--ease);
+}
+.cp__modele-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+:root[data-theme='blanc'] .cp__modele-media { background: transparent; }
+.cp__modele-nom {
+  position: relative;
+  padding-bottom: 7px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--grey);
+  overflow-wrap: anywhere;
+  transition: color var(--dur) var(--ease);
+}
+.cp__modele-nom::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.cp__modele[aria-pressed='true'] .cp__modele-media,
+.cp__modele[aria-current='true'] .cp__modele-media { outline-color: var(--text); }
+.cp__modele[aria-pressed='true'] .cp__modele-nom,
+.cp__modele[aria-current='true'] .cp__modele-nom { color: var(--text); }
+.cp__modele[aria-pressed='true'] .cp__modele-nom::after,
+.cp__modele[aria-current='true'] .cp__modele-nom::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .cp__modele:hover .cp__modele-media img { transform: scale(1.04); }
+  .cp__modele:hover .cp__modele-nom { color: var(--text); }
+}
+
+/* Étape 2 : les coloris (pastilles du thème ; la photo de la variante remplit le disque sans être déformée) */
+.cp__pastilles { gap: 10px; }
+.cp__pastilles .swatch--lg img { object-fit: cover; }
+.cp__pastilles .swatch.is-cachee { display: none; }
+.cp__pastilles .swatch.is-entree { animation: cp-entree 0.45s var(--ease) both; animation-delay: calc(var(--i, 0) * 14ms); }
+@keyframes cp-entree { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (hover: hover) and (pointer: fine) {
+  .cp__pastilles .swatch { transition: transform 0.3s var(--ease); }
+  .cp__pastilles .swatch:hover { transform: scale(1.08); }
+}
+.cp__tout { margin-top: 8px; }
+
+/* ---------- Ajout : barre fixée en bas sur téléphone et tablette ---------- */
+.cp__achat {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px var(--gutter);
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  transition: background-color var(--dur) var(--ease);
+}
+.cp__erreur { margin: 0 0 8px; }
+.cp__lien { margin-top: -18px; }
+.cp__vide { color: var(--grey); max-width: 40ch; }
+/* la barre fixe ne couvre jamais le bas du pied de page */
+.template-page--createur-petek .footer { padding-bottom: calc(72px + max(32px, env(safe-area-inset-bottom))); }
+
+/* ---------- Ordinateur : photo à gauche, choix à droite ---------- */
+@media (min-width: 990px) {
+  .cp {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 'photo tete' 'photo infos' 'photo choix';
+    column-gap: clamp(40px, 5vw, 104px);
+    padding: var(--header-h) var(--gutter) var(--space-section) 0;
+  }
+  .cp__scene { display: contents; }
+  .cp__photo {
+    grid-area: photo;
+    position: sticky;
+    top: var(--header-h);
+    align-self: start;
+    height: calc(100vh - var(--header-h));
+    height: calc(100svh - var(--header-h));
+  }
+  .cp__tete { grid-area: tete; max-width: 560px; margin: 0 0 28px; padding-top: clamp(40px, 7vh, 88px); }
+  .cp__infos { grid-area: infos; max-width: 560px; padding-top: 0; }
+  .cp__nom { font-size: clamp(26px, 2.6vw, 40px); }
+  .cp__choix { grid-area: choix; max-width: 560px; padding-bottom: 24px; }
+  /* 7 vignettes par rang : les 21 matières tiennent en trois rangs, le coloris et le bouton restent proches */
+  .cp__modeles { flex-wrap: wrap; gap: 18px 12px; margin: 0; padding: 4px 0 0; overflow: visible; }
+  .cp__modele { width: calc((100% - 6 * 12px) / 7); gap: 7px; }
+  .cp__modele-nom { font-size: 9.5px; letter-spacing: 0.08em; }
+  .cp__achat { position: static; padding: 0; background: transparent; border-top: 0; }
+  .cp__lien { margin-top: -16px; }
+  .template-page--createur-petek .footer { padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp__calque--net, .cp__modele-media, .cp__modele-media img, .cp__modele-nom, .cp__modele-nom::after { transition: none; }
+  .cp__pastilles .swatch.is-entree { animation: none; }
+  .cp__photo.is-charge .cp__charge { transition: none; transform: scaleX(1); }
+  .cp__modele:hover .cp__modele-media img, .cp__pastilles .swatch:hover { transform: none; }
+}

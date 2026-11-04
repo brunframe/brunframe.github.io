@@ -321,7 +321,7 @@ hr, .rule { border: 0; height: 1px; background: var(--line); margin: 0; }
 .header__logo { display: flex; align-items: center; gap: 12px; min-height: 44px; transition: opacity var(--dur) var(--ease); }
 .header__gothique svg { height: 34px; width: auto; display: block; }   /* logo officiel : flamme, « Breslev gang », ligne en hébreu */
 @media (min-width: 750px) { .header__gothique svg { height: 40px; } }
-@media (max-width: 374px) { .header__nav .mode-toggle { display: none; } }
+@media (max-width: 749px) { .header__nav .mode-toggle { display: none; } }   /* téléphone : Blanc / Noir dans le volet du menu */
 .header__nav { display: flex; align-items: center; gap: 4px; }
 .header__link {
   display: inline-flex;

@@ -3,7 +3,7 @@
 
 /* ---------- Photos : une bande glissable au doigt, miniatures dessous ---------- */
 /* le fond de soie déborde de 12 px pour son flou : coupé ici, sinon la fiche glisse de côté sur téléphone */
-.product__media { order: 1; overflow: hidden; }
+.product__media { order: 1; overflow: hidden; background: var(--media-bg); }   /* fond uni des photos, sans flou */
 .product__summary { order: 2; }
 .product__details { order: 4; padding-top: 48px; }
 

@@ -1,0 +1,72 @@
+{
+  "lisez_moi": [
+    "Règles de la page « Trouve ta flamme » (sections/main-trouve-ta-flamme.liquid, assets/trouve-ta-flamme.js).",
+    "Les pièces sont les vraies variantes du catalogue Shopify. Seuls sont lus : la catégorie (étiquette cat:, sinon le type), l'univers (métachamp custom.univers, sinon étiquette univers:), le titre, les options, la couleur (valeur de l'option Couleur), le prix et la disponibilité.",
+    "garder : un objet = toutes ses clés doivent être vraies ; une liste d'objets = l'un d'eux suffit. exclure : même écriture, la pièce est retirée.",
+    "Clés possibles : categories, univers, titre_contient, couleur_contient, couleur_ignorer, sans_option, prix_min, prix_max (dans la devise affichée), disponible, photo.",
+    "Les mots sont comparés sans accents ni majuscules, en mots entiers : « or » trouve « Or rose » mais pas « Orange ».",
+    "Une réponse n'est proposée que si elle donne au moins « reponse_visible_si_au_moins » pièces ; s'il ne reste qu'une réponse possible, elle est choisie seule et la question n'est pas posée.",
+    "Résultat : les pièces dans l'ordre du catalogue Shopify, une seule variante par modèle (jusqu'à « par_modele_si_trop_peu » s'il en manque), de « minimum » à « maximum » pièces. S'il en manque encore, les critères de « assouplir » sont retirés un à un, dans cet ordre, et la page le dit.",
+    "Libellés : les questions et les réponses « pour » et « style » se règlent dans l'éditeur de thème (section Trouve ta flamme) ; un libellé vide masque la réponse. Les réponses « sens » affichent leur « nom », qui est le nom de l'univers ou de la catégorie dans le catalogue."
+  ],
+  "nombre": { "minimum": 3, "maximum": 6 },
+  "reponse_visible_si_au_moins": 3,
+  "par_modele": 1,
+  "par_modele_si_trop_peu": 3,
+  "ordre": "catalogue",
+  "toujours": { "disponible": true, "photo": true },
+  "assouplir": ["style", "sens", "pour"],
+  "questions": [
+    {
+      "id": "pour",
+      "reponses": [
+        { "id": "moi" },
+        { "id": "offrir", "garder": { "sans_option": ["Taille", "Size"] } },
+        { "id": "enfant", "garder": { "titre_contient": ["Kids", "Bébé", "Baby", "Enfant"] } }
+      ]
+    },
+    {
+      "id": "sens",
+      "reponses": [
+        { "id": "petek", "nom": "Petek", "garder": { "categories": ["Petek"] } },
+        { "id": "flamme", "nom": "Flamme", "garder": [
+          { "univers": ["Flamme"] },
+          { "categories": ["Bracelets"], "titre_contient": ["Flamme", "Flame", "Fire"] }
+        ] },
+        { "id": "maguen", "nom": "Maguen", "garder": [
+          { "univers": ["Maguen"] },
+          { "categories": ["Bracelets"], "titre_contient": ["Maguen"] }
+        ] },
+        { "id": "hay-israel", "nom": "Hay & Israël", "garder": [
+          { "univers": ["Hay & Israël"] },
+          { "categories": ["Bracelets"], "titre_contient": ["Hay"] }
+        ] },
+        { "id": "rabbi-770", "nom": "Rabbi & 770", "garder": { "univers": ["Rabbi & 770"] } },
+        { "id": "love", "nom": "Love", "garder": [
+          { "univers": ["Love"] },
+          { "categories": ["Bracelets"], "titre_contient": ["Love"] }
+        ] },
+        { "id": "mezouza", "nom": "Mezouza", "garder": [
+          { "univers": ["Mezouza"] },
+          { "categories": ["Mezouza à perles"] }
+        ] },
+        { "id": "pieces-a-part", "nom": "Pièces à part", "garder": { "univers": ["Pièces à part"] } }
+      ]
+    },
+    {
+      "id": "style",
+      "reponses": [
+        { "id": "noir", "garder": { "couleur_contient": ["noir", "noire", "black", "carbon"] } },
+        { "id": "gris", "garder": { "couleur_contient": ["gris", "grise", "grey", "gray"] } },
+        { "id": "clair", "garder": { "couleur_contient": ["blanc", "blanche", "white", "cream", "crème", "milk", "beige", "pearl", "perle", "nacré", "ivoire"] } },
+        { "id": "colore", "garder": {
+          "couleur_contient": ["bleu", "blue", "rose", "pink", "vert", "green", "rouge", "red", "violet", "purple", "orange", "jaune", "yellow", "turquoise", "tehelet", "bordeaux", "burgundy", "améthyste", "amethyst", "ametyst", "ocean", "océan", "sky", "barbie", "canari", "royal", "navy", "denim", "emerald", "pistachio", "cactus", "candy", "fushia", "azur", "wine", "multicolor", "multicolore", "multi"],
+          "couleur_ignorer": ["or rose", "rose gold", "gold pink", "pink gold"]
+        } },
+        { "id": "dore", "garder": { "couleur_contient": ["or", "gold", "golden", "doré", "dorée"] } },
+        { "id": "argente", "garder": { "couleur_contient": ["argent", "argenté", "silver"] } },
+        { "id": "tout" }
+      ]
+    }
+  ]
+}
