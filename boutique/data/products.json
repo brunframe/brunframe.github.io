@@ -119,7 +119,9 @@
     }
    ],
    "alt": "La table des bracelets : six bracelets couchés sur des socles de travertin et de marbre noir cerclés de laiton, devant le mur du logo.",
-   "liste_titre": "Les six bracelets"
+   "liste_titre": "Les six bracelets",
+   "astuce_souris": "Survolez un bracelet. Cliquez pour le voir de près.",
+   "astuce_toucher": "Touchez un bracelet pour le voir de près."
   }
  ]
 }

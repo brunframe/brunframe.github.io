@@ -79,6 +79,14 @@
   const arrivee = $('.arrivee');
   const fin = $('#fin');
   const chargement = $('.chargement');
+  const respireEl = $('.respire');
+  const survol = $('.survol');
+  const sctx = survol.getContext('2d');
+  const gros = $('#gros');
+  const grosImg = $('.gros__img', gros);
+  const G = {};
+  $$('[data-g]', gros).forEach((el) => { G[el.dataset.g] = el; });
+  const intro = $('#intro');
   const cvs = $('.eclats');
   const ctx = cvs.getContext('2d');
   const F = {};
@@ -92,7 +100,7 @@
     b.type = 'button';
     b.className = 'point' + (i === 0 || i === FIN ? ' salle' : '');
     b.setAttribute('aria-label', `Aller à : ${txt}`);
-    b.addEventListener('click', () => { if (!pris()) aligner(0); goTo(i); });
+    b.addEventListener('click', () => { if (!pris()) aligner(0); entreeFaite = true; goTo(i); });
     points.appendChild(b);
   });
   const dots = $$('.point', points);
@@ -107,6 +115,11 @@
   let actif = 0;              // index de l'image d'arrêt visible
   let ficheIdx = -1;
   const pistes = {};          // une balise <video> par segment et par sens, créée à la demande
+  let entreeFaite = false;    // la marche d'entrée est partie (seule ou par un geste) : plus d'entrée automatique
+  let entreeMinuteur = 0;
+  let autoEnCours = false;    // marche lancée par la page (pas par un geste) : si la lecture est refusée, on attend le geste
+  let introEtat = 0;          // film de la marque avant la boutique (page seule) : 0 aucun, 1 en cours, 2 fini
+  const introOuverte = () => introEtat === 1;
 
   function piste(i, inv) {
     const k = inv ? `${i}r` : String(i);
@@ -200,15 +213,34 @@
     source(i, inv);
     lecture = { i, v, inv: !!inv };
     const but = inv ? i : i + 1;
+    const entree = i === 0 && !inv;          // la marche d'entrée : on la voit toujours, quitte à l'attendre
+    const geste = !autoEnCours;
+    entreeFaite = entreeFaite || entree;
+    poseTable();
     if (v.currentTime) v.currentTime = 0;
     const p = v.play();                      // appelé dans le geste de l'utilisateur (iPhone, mode économie d'énergie)
     v.classList.add('is-on');                // l'affiche de la vidéo est l'image de l'arrêt : rien ne bouge avant la première image
-    // jamais d'attente visible : une marche qui ne démarre pas tout de suite laisse place à un fondu vers l'arrêt visé
-    const secours = setTimeout(() => {
+    // entre deux vitrines, jamais d'attente visible : une marche qui ne démarre pas tout de suite laisse place à un fondu
+    const secours = entree ? 0 : setTimeout(() => {
       if (lecture && lecture.v === v && v.currentTime === 0 && v.readyState < 3) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
     }, 450);
-    v.addEventListener('playing', () => clearTimeout(secours), { once: true });
-    if (p && p.catch) p.catch(() => { clearTimeout(secours); if (lecture && lecture.v === v) { v.classList.remove('is-on'); lecture = null; sautVers(but); } });   // vidéo en échec : elle ne reste pas affichée (son affiche est l'arrêt de départ)
+    let filet = 0;
+    if (entree && v.readyState < 3) {        // l'entrée se charge encore : un trait discret, puis la marche dès qu'elle est là
+      chargement.classList.add('is-on');
+      filet = setTimeout(() => {             // réseau coupé : au bout de 12 s, fondu vers la première vitrine
+        chargement.classList.remove('is-on');
+        if (lecture && lecture.v === v && v.currentTime === 0) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
+      }, 12000);
+    }
+    v.addEventListener('playing', () => { clearTimeout(secours); clearTimeout(filet); chargement.classList.remove('is-on'); }, { once: true });
+    if (p && p.catch) p.catch(() => {
+      clearTimeout(secours); clearTimeout(filet);
+      chargement.classList.remove('is-on');
+      if (!(lecture && lecture.v === v)) return;
+      v.classList.remove('is-on'); lecture = null;           // vidéo en échec : elle ne reste pas affichée (son affiche est l'arrêt de départ)
+      if (entree && !geste) { entreeFaite = false; return; } // lecture refusée sans geste (iPhone en économie d'énergie) : on attend le geste
+      sautVers(but);
+    });
     if (inv) { prepare(i - 1, true); precharge(i - 1); } else { prepare(i + 1, false); precharge(i + 2); }
     wake();
   }
@@ -234,6 +266,7 @@
     wake();
   }
   function arrive() {
+    if (at === ARRET_TABLE) chargeTable();
     prepare(at, false);                     // la marche suivante (et le retour) se chargent pendant qu'on regarde la vitrine
     prepare(at - 1, true);
     precharge(at + 1);
@@ -274,6 +307,8 @@
     // la table : chaque bracelet, son prix et sa fiche
     // repliée sur téléphone pour laisser voir la table, ouverte sur ordinateur
     F.details.hidden = !p.liste;
+    F.astuce.hidden = !p.liste || !TABLE;
+    F.astuce.textContent = p.liste ? (souris.matches ? p.astuce_souris : p.astuce_toucher) || '' : '';
     F.details.open = !!p.liste && !portraitMQ.matches;
     F.resume.textContent = p.liste_titre || '';
     F.liste.innerHTML = p.liste ? p.liste.map((b) => `<li><a href="${lienProduit(b)}"><span>${echappe(b.nom)}</span>`
@@ -373,6 +408,204 @@
     return true;
   }
 
+  // ---------------------------------------------------------------- la table des bracelets
+  // Sur ordinateur, le bracelet survolé se lève sous sa cloche (images calculées dans la scène, posées sur l'image d'arrêt) ;
+  // un clic, ou un doigt sur téléphone, ouvre son gros plan : le bracelet levé, de près, avec son nom, son prix et sa fiche.
+  const TABLE = SALLE.table || null;      // { n, '16x9' et '9x16' : zones des cloches, dessin : rectangles des images de levée } (fractions)
+  const ARRET_TABLE = PRODUITS.findIndex((p) => p.liste) + 1;  // l'arrêt de la table (8)
+  const BRACELETS = ARRET_TABLE > 0 ? PRODUITS[ARRET_TABLE - 1].liste : [];
+  const souris = matchMedia('(hover: hover) and (pointer: fine)');
+  const leves = BRACELETS.map(() => ({ t: 0, cible: 0 }));
+  let sprites = {}, spritesCle = '', survole = -1, tableSale = false, grosK = -1;
+  const surTable = () => !!TABLE && at === ARRET_TABLE && !lecture && !fondu;
+  const grosOuvert = () => grosK >= 0;
+  const grosSrc = (k) => `assets/film/${VERSION}/${F_}/gros/b${k}.webp`;
+  function chargeTable() {
+    if (!TABLE) return;
+    const cle = VERSION + F_;
+    if (spritesCle === cle) return;
+    spritesCle = cle;
+    sprites = {};
+    BRACELETS.forEach((b, k) => {
+      if (F_ === '16x9' && souris.matches) {                 // levée au survol : ordinateur seulement
+        const im = new Image();
+        im.decoding = 'async';
+        im.onload = () => { sprites[k] = im; };
+        im.src = `assets/film/${VERSION}/16x9/survol/b${k}.webp`;
+      }
+      const g = new Image();                                 // gros plans : chargés d'avance pendant qu'on regarde la table
+      g.decoding = 'async';
+      g.src = grosSrc(k);
+    });
+  }
+  function zoneEcran(k) {                                    // zone du bracelet k en pixels du cadre (avant la « respiration »)
+    const z = TABLE && TABLE[F_] && TABLE[F_][k];
+    if (!z) return null;
+    const [ax, ay] = versEcran(z[0], z[1]);
+    const [bx, by] = versEcran(z[2], z[3]);
+    return [ax, ay, bx - ax, by - ay];
+  }
+  function dessinEcran(k) {                                  // rectangle des images de levée (16:9), en pixels du cadre
+    const z = TABLE && TABLE.dessin && TABLE.dessin[k];
+    if (!z || F_ !== '16x9') return null;
+    const [ax, ay] = versEcran(z[0], z[1]);
+    const [bx, by] = versEcran(z[2], z[3]);
+    return [ax, ay, bx - ax, by - ay];
+  }
+  function braceletSous(x, y) {                              // x, y : coordonnées de la fenêtre
+    if (!surTable() || grosOuvert()) return -1;
+    const r = respireEl.getBoundingClientRect();
+    const e = r.width / vw || 1;
+    const lx = (x - r.left) / e, ly = (y - r.top) / e;
+    for (let k = 0; k < BRACELETS.length; k += 1) {
+      const z = zoneEcran(k);
+      if (!z) continue;
+      const m = 0.14;                                        // la zone calculée comprend la cloche et une marge
+      if (lx > z[0] + z[2] * m && lx < z[0] + z[2] * (1 - m) && ly > z[1] + z[3] * m && ly < z[1] + z[3] * (1 - m)) return k;
+    }
+    return -1;
+  }
+  function majSurvol(k) {
+    survole = k;
+    leves.forEach((l, n) => { l.cible = n === k ? 1 : 0; });
+    stage.classList.toggle('sur-bracelet', k >= 0);
+    tableSale = true;
+    wake();
+  }
+  function poseTable() {                                     // on quitte la table : les bracelets se recouchent sans attendre
+    leves.forEach((l) => { l.t = 0; l.cible = 0; });
+    survole = -1;
+    stage.classList.remove('sur-bracelet');
+    sctx.setTransform(1, 0, 0, 1, 0, 0);
+    sctx.clearRect(0, 0, survol.width, survol.height);
+  }
+  function dessineTable(dt) {
+    if (!tableSale && !leves.some((l) => l.t > 0)) return false;
+    tableSale = false;
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sctx.clearRect(0, 0, vw, vh);
+    let anime = false;
+    leves.forEach((l, k) => {
+      l.t = clamp(l.t + (l.cible ? dt / 0.55 : -dt / 0.4), 0, 1);
+      if (l.t > 0 && l.t < 1) anime = true;
+      const im = sprites[k];
+      const z = dessinEcran(k);
+      if (!im || !z || l.t <= 0 || !surTable()) return;
+      const n = TABLE.n;
+      const i = Math.round(l.t * (n - 1));
+      const fw = im.naturalWidth / n;
+      sctx.drawImage(im, i * fw, 0, fw, im.naturalHeight, z[0], z[1], z[2], z[3]);
+    });
+    if (!anime && leves.every((l) => l.t === 0)) { sctx.clearRect(0, 0, vw, vh); return false; }
+    return anime;
+  }
+  function remplitGros(k) {
+    const b = BRACELETS[k];
+    G.nom.textContent = b.nom;
+    G.prix.textContent = b.epuise ? 'Épuisé' : prixTexte(b.prix);
+    G.lien.href = lienProduit(b);
+    G.lien.setAttribute('aria-label', `Découvrir la pièce : ${b.nom}`);
+    grosImg.alt = b.nom;
+    grosImg.src = grosSrc(k);
+  }
+  function ouvrirGros(k) {
+    if (!BRACELETS[k] || grosOuvert()) return;
+    grosK = k;
+    remplitGros(k);
+    const z = zoneEcran(k);                                  // le gros plan sort du bracelet touché
+    grosImg.style.transformOrigin = z ? `${Math.round(z[0] + z[2] / 2)}px ${Math.round(z[1] + z[3] / 2)}px` : '50% 50%';
+    majSurvol(-1);
+    gros.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => gros.classList.add('ouvert')));
+    try { G.fermer.focus({ preventScroll: true }); } catch (e) { /* sans effet */ }
+  }
+  function fermerGros() {
+    if (!grosOuvert()) return;
+    const k = grosK;
+    grosK = -1;
+    const z = zoneEcran(k);
+    if (z) grosImg.style.transformOrigin = `${Math.round(z[0] + z[2] / 2)}px ${Math.round(z[1] + z[3] / 2)}px`;
+    gros.classList.remove('ouvert');
+    setTimeout(() => { if (!grosOuvert()) gros.hidden = true; }, 560);
+  }
+  function grosVoisin(d) {
+    if (!grosOuvert()) return;
+    let k = grosK;
+    k = (k + d + BRACELETS.length) % BRACELETS.length;
+    grosK = k;
+    gros.classList.add('change');
+    setTimeout(() => { remplitGros(k); (grosImg.decode ? grosImg.decode() : Promise.resolve()).then(() => gros.classList.remove('change'), () => gros.classList.remove('change')); }, 220);
+  }
+  if (TABLE) {
+    stage.addEventListener('mousemove', (e) => {
+      if (!souris.matches) return;
+      const k = braceletSous(e.clientX, e.clientY);
+      if (k !== survole) majSurvol(k);
+    });
+    stage.addEventListener('mouseleave', () => { if (survole !== -1) majSurvol(-1); });
+    // la liste de la fiche lève aussi le bracelet qu'on y pointe
+    F.liste.addEventListener('mouseover', (e) => {
+      const li = e.target.closest && e.target.closest('li');
+      if (li && souris.matches && surTable()) majSurvol([...F.liste.children].indexOf(li));
+    });
+    F.liste.addEventListener('mouseleave', () => { if (souris.matches) majSurvol(-1); });
+    // un bracelet de la liste ouvre son gros plan (sur téléphone, la table n'en montre que quelques-uns en entier) ;
+    // la fiche reste à un geste : « Découvrir la pièce » dans le gros plan
+    F.liste.addEventListener('click', (e) => {
+      const li = e.target.closest && e.target.closest('li');
+      if (!li || !surTable()) return;
+      e.preventDefault();
+      ouvrirGros([...F.liste.children].indexOf(li));
+    });
+    stage.addEventListener('click', (e) => {
+      if (grosOuvert() || (e.target.closest && e.target.closest('a,button,summary,details,.fiche'))) return;
+      const k = braceletSous(e.clientX, e.clientY);
+      if (k >= 0) ouvrirGros(k);
+    });
+    G.fermer.addEventListener('click', fermerGros);
+    $$('[data-gnav]', gros).forEach((b) => b.addEventListener('click', () => grosVoisin(b.dataset.gnav === 'next' ? 1 : -1)));
+    gros.addEventListener('click', (e) => { if (e.target === gros || e.target === grosImg) fermerGros(); });
+  }
+
+  // ---------------------------------------------------------------- entrée : la marche part seule quand la boutique remplit l'écran
+  function entreeAuto(delai) {
+    if (entreeFaite || !VIDEO_OK) return;
+    clearTimeout(entreeMinuteur);
+    entreeMinuteur = setTimeout(() => {
+      if (entreeFaite || at !== 0 || lecture || fondu || !pris() || document.hidden || introOuverte() || grosOuvert()) return;
+      autoEnCours = true;
+      goTo(1);
+      autoEnCours = false;
+    }, delai);
+  }
+
+  // ---------------------------------------------------------------- page seule : le film de la marque, puis la boutique
+  function lanceIntro() {
+    const v = $('.intro__video', intro);
+    const petit = portraitMQ.matches || Math.min(screen.width || 0, screen.height || 0) < 700;
+    v.poster = 'assets/intro/affiche.webp';
+    v.src = `assets/intro/accueil-${petit ? 720 : 1080}.mp4`;
+    intro.hidden = false;
+    introEtat = 1;
+    v.addEventListener('ended', finIntro, { once: true });
+    v.addEventListener('error', finIntro, { once: true });
+    const p = v.play();
+    if (p && p.catch) p.catch(() => {});                       // sans lecture automatique : l'affiche et le bouton « Entrer »
+    $('.intro__entrer', intro).addEventListener('click', finIntro);
+  }
+  function finIntro() {
+    if (introEtat !== 1) return;
+    introEtat = 2;
+    try { sessionStorage.setItem('bg-intro', '1'); } catch (e) { /* sans effet */ }
+    intro.classList.add('fini');
+    setTimeout(() => {
+      intro.hidden = true;
+      const v = $('.intro__video', intro);
+      v.pause(); v.removeAttribute('src'); v.load();
+    }, 950);
+    entreeAuto(650);
+  }
+
   // ---------------------------------------------------------------- boucle (seulement quand quelque chose bouge)
   let running = false, lastT = 0;
   function wake() { if (!running && !document.hidden) { running = true; lastT = performance.now(); requestAnimationFrame(tick); } }
@@ -382,7 +615,8 @@
     majPos(now);
     render();
     const sp = sparkle(dt);
-    if (lecture || fondu || sp) requestAnimationFrame(tick); else running = false;
+    const tb = dessineTable(dt);
+    if (lecture || fondu || sp || tb) requestAnimationFrame(tick); else running = false;
   }
 
   // ---------------------------------------------------------------- lumière : allumée ou éteinte comme le site
@@ -395,6 +629,9 @@
     fondu = null;
     oublie();
     creeVideos();
+    fermerGros();
+    poseTable();
+    spritesCle = '';
     montreArret(at, true);                    // fondu vers le même arrêt, dans l'autre lumière
     arrive();
     wake();
@@ -408,6 +645,8 @@
     vw = cadre.clientWidth; vh = cadre.clientHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     cvs.width = Math.round(vw * dpr); cvs.height = Math.round(vh * dpr);
+    survol.width = Math.round(vw * dpr); survol.height = Math.round(vh * dpr);
+    tableSale = true;
     const f = fmt();
     root.classList.toggle('format-secours', f !== fmtVoulu());
     if (f !== F_ || !pret) {
@@ -417,6 +656,9 @@
       oublie();
       creeVideos();
       stills.forEach((s) => { s.removeAttribute('src'); s.classList.remove('is-on', 'dessus', 'fondu'); });
+      fermerGros();
+      poseTable();
+      spritesCle = '';
       montreArret(at, false);
       arrive();
     }
@@ -449,6 +691,7 @@
       parentRepond = true;
       aligne = !!e.data.aligne;
       stage.style.touchAction = pris() ? 'none' : 'pan-y';   // à moitié visible, le doigt fait défiler le site
+      if (aligne) entreeAuto(1100); else clearTimeout(entreeMinuteur);   // la boutique remplit l'écran : on entre
     });
     try { window.parent.postMessage({ boutique: 'pret' }, '*'); } catch (e) { /* sans effet */ }
   }
@@ -459,6 +702,10 @@
     try { window.parent.postMessage({ boutique: 'bord', dir }, '*'); } catch (e) { /* sans effet */ }
   }
   function avance(dir) {
+    if (introOuverte()) { finIntro(); return; }              // un geste pendant le film de la marque : on entre
+    if (grosOuvert()) { if (dir > 0) grosVoisin(1); else grosVoisin(-1); return; }
+    entreeFaite = true;
+    clearTimeout(entreeMinuteur);
     const cible = (lecture ? (lecture.inv ? lecture.i : lecture.i + 1) : at) + dir;
     if (cible < 0 || cible > FIN) { bord(dir); return; }
     step(dir);
@@ -480,6 +727,7 @@
   addEventListener('keydown', (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const onControl = e.target.closest && e.target.closest('a,button,input,select,textarea');
+    if (grosOuvert() && e.key === 'Escape') { e.preventDefault(); fermerGros(); return; }
     switch (e.key) {
       case 'ArrowDown': case 'ArrowRight': case 'PageDown': e.preventDefault(); avance(1); break;
       case 'ArrowUp': case 'ArrowLeft': case 'PageUp': e.preventDefault(); avance(-1); break;
@@ -506,6 +754,10 @@
     t0 = null;
     const d = Math.abs(dy) >= Math.abs(dx) ? dy : dx;
     if (Math.abs(d) < 36) return;
+    if (grosOuvert()) {                     // gros plan : glisser de côté change de bracelet, vers le bas le referme
+      if (Math.abs(dx) > Math.abs(dy)) grosVoisin(dx < 0 ? 1 : -1); else if (dy > 0) fermerGros();
+      return;
+    }
     const dir = d < 0 ? 1 : -1;             // glisser vers le haut (ou vers la gauche) : on avance
     if (tenu) avance(dir); else aligner(dir);
   }, { passive: true });
@@ -520,8 +772,13 @@
 
   // ---------------------------------------------------------------- démarrage
   const depart = parseInt(new URLSearchParams(location.search).get('arret'), 10);
-  if (depart >= 0 && depart <= FIN) { at = depart; pos = depart; }
+  if (depart >= 0 && depart <= FIN) { at = depart; pos = depart; entreeFaite = true; }
   layout();
+  // page ouverte seule (sans l'accueil au-dessus) : le film de la marque d'abord, puis la marche d'entrée
+  let introVue = false;
+  try { introVue = sessionStorage.getItem('bg-intro') === '1'; } catch (e) { /* sans effet */ }
+  if (!embarque && at === 0 && !introVue && intro) lanceIntro();
+  else if (!embarque && at === 0) entreeAuto(1500);
 
   window.__boutique = {
     goTo, step,
@@ -535,5 +792,9 @@
     get enCours() { return !!lecture || !!fondu; },
     get prend() { return pris(); },
     get chargees() { return Object.values(pistes).filter((v) => v.readyState >= 3).length; },
+    get gros() { return grosK; },
+    get survole() { return survole; },
+    get intro() { return introEtat; },
+    ouvrirGros, fermerGros, finIntro,
   };
 })();

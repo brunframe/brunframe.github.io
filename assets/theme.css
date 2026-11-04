@@ -778,6 +778,24 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .histoire__text p + p { margin-top: 0.8em; }
 .histoire__hebreu { margin-top: clamp(96px, 14vw, 170px); display: flex; justify-content: center; }
 .histoire__hebreu svg { width: min(80vw, 520px); height: auto; }
+/* Histoire illustrée : une image par temps (scène de la boutique ou bijou détouré), en alternance gauche / droite */
+.histoire__step--image { max-width: none; gap: clamp(26px, 4vw, 80px); }
+.histoire__corps { display: grid; gap: 22px; align-content: center; }
+.histoire__figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; }
+.histoire__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.histoire__figure--entier .histoire__img { object-fit: contain; }
+@media (min-width: 750px) {
+  .histoire__step--image { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  .histoire__step--image:nth-child(even) { margin-left: 0; }
+  .histoire__step--image:nth-child(even) .histoire__figure { order: 2; }
+  .histoire__step--image .histoire__corps { max-width: 520px; }
+  .histoire__step--image:nth-child(odd) .histoire__corps { justify-self: start; }
+  .histoire__step--image:nth-child(even) .histoire__corps { justify-self: end; }
+}
+@media (max-width: 749px) {
+  .histoire__step--image .histoire__figure { width: 86%; }
+  .histoire__step--image:nth-child(even) .histoire__figure { margin-left: auto; }
+}
 
 /* ---------- Fiche produit ---------- */
 .template-product .main { padding-top: var(--header-h); }

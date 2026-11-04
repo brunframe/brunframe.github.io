@@ -204,3 +204,40 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
 /* Balayage de lumière et reflet : utiles sur l'ancienne version en photos ; sur la marche filmée dans la salle recréée,
    ils faisaient effet de filtre et, mélangés en « screen » sur la vidéo 4K, coûtaient au navigateur à chaque image. */
 .cadre .reflet, .cadre .balayage { display: none; }
+
+/* --- la table des bracelets : levée au survol (ordinateur), gros plan (clic, doigt) --- */
+.survol { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 4; pointer-events: none; }
+.stage.sur-bracelet { cursor: zoom-in; }
+.fiche-astuce { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: var(--gris); }
+.gros { position: absolute; inset: 0; z-index: 50; opacity: 0; transition: opacity .45s ease; background: #120e0a; }
+.gros.ouvert { opacity: 1; }
+.gros__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(.28); cursor: zoom-out;
+  transition: transform .62s cubic-bezier(.2, .8, .2, 1), opacity .22s ease; }
+.gros.ouvert .gros__img { transform: scale(1); }
+.gros.change .gros__img { opacity: 0; }
+.gros__texte { position: absolute; left: clamp(18px, 3vw, 48px); bottom: calc(env(safe-area-inset-bottom) + clamp(22px, 5svh, 56px));
+  width: min(400px, calc(100vw - 36px)); padding: clamp(20px, 2.2vw, 30px); background: rgba(246, 240, 229, .88); }
+.gros__nom { margin: 0 0 8px; font: 400 clamp(26px, 2.4vw, 38px)/1 var(--police-titre); text-transform: uppercase; letter-spacing: -.01em; }
+.gros__prix { margin: 0 0 18px; font-size: 15px; font-weight: 300; }
+.gros__fermer { position: absolute; top: calc(env(safe-area-inset-top) + 14px); right: clamp(14px, 3vw, 44px); min-height: 44px; padding: 0 16px;
+  border: 0; background: rgba(246, 240, 229, .88); color: var(--encre); font: 400 11px var(--police-texte); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
+.gros__nav { position: absolute; right: clamp(18px, 3vw, 48px); bottom: calc(env(safe-area-inset-bottom) + clamp(22px, 5svh, 56px)); display: flex; gap: 10px; }
+.gros__nav .rond { background: rgba(246, 240, 229, .88); }
+@media (max-aspect-ratio: 9/10) {
+  .gros__texte { left: 0; right: 0; bottom: 0; width: auto; padding: 18px 20px calc(env(safe-area-inset-bottom) + 18px); }
+  .gros__texte .bouton { width: 100%; }
+  .gros__nav { right: auto; left: 16px; bottom: auto; top: calc(env(safe-area-inset-top) + 14px); }
+}
+/* --- page seule : le film de la marque avant la boutique --- */
+.intro { position: absolute; inset: 0; z-index: 45; background: #120e0a; transition: opacity .9s ease; }
+.intro.fini { opacity: 0; pointer-events: none; }
+.intro__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.intro::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(18, 14, 10, .55), rgba(18, 14, 10, 0) 46%); }
+.intro__logo { position: absolute; z-index: 1; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 7svh + 74px); width: min(64vw, 440px); aspect-ratio: 152 / 34;
+  transform: translateX(-50%); background: var(--ivoire);
+  -webkit-mask: url(../assets/logo-breslev-gang-officiel.svg) no-repeat center / contain; mask: url(../assets/logo-breslev-gang-officiel.svg) no-repeat center / contain; }
+.intro__entrer { position: absolute; z-index: 1; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 7svh); transform: translateX(-50%); min-height: 48px; padding: 0 30px;
+  border: 1px solid rgba(246, 240, 229, .75); background: rgba(18, 14, 10, .28); color: var(--ivoire); font: 400 12px var(--police-texte);
+  letter-spacing: .24em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s; }
+.intro__entrer:hover, .intro__entrer:focus-visible { background: var(--ivoire); color: var(--encre); }
+@media (prefers-reduced-motion: reduce) { .gros__img { transition: opacity .2s ease; transform: none; } }

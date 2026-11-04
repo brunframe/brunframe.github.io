@@ -30,6 +30,7 @@
         <img class="arret arret--a" alt="" decoding="async" fetchpriority="high">
         <img class="arret arret--b" alt="" decoding="async">
         <div class="marches"></div>
+        <canvas class="survol" aria-hidden="true"></canvas>
       </div>
       <div class="reflet" aria-hidden="true"></div>
       <div class="balayage" aria-hidden="true"></div>
@@ -61,6 +62,7 @@
         <summary class="fiche-resume" data-f="resume"></summary>
         <ul class="fiche-liste" data-f="liste"></ul>
       </details>
+      <p class="fiche-astuce" data-f="astuce" hidden></p>
       <a class="bouton" data-f="lien" href="#">Découvrir la pièce</a>
       <div class="fiche-nav">
         <button type="button" class="rond" data-nav="prev" aria-label="Pièce précédente">
@@ -76,6 +78,32 @@
       <h2 class="fin-titre">Votre pièce vous attend</h2>
       <a class="bouton" data-lien="collection" href="/catalogue.html">Choisir ma pièce</a>
     </section>
+
+    <!-- Gros plan d'un bracelet de la table (clic sur ordinateur, doigt sur téléphone) -->
+    <div class="gros" id="gros" role="dialog" aria-modal="true" aria-label="Le bracelet de près" hidden>
+      <img class="gros__img" alt="" decoding="async">
+      <div class="gros__texte">
+        <p class="gros__nom" data-g="nom"></p>
+        <p class="gros__prix" data-g="prix"></p>
+        <a class="bouton" data-g="lien" href="#">Découvrir la pièce</a>
+      </div>
+      <div class="gros__nav">
+        <button type="button" class="rond" data-gnav="prev" aria-label="Bracelet précédent">
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+        <button type="button" class="rond" data-gnav="next" aria-label="Bracelet suivant">
+          <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+      </div>
+      <button type="button" class="gros__fermer" data-g="fermer">Fermer</button>
+    </div>
+
+    <!-- Page ouverte seule : le film de la marque, puis la boutique -->
+    <div class="intro" id="intro" hidden>
+      <video class="intro__video" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+      <span class="intro__logo" role="img" aria-label="Breslev Gang"></span>
+      <button type="button" class="intro__entrer">Entrer</button>
+    </div>
 
     <nav class="points" aria-label="Progression dans la boutique"></nav>
     <div class="chargement" aria-hidden="true"></div>
