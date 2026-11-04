@@ -23,7 +23,7 @@
       html.setAttribute('data-theme', mode);
       html.style.colorScheme = mode === 'noir' ? 'dark' : 'light';
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', mode === 'noir' ? '#111010' : '#F6F4F0');
+      if (meta) meta.setAttribute('content', mode === 'noir' ? '#111010' : '#FFFFFF');
       if (remember) { try { window.localStorage.setItem(this.key, mode); } catch (e) {} }
       this.paint();
       // la boutique immersive (iframe, parfois sur une autre adresse) s'allume ou s'éteint avec le site

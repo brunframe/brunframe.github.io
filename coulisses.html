@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Coulisses — Breslev Gang, concept de refonte</title>
+<style>
+  @font-face { font-family: 'Anton'; src: url(assets/anton-latin-400-normal.woff2) format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Inter Tight'; font-weight: 300; src: url(assets/inter-tight-latin-300-normal.woff2) format('woff2'); font-display: swap; }
+  :root { color-scheme: light; }
+  body { margin: 0; background: #FFFFFF; color: #000000; font: 300 17px/1.55 'Inter Tight', system-ui, sans-serif; }
+  main { max-width: 1180px; margin: 0 auto; padding: 56px 16px 80px; }
+  h1, h2 { font-family: 'Anton', Impact, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; margin: 0; }
+  h1 { font-size: clamp(56px, 14vw, 150px); }
+  .intro { max-width: 40ch; margin: 18px 0 72px; color: #767676; }
+  .paire { margin: 0 0 96px; }
+  h2 { font-size: clamp(34px, 7vw, 72px); margin-bottom: 12px; }
+  .paire p { max-width: 52ch; margin: 0 0 24px; }
+  .images { display: grid; gap: 12px; }
+  @media (min-width: 760px) { .images { grid-template-columns: 1fr 1fr; } }
+  figure { margin: 0; }
+  img { width: 100%; height: auto; display: block; }
+  figcaption { margin-top: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #767676; }
+  footer { border-top: 1px solid #e6e6e6; padding: 24px 16px 40px; text-align: center; font-size: 13px; color: #767676; }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Coulisses</h1>
+  <p class="intro">La boutique de la démo : une salle, sept vitrines, une table de bracelets, chaque bijou refait d'après sa photo. <a href="boutique/index.html">Entrer dans la boutique</a>.</p>
+  <section class="paire">
+    <h2>La salle</h2>
+    <p>Une image de boutique, créée avec Canva, est projetée sur le volume 3D de la pièce ; vitrines, bustes, meubles et bijoux sont en vraie 3D devant elle.</p>
+    <div class="images"><figure><img src="coulisses/salle-image.webp" alt="L'image de départ" loading="lazy"><figcaption>L'image de départ</figcaption></figure>
+    <figure><img src="coulisses/salle-3d.webp" alt="La salle en 3D" loading="lazy"><figcaption>La salle en 3D</figcaption></figure></div>
+  </section>
+  <section class="paire">
+    <h2>Les bijoux</h2>
+    <p>Chaque pendentif est relevé sur sa photo : contour, jours, émail et gravure ; puis viennent l'épaisseur, les arêtes et le métal poli.</p>
+    <div class="images"><figure><img src="coulisses/bijou-photo.webp" alt="La photo du catalogue" loading="lazy"><figcaption>La photo du catalogue</figcaption></figure>
+    <figure><img src="coulisses/bijou-3d.webp" alt="Le bijou en 3D, dans sa vitrine" loading="lazy"><figcaption>Le bijou en 3D, dans sa vitrine</figcaption></figure></div>
+  </section>
+  <section class="paire">
+    <h2>La table des bracelets</h2>
+    <p>Six bracelets de la marque, couchés comme sur leurs photos, chacun sous sa cloche de verre.</p>
+    <div class="images"><figure><img src="coulisses/table-photos.webp" alt="Les six photos" loading="lazy"><figcaption>Les six photos</figcaption></figure>
+    <figure><img src="coulisses/table-3d.webp" alt="La table" loading="lazy"><figcaption>La table</figcaption></figure></div>
+  </section>
+  <section class="paire">
+    <h2>Les photos</h2>
+    <p>Le fond croco et la plaque disparaissent ; les pixels du bijou restent ceux de la photo.</p>
+    <div class="images"><figure><img src="coulisses/photo-croco.webp" alt="Avant" loading="lazy"><figcaption>Avant</figcaption></figure>
+    <figure><img src="coulisses/photo-detouree.webp" alt="Après" loading="lazy"><figcaption>Après</figcaption></figure></div>
+  </section>
+  <section class="paire">
+    <h2>La boutique éteinte</h2>
+    <p>Le bouton Noir du site éteint la salle : il ne reste que les vitrines, la table et le logo.</p>
+    <div class="images"><figure><img src="coulisses/allumee.webp" alt="Blanc" loading="lazy"><figcaption>Blanc</figcaption></figure>
+    <figure><img src="coulisses/eteinte.webp" alt="Noir" loading="lazy"><figcaption>Noir</figcaption></figure></div>
+  </section>
+</main>
+<footer>Concept de refonte — démonstration réalisée par BRUNFRAME. Boutique officielle : <a href="https://breslevgang.com">breslevgang.com</a></footer>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /* Breslev Gang — thème Shopify. Fond ivoire, serif fine, la seule couleur est celle des bijoux.
 
    VARIABLES GLOBALES (à utiliser dans cart.css, product.css et les sections) :
-     --bg        fond de page            Blanc #F6F4F0   Noir #111010
+     --bg        fond de page            Blanc #FFFFFF   Noir #111010
      --surface   surfaces (tiroir, menu, champs, nuancier)   #FCFBF8 / #1B1A1A
      --text      texte                   #171512 / #F2EFEA
      --grey      texte secondaire        #5F5A54 / #A39E96   (AA sur --bg et --surface)
@@ -30,12 +30,12 @@
    Le mode est porté par html[data-theme="blanc" | "noir"], posé avant le premier rendu. */
 
 :root {
-  --bg: #F6F4F0;
-  --surface: #FCFBF8;
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
   --text: #171512;
   --grey: #5F5A54;
   --line: #E4E0D8;
-  --veil: rgba(246, 244, 240, 0.82);
+  --veil: rgba(255, 255, 255, 0.86);
   --media-bg: #FFFFFF;
   --soie-a: #FBFAF7;
   --soie-b: #F3F0EA;
@@ -466,6 +466,19 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
   text-align: center;
 }
 .hero__brand { display: flex; flex-direction: column; align-items: center; gap: clamp(18px, 3.5vh, 32px); font-weight: inherit; }
+/* ordinateur : le logo et la phrase en bas à gauche, les bijoux de la vidéo restent dégagés (jury n°3) */
+@media (min-width: 750px) {
+  .hero__overlay { justify-content: flex-end; align-items: flex-start; text-align: left; padding: var(--header-h) clamp(32px, 5vw, 80px) clamp(56px, 9vh, 96px); }
+  .hero__brand { align-items: flex-start; }
+  .hero__gothique svg { width: min(32vw, 440px); }
+  .hero__phrase { text-indent: 0; }
+}
+.hero__lien { color: inherit; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; }
+/* téléphone : le logo et la phrase en bas de l'écran, les bijoux de la vidéo restent dégagés au centre (jury n°2) */
+@media (max-width: 749px) {
+  .hero__overlay { justify-content: flex-end; padding-bottom: calc(var(--gutter) + 92px); }
+  .hero__veil { background: linear-gradient(to top, rgba(10, 9, 8, 0.6), rgba(10, 9, 8, calc(var(--hero-veil, 0.2) * 0.5)) 55%); }
+}
 .hero__gothique svg { width: min(84vw, 760px); height: auto; }
 .hero__phrase {
   font-size: clamp(15px, 1.5vw, 21px);
@@ -1098,3 +1111,6 @@ option { background: var(--surface); color: var(--text); }
 .personnalites__carte:nth-child(odd) { transform: rotate(-1.2deg); }
 .personnalites__carte:nth-child(even) { transform: rotate(1deg) translateY(14px); }
 @media (max-width: 749px) { .personnalites__carte { flex-basis: 62vw; } }
+
+/* titres de l'Histoire sur plusieurs lignes : les accents des capitales ne mordent plus la ligne du dessus (jury n°3) */
+.histoire__title { line-height: 1.1; }

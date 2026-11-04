@@ -10,8 +10,8 @@
   <meta name="theme-color" content="#1b1510">
   <link rel="icon" href="assets/logo-flamme.svg" type="image/svg+xml">
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/anton-latin-400-normal.woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/salle/16x9/arret-0.webp" type="image/webp" media="(min-aspect-ratio: 91/100)">
-  <link rel="preload" as="image" href="assets/salle/9x16/arret-0.webp" type="image/webp" media="(max-aspect-ratio: 9/10)">
+  <link rel="preload" as="image" href="assets/film/allume/16x9/arrets/arret-0.webp" type="image/webp" media="(min-aspect-ratio: 91/100)">
+  <link rel="preload" as="image" href="assets/film/allume/9x16/arrets/arret-0.webp" type="image/webp" media="(max-aspect-ratio: 9/10)">
   <link rel="stylesheet" href="css/boutique.css">
   <script>
     document.documentElement.classList.add('js');
@@ -55,8 +55,12 @@
     <aside class="fiche" id="fiche" aria-live="polite" aria-label="La pièce présentée">
       <p class="fiche-num"><span data-f="num">01</span> / <span data-f="total">07</span></p>
       <h2 class="fiche-nom" data-f="nom"></h2>
-      <p class="fiche-ref">Réf. <span data-f="ref"></span></p>
+      <p class="fiche-ref" data-f="refl">Réf. <span data-f="ref"></span></p>
       <p class="fiche-prix" data-f="prix"></p>
+      <details class="fiche-details" data-f="details" hidden>
+        <summary class="fiche-resume" data-f="resume"></summary>
+        <ul class="fiche-liste" data-f="liste"></ul>
+      </details>
       <a class="bouton" data-f="lien" href="#">Découvrir la pièce</a>
       <div class="fiche-nav">
         <button type="button" class="rond" data-nav="prev" aria-label="Pièce précédente">

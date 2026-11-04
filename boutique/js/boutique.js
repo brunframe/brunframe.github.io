@@ -24,6 +24,11 @@
   const prixTexte = (n) => `${n} €`;
   const lienProduit = (p) => `${C.SITE_URL}/products/${p.fiche}${C.EXT}${p.couleur ? '?couleur=' + encodeURIComponent(p.couleur) : ''}`;
   const lienCollection = `${C.SITE_URL}${C.COLLECTION}`;
+  // une catégorie (la table des bracelets) : /collections/all/<étiquette> sur Shopify, categorie-<étiquette>.html en démo
+  const lienCategorie = (cat) => (C.EXT ? `${C.SITE_URL}/categorie-${cat}${C.EXT}` : `${C.SITE_URL}/collections/all/${cat}`);
+  const lienArret = (p) => (p.collection ? lienCategorie(p.collection) : lienProduit(p));
+  const prixArret = (p) => p.prix_texte || prixTexte(p.prix);
+  const echappe = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   $$('[data-lien="collection"]').forEach((a) => { a.href = lienCollection; });
   $$('[data-lien="accueil"]').forEach((a) => { a.href = `${C.SITE_URL}${C.ACCUEIL}`; });
 
@@ -32,21 +37,23 @@
   // format voulu par l'écran ; s'il n'est pas encore calculé, on montre l'autre en entier (bandes sur les côtés)
   const fmtVoulu = () => (portraitMQ.matches ? '9x16' : '16x9');
   const fmt = () => { const f = fmtVoulu(); return SALLE[f] || !SALLE[f === '9x16' ? '16x9' : '9x16'] ? f : (f === '9x16' ? '16x9' : '9x16'); };
-  // navigateur sans H.264 (rare) : fondus enchaînés entre les arrêts, sans vidéo
-  const VIDEO_OK = !!document.createElement('video').canPlayType('video/mp4; codecs="avc1.640033"');
-  function niveau(f) {
-    const dpr = window.devicePixelRatio || 1;
-    if (f === '16x9') return Math.max(innerWidth * dpr, innerHeight * dpr * 16 / 9) >= 2200 ? '2160' : '1080';
-    return Math.max(innerHeight * dpr, innerWidth * dpr * 16 / 9) >= 2200 ? '2560' : '1920';
-  }
+  // H.265 si le navigateur le lit (plus léger), sinon H.264 ; sans vidéo (rare) : fondus enchaînés entre les arrêts
+  const essai = document.createElement('video');
+  const HEVC = !!essai.canPlayType('video/mp4; codecs="hvc1.1.6.L120.90"');
+  const CODEC = HEVC ? 'hevc' : 'h264';
+  const VIDEO_OK = HEVC || !!essai.canPlayType('video/mp4; codecs="avc1.640033"');
+  // boutique allumée (site en Blanc) ou éteinte (site en Noir) : le bouton Blanc/Noir du site éteint vraiment la boutique
+  const lireVersion = () => { try { return localStorage.getItem('bg-mode') === 'noir' ? 'eteint' : 'allume'; } catch (e) { return 'allume'; } };
+  let VERSION = lireVersion();
   const NV = PRODUITS.length;                                         // vitrines, une pièce chacune
   // segment i : de l'arrêt i à l'arrêt i + 1 (i : l'entrée ; v2… : d'une vitrine à la suivante ; f : vers le logo)
   const SEGMENTS = ['i'].concat(PRODUITS.slice(1).map((p, k) => `v${k + 2}`), ['f']);
   const FIN = SEGMENTS.length;                                        // dernier arrêt : le mur au logo
   const DERNIER = NV;                                                 // dernière vitrine
   const deux = (n) => String(n).padStart(2, '0');
-  const arretSrc = (f, i) => `assets/salle/${f}/arret-${i}.webp`;
-  const videoSrc = (f, n, i) => `assets/salle/${f}/${n}/${SEGMENTS[i]}.mp4`;
+  const arretSrc = (f, i) => `assets/film/${VERSION}/${f}/arrets/arret-${i}.webp`;
+  // segment i joué à l'endroit (de l'arrêt i à i + 1) ou à l'envers (de i + 1 à i : on revient sans fondu)
+  const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${f}/${CODEC}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
 
   // ---------------------------------------------------------------- version statique (mouvement réduit)
   const liste = $('.diaporama-liste');
@@ -54,8 +61,8 @@
     const li = document.createElement('li');
     li.innerHTML = `<figure><picture><source media="(max-aspect-ratio: 9/10)" srcset="${arretSrc('9x16', p.n)}">
       <img src="${arretSrc('16x9', p.n)}" alt="${p.alt}" width="1920" height="1080" loading="lazy" decoding="async"></picture>
-      <figcaption><span class="d-num">${deux(p.n)} / ${deux(NV)}</span><span class="d-nom">${p.nom}</span><span class="d-ref">Réf. ${p.ref}</span>
-      <span class="d-prix">${prixTexte(p.prix)}</span><a class="bouton" href="${lienProduit(p)}">Découvrir la pièce</a></figcaption></figure>`;
+      <figcaption><span class="d-num">${deux(p.n)} / ${deux(NV)}</span><span class="d-nom">${p.nom}</span><span class="d-ref">${p.liste ? '' : 'Réf. '}${p.ref}</span>
+      <span class="d-prix">${prixArret(p)}</span><a class="bouton" href="${lienArret(p)}">${p.bouton || 'Découvrir la pièce'}</a></figcaption></figure>`;
     liste.appendChild(li);
   });
   const rmQuery = matchMedia('(prefers-reduced-motion: reduce)');
@@ -91,31 +98,35 @@
   const dots = $$('.point', points);
 
   // ---------------------------------------------------------------- état
-  let F_ = fmt(), N_ = niveau(F_);
+  let F_ = fmt();
   let at = 0;                 // arrêt courant (entier)
   let pos = 0;                // position continue (pour les textes et les fondus)
-  let lecture = null;         // { i, v } : vidéo de marche en cours
+  let lecture = null;         // { i, v, inv } : vidéo de marche en cours (inv : à l'envers)
   let enAttente = 0;          // pas demandés pendant une marche (+1 / -1)
   let fondu = null;           // { de, vers, t0, dur } : fondu enchaîné entre deux arrêts
   let actif = 0;              // index de l'image d'arrêt visible
   let ficheIdx = -1;
-  const videos = [];          // une balise <video> par segment (format courant)
+  const pistes = {};          // une balise <video> par segment et par sens, créée à la demande
 
-  function creeVideos() {
-    marches.innerHTML = '';
-    videos.length = 0;
-    SEGMENTS.forEach((n, i) => {
+  function piste(i, inv) {
+    const k = inv ? `${i}r` : String(i);
+    if (!pistes[k]) {
       const v = document.createElement('video');
       v.muted = true; v.defaultMuted = true;
       v.playsInline = true;
       v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
       v.setAttribute('disablepictureinpicture', ''); v.setAttribute('disableremoteplayback', '');
       v.preload = 'none';
-      v.dataset.seg = n;
-      v.addEventListener('ended', () => finDeMarche(i));
+      v.dataset.seg = SEGMENTS[i] + (inv ? '-inverse' : '');
+      v.addEventListener('ended', () => finDeMarche(i, inv));
       marches.appendChild(v);
-      videos.push(v);
-    });
+      pistes[k] = v;
+    }
+    return pistes[k];
+  }
+  function creeVideos() {
+    marches.innerHTML = '';
+    Object.keys(pistes).forEach((k) => { delete pistes[k]; });
   }
   // Chaque vidéo de marche est téléchargée à l'avance en entier (en mémoire) pendant qu'on regarde la vitrine :
   // la marche démarre alors instantanément, même sur iPhone (qui ne précharge pas les vidéos de lui-même).
@@ -131,25 +142,26 @@
     Object.values(memoire).forEach((p) => p.then((u) => { if (u) URL.revokeObjectURL(u); }));
     memoire = {};
   }
-  function prepare(i) {
-    const v = videos[i];
-    if (!VIDEO_OK || !v || v.dataset.charge) return;
+  function prepare(i, inv) {
+    if (!VIDEO_OK || i < 0 || i >= SEGMENTS.length) return;
+    const v = piste(i, inv);
+    if (v.dataset.charge) return;
     v.dataset.charge = '1';
-    v.poster = arretSrc(F_, i);
-    telecharge(videoSrc(F_, N_, i)).then((u) => {
-      if (!u || videos[i] !== v || v.dataset.src) return;
+    v.poster = arretSrc(F_, inv ? i + 1 : i);
+    telecharge(videoSrc(F_, i, inv)).then((u) => {
+      if (!u || pistes[inv ? `${i}r` : String(i)] !== v || v.dataset.src) return;
       v.dataset.src = 'memoire';
       v.preload = 'auto';
       v.src = u;
       v.load();
     });
   }
-  function source(i) {                      // la vidéo n'est pas encore en mémoire : lecture directe depuis le réseau
-    const v = videos[i];
+  function source(i, inv) {                 // la vidéo n'est pas encore en mémoire : lecture directe depuis le réseau
+    const v = piste(i, inv);
     if (v.dataset.src) return;
     v.dataset.src = 'reseau';
     v.preload = 'auto';
-    v.src = videoSrc(F_, N_, i);
+    v.src = videoSrc(F_, i, inv);
   }
   function precharge(i) {
     if (i < 0 || i > FIN) return;
@@ -182,27 +194,28 @@
   }
 
   // ---------------------------------------------------------------- navigation
-  function marcher(i) {                     // de l'arrêt i à l'arrêt i + 1 (vidéo)
-    const v = videos[i];
-    prepare(i);
-    source(i);
-    lecture = { i, v };
+  function marcher(i, inv) {                // segment i : de l'arrêt i à i + 1, ou à l'envers de i + 1 à i
+    const v = piste(i, inv);
+    prepare(i, inv);
+    source(i, inv);
+    lecture = { i, v, inv: !!inv };
+    const but = inv ? i : i + 1;
     if (v.currentTime) v.currentTime = 0;
     const p = v.play();                      // appelé dans le geste de l'utilisateur (iPhone, mode économie d'énergie)
     v.classList.add('is-on');                // l'affiche de la vidéo est l'image de l'arrêt : rien ne bouge avant la première image
-    if (v.readyState < 3) {
-      chargement.classList.add('is-on');
-      v.addEventListener('playing', () => chargement.classList.remove('is-on'), { once: true });
-    }
-    if (p && p.catch) p.catch(() => { if (lecture && lecture.v === v) { lecture = null; chargement.classList.remove('is-on'); sautVers(i + 1); } });
-    prepare(i + 1);
-    precharge(i + 2);
+    // jamais d'attente visible : une marche qui ne démarre pas tout de suite laisse place à un fondu vers l'arrêt visé
+    const secours = setTimeout(() => {
+      if (lecture && lecture.v === v && v.currentTime === 0 && v.readyState < 3) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
+    }, 450);
+    v.addEventListener('playing', () => clearTimeout(secours), { once: true });
+    if (p && p.catch) p.catch(() => { clearTimeout(secours); if (lecture && lecture.v === v) { v.classList.remove('is-on'); lecture = null; sautVers(but); } });   // vidéo en échec : elle ne reste pas affichée (son affiche est l'arrêt de départ)
+    if (inv) { prepare(i - 1, true); precharge(i - 1); } else { prepare(i + 1, false); precharge(i + 2); }
     wake();
   }
-  function finDeMarche(i) {
-    if (!lecture || lecture.i !== i) return;
+  function finDeMarche(i, inv) {
+    if (!lecture || lecture.i !== i || lecture.inv !== !!inv) return;
     const v = lecture.v;
-    at = i + 1;
+    at = inv ? i : i + 1;
     lecture = null;
     pos = at;
     // l'image fixe de l'arrêt se place sous la vidéo arrêtée sur sa dernière image (identique), puis la vidéo s'efface en douceur
@@ -221,7 +234,8 @@
     wake();
   }
   function arrive() {
-    prepare(at);                            // la marche suivante se charge pendant qu'on regarde la vitrine
+    prepare(at, false);                     // la marche suivante (et le retour) se chargent pendant qu'on regarde la vitrine
+    prepare(at - 1, true);
     precharge(at + 1);
     if (enAttente) { const d = enAttente; enAttente = 0; setTimeout(() => step(d), 120); }
   }
@@ -234,8 +248,9 @@
       arrive(); wake();
       return;
     }
-    if (lecture) { enAttente = clamp(n - (lecture.i + 1), -1, 1); return; }
-    if (n === at + 1 && at < FIN && VIDEO_OK) marcher(at);
+    if (lecture) { enAttente = clamp(n - (lecture.inv ? lecture.i : lecture.i + 1), -1, 1); return; }
+    if (n === at + 1 && at < FIN && VIDEO_OK) marcher(at, false);
+    else if (n === at - 1 && at > 0 && VIDEO_OK) marcher(at - 1, true);
     else sautVers(n);
   }
   function step(d) {
@@ -251,13 +266,25 @@
     F.num.textContent = deux(p.n);
     F.nom.textContent = p.nom;
     F.ref.textContent = p.ref;
-    F.prix.textContent = prixTexte(p.prix);
-    F.lien.href = lienProduit(p);
-    F.lien.setAttribute('aria-label', `Découvrir la pièce : ${p.nom}`);
+    F.refl.firstChild.textContent = p.liste ? '' : 'Réf. ';
+    F.prix.textContent = prixArret(p);
+    F.lien.href = lienArret(p);
+    F.lien.textContent = p.bouton || 'Découvrir la pièce';
+    F.lien.setAttribute('aria-label', p.liste ? p.bouton : `Découvrir la pièce : ${p.nom}`);
+    // la table : chaque bracelet, son prix et sa fiche
+    // repliée sur téléphone pour laisser voir la table, ouverte sur ordinateur
+    F.details.hidden = !p.liste;
+    F.details.open = !!p.liste && !portraitMQ.matches;
+    F.resume.textContent = p.liste_titre || '';
+    F.liste.innerHTML = p.liste ? p.liste.map((b) => `<li><a href="${lienProduit(b)}"><span>${echappe(b.nom)}</span>`
+      + `<span>${b.epuise ? 'Épuisé' : prixTexte(b.prix)}</span></a></li>`).join('') : '';
   }
   function majPos(now) {
-    if (lecture && lecture.v.ended) finDeMarche(lecture.i);   // au cas où l'événement « ended » se perd
-    if (lecture && lecture.v.duration) pos = lecture.i + clamp(lecture.v.currentTime / lecture.v.duration, 0, 1);
+    if (lecture && lecture.v.ended) finDeMarche(lecture.i, lecture.inv);   // au cas où l'événement « ended » se perd
+    if (lecture && lecture.v.duration) {
+      const k = clamp(lecture.v.currentTime / lecture.v.duration, 0, 1);
+      pos = lecture.inv ? lecture.i + 1 - k : lecture.i + k;
+    }
     else if (fondu) {
       const k = clamp((now - fondu.t0) / fondu.dur, 0, 1);
       pos = fondu.de + (fondu.vers - fondu.de) * k;
@@ -358,20 +385,39 @@
     if (lecture || fondu || sp) requestAnimationFrame(tick); else running = false;
   }
 
+  // ---------------------------------------------------------------- lumière : allumée ou éteinte comme le site
+  function changeVersion(mode) {
+    // le mode vient du message du site (boutique hébergée ailleurs : pas de stockage commun), sinon du stockage partagé
+    const v = mode ? (mode === 'noir' ? 'eteint' : 'allume') : lireVersion();
+    if (v === VERSION) return;
+    VERSION = v;
+    if (lecture) { lecture.v.pause(); lecture.v.classList.remove('is-on'); lecture = null; }
+    fondu = null;
+    oublie();
+    creeVideos();
+    montreArret(at, true);                    // fondu vers le même arrêt, dans l'autre lumière
+    arrive();
+    wake();
+  }
+  addEventListener('storage', (e) => { if (e.key === 'bg-mode') changeVersion(); });
+  addEventListener('message', (e) => { if (e.data && e.data.boutique === 'mode') changeVersion(e.data.mode); });
+
   // ---------------------------------------------------------------- mise en page
+  let pret = false;
   function layout() {
     vw = cadre.clientWidth; vh = cadre.clientHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     cvs.width = Math.round(vw * dpr); cvs.height = Math.round(vh * dpr);
-    const f = fmt(), n = niveau(f);
+    const f = fmt();
     root.classList.toggle('format-secours', f !== fmtVoulu());
-    if (f !== F_ || n !== N_ || !videos.length) {
-      F_ = f; N_ = n;
+    if (f !== F_ || !pret) {
+      F_ = f;
+      pret = true;
       if (lecture) { lecture.v.pause(); lecture = null; }
       oublie();
       creeVideos();
       stills.forEach((s) => { s.removeAttribute('src'); s.classList.remove('is-on', 'dessus', 'fondu'); });
-      if (at <= DERNIER) montreArret(at, false);
+      montreArret(at, false);
       arrive();
     }
     render();
@@ -413,7 +459,7 @@
     try { window.parent.postMessage({ boutique: 'bord', dir }, '*'); } catch (e) { /* sans effet */ }
   }
   function avance(dir) {
-    const cible = (lecture ? lecture.i + 1 : at) + dir;
+    const cible = (lecture ? (lecture.inv ? lecture.i : lecture.i + 1) : at) + dir;
     if (cible < 0 || cible > FIN) { bord(dir); return; }
     step(dir);
   }
@@ -484,9 +530,10 @@
     get arret() { return at; },
     get fiche() { return ficheIdx; },
     get format() { return F_; },
-    get niveau() { return N_; },
+    get niveau() { return CODEC; },
+    get version() { return VERSION; },
     get enCours() { return !!lecture || !!fondu; },
     get prend() { return pris(); },
-    get chargees() { return videos.filter((v) => v.readyState >= 3).length; },
+    get chargees() { return Object.values(pistes).filter((v) => v.readyState >= 3).length; },
   };
 })();

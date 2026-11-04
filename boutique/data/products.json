@@ -70,6 +70,56 @@
    "couleur": "or-rose",
    "legacy": "collier-necklace-fire-or-rose",
    "alt": "Collier Fire or rose : chaîne et pendentif flamme couleur or rose, sur un buste dans une vitrine en verre."
+  },
+  {
+   "n": 8,
+   "nom": "Les bracelets",
+   "ref": "Six bracelets",
+   "prix": null,
+   "prix_texte": "Dès 50 €",
+   "collection": "cat-bracelets",
+   "bouton": "Voir tous les bracelets",
+   "liste": [
+    {
+     "nom": "Bracelet double chaîne + perles",
+     "prix": 70,
+     "fiche": "bracelet-double-chaine-perles",
+     "couleur": "culture-2"
+    },
+    {
+     "nom": "Lot de bracelets · X2",
+     "prix": 50,
+     "fiche": "lot-de-bracelets",
+     "couleur": "x2",
+     "epuise": true
+    },
+    {
+     "nom": "Bracelet נ נח + האש שלי",
+     "prix": 100,
+     "fiche": "bracelet-נ-נח-האש-שלי",
+     "couleur": null
+    },
+    {
+     "nom": "Bracelet Cordon Fire · Bordeaux",
+     "prix": 50,
+     "fiche": "bracelet-cordon-fire",
+     "couleur": "bordeaux"
+    },
+    {
+     "nom": "Bracelet Eye Fire",
+     "prix": 75,
+     "fiche": "bracelet-eye-fire-collection",
+     "couleur": "bracelet-eye-fire"
+    },
+    {
+     "nom": "Bracelet Flamme · Silver",
+     "prix": 85,
+     "fiche": "bracelet-flamme",
+     "couleur": "silver"
+    }
+   ],
+   "alt": "La table des bracelets : six bracelets couchés sur des socles de travertin et de marbre noir cerclés de laiton, devant le mur du logo.",
+   "liste_titre": "Les six bracelets"
   }
  ]
 }
