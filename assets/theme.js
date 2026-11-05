@@ -227,7 +227,9 @@
     noeuds.forEach((n) => { n.nodeValue = nettoie(n.nodeValue); });
     root.querySelectorAll('*').forEach((el) => {
       for (const at of el.attributes) {
-        if (EMOJI.test(at.value) && at.name !== 'href' && at.name !== 'src' && at.name !== 'srcset') el.setAttribute(at.name, nettoie(at.value).trim());
+        // data-value : la valeur exacte de l'option Shopify (« Mix Pink 🐊 ») ; nettoyée, la couleur ne serait plus
+        // retrouvée (affichée épuisée, impossible à choisir). Le nom affiché vient de data-label, lui nettoyé.
+        if (EMOJI.test(at.value) && !['href', 'src', 'srcset', 'data-value'].includes(at.name)) el.setAttribute(at.name, nettoie(at.value).trim());
       }
     });
   }

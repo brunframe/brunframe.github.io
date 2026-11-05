@@ -81,11 +81,8 @@
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && this.isOpen()) this.close();
       });
-      // Passage en grand écran, retour depuis le cache : jamais de verrou de défilement résiduel.
-      const wide = window.matchMedia('(min-width: 750px)');
-      const onWide = () => { if (wide.matches && this.isOpen()) this.close(); };
-      if (wide.addEventListener) wide.addEventListener('change', onWide);
-      window.addEventListener('pageshow', () => this.unlock());
+      // Retour depuis le cache : jamais de verrou de défilement résiduel. (Le volet sert à toutes les largeurs.)
+      window.addEventListener('pageshow', () => { if (!this.isOpen()) this.unlock(); });
     },
 
     isOpen() { return this.root.classList.contains('is-open'); },

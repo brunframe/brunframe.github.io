@@ -164,8 +164,19 @@
       let match = null;
       if (id) match = this.data.variants.find((v) => v.id === id);
       if (!match && couleur && this.data.colorIndex >= 0) {
+        const ci = this.data.colorIndex;
         const target = normalize(couleur);
-        match = this.data.variants.find((v) => normalize(v.options[this.data.colorIndex]) === target);
+        match = this.data.variants.find((v) => normalize(v.options[ci]) === target);
+        // anciennes adresses où l'apostrophe est devenue un tiret (« camel-00-s » pour « Camel 00’s »)
+        const serre = (s) => s.replace(/-/g, '');
+        if (!match) match = this.data.variants.find((v) => serre(normalize(v.options[ci])) === serre(target));
+        // « …-2 » : la deuxième des couleurs qui s'écrivent pareil (« Fire & Petek » et « Fire Petek »)
+        const rang = !match && target.match(/^(.+)-(\d+)$/);
+        if (rang) {
+          const memes = this.data.variants.filter((v) => normalize(v.options[ci]) === rang[1]);
+          const valeur = [...new Set(memes.map((v) => v.options[ci]))][Number(rang[2]) - 1];
+          if (valeur) match = memes.find((v) => v.options[ci] === valeur);
+        }
       }
       if (match) {
         if (fromHistory || match.id !== this.current.id || this.state.some((s) => s === null)) {
@@ -230,7 +241,7 @@
         $$('[data-value]', picker).forEach((b) => b.setAttribute('aria-pressed', b.dataset.value === value ? 'true' : 'false'));
         const label = $('[data-picker-value]', picker);
         if (label) {
-          if (index === this.data.colorIndex) roll(label, value || '');
+          if (index === this.data.colorIndex) roll(label, this.colorLabel(value));
           else label.textContent = value || '';
         }
       });
@@ -268,7 +279,9 @@
       this.button.disabled = !variant.available;
       this.button.textContent = variant.available ? this.button.dataset.labelAdd : this.button.dataset.labelSoldout;
       this.button.dataset.variantId = String(variant.id);
-      this.button.dataset.variant = variant.title;
+      this.button.dataset.variant = variant.options
+        .map((o, i) => (i === this.data.colorIndex ? this.colorLabel(o) : o))
+        .filter((o) => o && o !== 'Default Title').join(' / ');
       this.button.dataset.price = String(variant.priceCents);
       this.button.dataset.image = image ? sized(image.src, 600) : '';
       this.button.dataset.url = variant.url || '';
@@ -313,8 +326,18 @@
       if (!variant) return;
       this.previewing = true;
       const label = $('[data-picker-value]', this.pickers.find((p) => Number(p.dataset.optionIndex) === this.data.colorIndex));
-      if (label) label.textContent = value;
+      if (label) label.textContent = this.colorLabel(value);
       this.swapMain(this.image(variant.imagePos) || this.data.images[0], true);
+    }
+
+    // nom affiché d'une couleur : celui de la marque, sans le numéro ajouté par Shopify (snippets/color-label)
+    colorLabel(value) {
+      const scope = [this.root, this.nuancier].filter(Boolean);
+      for (const el of scope) {
+        const b = Array.from(el.querySelectorAll('[data-label]')).find((x) => x.dataset.value === value);
+        if (b) return b.dataset.label;
+      }
+      return value || '';
     }
 
     endPreview() {
@@ -322,7 +345,7 @@
       if (!this.previewing) return;
       this.previewing = false;
       const label = $('[data-picker-value]', this.pickers.find((p) => Number(p.dataset.optionIndex) === this.data.colorIndex));
-      if (label) label.textContent = this.state[this.data.colorIndex] || '';
+      if (label) label.textContent = this.colorLabel(this.state[this.data.colorIndex]);
       this.swapMain(this.image(this.shownPos) || this.data.images[0], true);
     }
 

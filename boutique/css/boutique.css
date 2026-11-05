@@ -69,7 +69,12 @@ html.embarque .entete { pointer-events: none; min-height: 0; padding: 0; }
 html.embarque .passer { position: fixed; left: clamp(18px, 3vw, 44px); bottom: calc(env(safe-area-inset-bottom) + 18px); pointer-events: auto; z-index: 40; background: rgba(246, 240, 229, .78); padding: 0 12px 3px; min-height: 40px; border-bottom: 0; }
 html.embarque .points { top: 50%; }
 /* téléphone, dans l'accueil : l'en-tête du site (60 px) recouvre le haut de l'iframe ; « Passer » et les points passent dessous */
-@media (max-aspect-ratio: 9/10) { html.embarque .points { top: 118px; } html.embarque .passer { bottom: auto; top: 72px; right: 16px; left: auto; } }
+@media (max-aspect-ratio: 9/10) {
+  html.embarque .passer { bottom: auto; top: 70px; right: 14px; left: auto; min-height: 30px; padding: 0 11px 1px; font-size: 10px; letter-spacing: .18em; background: rgba(246, 240, 229, .82); transition: top .5s cubic-bezier(.2, .7, .2, 1); }
+  /* plein écran (6 novembre) : l'en-tête du site s'est effacé, « Passer » remonte en haut */
+  html.embarque.plein .passer { top: calc(env(safe-area-inset-top) + 14px); }
+  .passer-suite { display: none; }
+}
 
 /* --- ouverture --- */
 .ouverture { position: absolute; z-index: 20; left: 0; right: 0; bottom: 0; text-align: center; pointer-events: none; padding: 0 20px calc(3.2svh + env(safe-area-inset-bottom)); }
@@ -160,24 +165,53 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
   .marque span { font-size: 14px; }
   .ouverture { padding-bottom: calc(4.5svh + env(safe-area-inset-bottom)); }
   .titre-ouverture { font-size: clamp(46px, 14.5vw, 84px); }
-  .fiche { left: 0; right: 0; top: auto; bottom: 0; width: auto; transform: none; display: grid; grid-template-columns: 1fr; gap: 0;
-    padding: 22px 20px calc(18px + env(safe-area-inset-bottom)); border-radius: 22px 22px 0 0; border-left: 0; border-right: 0; border-bottom: 0;
-    background: rgba(244, 236, 222, .74); }
-  .fiche-num { margin: 0 0 10px; }
-  .fiche-nom { font-size: clamp(30px, 9vw, 44px); margin-bottom: 10px; padding-right: 112px; }
-  .fiche-ref { margin-bottom: 10px; }
-  .fiche-prix { margin-bottom: 18px; font-size: 20px; }
-  .fiche-details { margin: -6px 0 12px; }
-  .fiche-liste a { padding: 6px 0; min-height: 34px; font-size: 13px; }
-  .fiche .bouton { width: 100%; min-height: 54px; }
-  .fiche-nav { position: absolute; top: 16px; right: 16px; margin: 0; }
-  .points { left: 50%; top: calc(env(safe-area-inset-top) + 62px); transform: translateX(-50%); flex-direction: row; }
-  .point { width: 30px; height: 30px; }
-  .fin { left: 0; right: 0; bottom: 0; width: auto; transform: none; padding: 24px 20px calc(20px + env(safe-area-inset-bottom));
-    border-radius: 22px 22px 0 0; border-left: 0; border-right: 0; border-bottom: 0; background: rgba(244, 236, 222, .74); }
-  .fin-titre { font-size: clamp(30px, 9vw, 44px); margin-bottom: 16px; }
-  .fin .bouton { width: 100%; min-height: 54px; }
+  /* téléphone (5 novembre) : le bijou en entier au-dessus des textes. L'image est calée en bas (le pendentif remonte) ;
+     plus de carte : le nom et le prix sont posés sur l'image, sur un voile sombre qui s'arrête sous le pendentif ;
+     ni points de progression ni référence (elle redit le nom) ; « Passer » devient un petit bouton */
+  .arret, .marches video { object-position: 50% var(--ancre-y, 100%); }   /* calage calculé par la page (boutique.js) */
+  .format-secours .arret, .format-secours .marches video { object-position: 50% 50%; }
+  .fiche { left: 0; right: 0; top: auto; bottom: 0; width: auto; transform: none; display: block; color: var(--ivoire);
+    padding: 52px 20px calc(16px + env(safe-area-inset-bottom)); border: 0; border-radius: 0;
+    background: linear-gradient(to top, rgba(14, 10, 7, .8) 0%, rgba(14, 10, 7, .6) 52%, rgba(14, 10, 7, 0) 100%);
+    -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .fiche-num { margin: 0 0 6px; font-size: 11px; color: rgba(246, 240, 229, .72); }
+  .fiche-nom { font-size: clamp(24px, 7.2vw, 30px); margin: 0 0 8px; }
+  .fiche-ref, .fiche-details { display: none; }
+  .fiche-prix { display: inline-block; margin: 0 20px 0 0; font-size: 15px; vertical-align: middle; }
+  .fiche .fiche-astuce { margin: 0 0 4px; font-size: 12px; color: rgba(246, 240, 229, .78); }
+  .fiche .bouton { display: inline-flex; width: auto; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ivoire);
+    vertical-align: middle; font-size: 11px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .fiche-nav { position: absolute; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); margin: 0; gap: 8px; }
+  .fiche .rond { width: 40px; height: 40px; border-color: rgba(246, 240, 229, .5); color: var(--ivoire); }
+  .fiche .rond:hover, .fiche .rond:focus-visible { background: var(--ivoire); color: var(--encre); }
+  .points { display: none; }
+  .fin { left: 0; right: 0; bottom: 0; width: auto; transform: none; padding: 64px 20px calc(22px + env(safe-area-inset-bottom));
+    border: 0; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: linear-gradient(to top, rgba(14, 10, 7, .74) 0%, rgba(14, 10, 7, .5) 52%, rgba(14, 10, 7, 0) 100%); }
+  .fin-titre { font-size: clamp(26px, 7.6vw, 32px); margin-bottom: 14px; color: var(--ivoire); }
+  .fin .bouton { min-height: 46px; padding: 0 26px; border-color: rgba(246, 240, 229, .72); color: var(--ivoire); }
   .diaporama-liste img { aspect-ratio: 9 / 13; }
+}
+/* téléphone étroit (320 à 380 px) : le lien passe sous le prix, les flèches gardent leur place à droite */
+@media (max-aspect-ratio: 9/10) and (max-width: 380px) {
+  .fiche .bouton { display: flex; width: max-content; }
+  .fiche-prix { display: block; margin: 0 0 2px; }
+}
+/* tablette en portrait (6 novembre) : la même fiche que sur téléphone, à l'échelle de l'écran (elle paraissait minuscule) */
+@media (max-aspect-ratio: 9/10) and (min-width: 700px) {
+  .fiche { padding: 96px 48px calc(40px + env(safe-area-inset-bottom)); }
+  .fiche-num { font-size: 13px; margin-bottom: 10px; }
+  .fiche-nom { font-size: clamp(40px, 6vw, 60px); margin-bottom: 14px; }
+  .fiche-prix { font-size: 20px; margin-right: 28px; }
+  .fiche .fiche-astuce { font-size: 15px; }
+  .fiche .bouton { font-size: 13px; min-height: 52px; }
+  .fiche-nav { right: 40px; bottom: calc(40px + env(safe-area-inset-bottom)); gap: 12px; }
+  .fiche .rond { width: 56px; height: 56px; }
+  .fin { padding: 96px 48px calc(48px + env(safe-area-inset-bottom)); }
+  .fin-titre { font-size: clamp(40px, 6vw, 60px); margin-bottom: 22px; }
+  .fin .bouton { min-height: 56px; padding: 0 36px; font-size: 13px; }
+  html.embarque .passer { top: 86px; right: 24px; min-height: 40px; padding: 0 16px 1px; font-size: 12px; }
+  html.embarque.plein .passer { top: calc(env(safe-area-inset-top) + 24px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .kb.on, .invite i, html.js .ouverture { animation: none; }
@@ -194,6 +228,7 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
 .format-secours .arret, .format-secours .marches video { object-fit: contain; }
 .marches video { opacity: 0; z-index: 3; pointer-events: none; transition: opacity .35s linear; }
 .marches video.is-on { opacity: 1; transition-duration: .12s; }
+.marches video.devant { z-index: 4; }                    /* la marche en cours passe devant (demi-tour) */
 .cadre .reflet, .cadre .balayage, .cadre .vignette { z-index: 6; }
 .cadre .eclats { z-index: 7; }
 .chargement { position: absolute; z-index: 30; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 22px); width: 46px; height: 2px; margin-left: -23px; background: rgba(246, 240, 229, .25); overflow: hidden; opacity: 0; transition: opacity .3s; pointer-events: none; }
@@ -241,3 +276,25 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
   letter-spacing: .24em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s; }
 .intro__entrer:hover, .intro__entrer:focus-visible { background: var(--ivoire); color: var(--encre); }
 @media (prefers-reduced-motion: reduce) { .gros__img { transition: opacity .2s ease; transform: none; } }
+
+/* --- télé (6 novembre) : au-delà de 1900 px en paysage, la fiche et les commandes lisibles à trois mètres --- */
+@media (min-width: 1900px) and (min-aspect-ratio: 9/10) {
+  .fiche { width: clamp(430px, 26vw, 640px); padding: clamp(42px, 2.4vw, 60px); }
+  .fiche-num { font-size: 16px; margin-bottom: 26px; }
+  .fiche-nom { font-size: clamp(52px, 2.9vw, 76px); margin-bottom: 20px; }
+  .fiche-ref { font-size: 20px; }
+  .fiche-prix { font-size: 30px; margin-bottom: 36px; }
+  .bouton { min-height: 68px; padding: 0 44px; font-size: 15px; }
+  .rond { width: 64px; height: 64px; }
+  .rond svg { width: 24px; height: 24px; }
+  .point { width: 56px; height: 36px; }
+  .point::before { width: 11px; height: 11px; }
+  .point.salle::before { width: 8px; height: 8px; }
+  .passer { font-size: 15px; min-height: 56px; }
+  html.embarque .passer { padding: 0 18px 4px; min-height: 52px; font-size: 14px; }
+  .fin { width: min(760px, calc(100vw - 36px)); }
+  .fin-titre { font-size: clamp(52px, 3vw, 76px); margin-bottom: 30px; }
+  .gros__nom { font-size: clamp(40px, 2.4vw, 56px); }
+  .gros__prix { font-size: 22px; }
+  .gros__fermer { font-size: 15px; min-height: 56px; padding: 0 22px; }
+}

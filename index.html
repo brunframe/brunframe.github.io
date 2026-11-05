@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="fr" dir="ltr" class="no-js" data-theme="blanc">
   <head>
+    <meta name="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#FFFFFF" data-theme-color>
-    <meta name="robots" content="noindex, nofollow"><title>Breslev Gang</title>
+    <title>Breslev Gang</title>
       <meta name="description" content="">
 
     <meta property="og:site_name" content="Breslev Gang">
@@ -127,7 +128,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav><div class="menu__foot">
           <span class="menu__label">Affichage</span>
           <button type="button" class="mode-toggle mode-toggle--menu" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">
@@ -166,12 +167,17 @@
     </h1><p class="hero__phrase display" data-anim="hero-phrase">Pas qu'un collier. Une protection.</p><a class="hero__lien link-btn" href="catalogue.html">Voir les pièces</a></div><button type="button" class="hero__toggle" data-hero-toggle aria-pressed="false" hidden>Pause</button></section>
 
 
-</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html" title="La boutique : sept vitrines et la table des bracelets" loading="lazy" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
+</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html" title="La boutique : six vitrines et la table des bracelets" loading="lazy" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
 </section>
 <style>
   .boutique-immersive { position: relative; height: 100vh; height: 100svh; min-height: 520px; background: #1b1510 var(--attente) center / cover no-repeat; }
   @media (max-aspect-ratio: 9/10) { .boutique-immersive { background-image: var(--attente-portrait); } }
   .boutique-immersive__cadre { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  /* téléphone et tablette en portrait : l'animation en plein écran, sans l'en-tête du site par-dessus (6 novembre) */
+  @media (max-aspect-ratio: 9/10) {
+    .header { transition: transform .5s cubic-bezier(.2, .7, .2, 1), background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+    html.boutique-plein-ecran .header { transform: translateY(-100%); }
+  }
   .boutique-immersive__secours { position: absolute; inset: auto 0 24px; text-align: center; color: #F6F0E5; }
 </style>
 <script>
@@ -190,6 +196,8 @@
     // la section remplit l'écran quand son haut est en haut de la fenêtre
     function etat(toujours) {
       var a = Math.abs(root.getBoundingClientRect().top) < 4;
+      // la boutique remplit l'écran : sur téléphone, l'en-tête du site s'efface (plein écran) et revient dès qu'on la quitte
+      document.documentElement.classList.toggle('boutique-plein-ecran', a);
       if (a !== aligne || toujours) { aligne = a; dire({ boutique: 'cadre', aligne: a }); }
     }
     function visible(r) { return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / window.innerHeight; }
@@ -223,40 +231,6 @@
     });
   })();
 </script>
-
-
-</div><div id="shopify-section-template--1__chapitres" class="shopify-section section-chapitres"><section class="chapitres" id="collections" data-anim="chapitres" aria-label="Les collections"><article class="chapitre chapitre--gauche"  data-reveal>
-      <a class="chapitre__media" href="categorie-univers-flamme.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-aech-cheli.webp" alt="Collier Flamme Diamant couleur or sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
-      <div class="chapitre__texte"><p class="chapitre__surtitre" lang="he" dir="rtl">אש שלי</p><h2 class="display chapitre__titre">Aech cheli</h2><p class="chapitre__phrase">« Mon feu brûlera jusqu'à la venue du Machia'h. »</p><a class="link-btn chapitre__lien" href="categorie-univers-flamme.html">Les flammes</a></div>
-    </article><article class="chapitre chapitre--droite"  data-reveal>
-      <a class="chapitre__media" href="categorie-cat-petek.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-petek.webp" alt="Petek Blue Tiger sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
-      <div class="chapitre__texte"><p class="chapitre__surtitre" lang="he" dir="rtl">פתק</p><h2 class="display chapitre__titre">Le Petek</h2><p class="chapitre__phrase">Le billet du 17 Tamouz 1922.</p><a class="link-btn chapitre__lien" href="categorie-cat-petek.html">Les Petek</a></div>
-    </article><article class="chapitre chapitre--gauche"  data-reveal>
-      <a class="chapitre__media" href="categorie-univers-mezouza.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-mezouza.webp" alt="Collier Pendentif Mezouza sur un buste de velours noir, dans sa vitrine." width="1200" height="1500" loading="lazy" decoding="async"></a>
-      <div class="chapitre__texte"><h2 class="display chapitre__titre">Mezouza</h2><p class="chapitre__phrase">Le rappel des portes, porté sur soi.</p><a class="link-btn chapitre__lien" href="categorie-univers-mezouza.html">Les Mezouza</a></div>
-    </article><article class="chapitre chapitre--droite"  data-reveal>
-      <a class="chapitre__media" href="categorie-cat-bracelets.html" tabindex="-1" aria-hidden="true"><img class="chapitre__img" src="assets/chapitre-bracelets.webp" alt="Six bracelets sous cloches de verre, sur des colonnes de travertin et de marbre noir." width="1200" height="1500" loading="lazy" decoding="async"></a>
-      <div class="chapitre__texte"><h2 class="display chapitre__titre">Les bracelets</h2><p class="chapitre__phrase">Le chant du Petek, au poignet.</p><a class="link-btn chapitre__lien" href="categorie-cat-bracelets.html">Les bracelets</a></div>
-    </article></section>
-
-<style>
-  .chapitres { padding: var(--space-section) 0 0; display: grid; gap: clamp(56px, 10vw, 160px); }
-  .chapitre { display: grid; gap: 22px; }
-  .chapitre__media { display: block; overflow: hidden; background: var(--media-bg); aspect-ratio: 4 / 5; }
-  .chapitre__img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.001); transition: transform 1.2s var(--ease); }
-  @media (hover: hover) { .chapitre__media:hover .chapitre__img { transform: scale(1.03); } }
-  .chapitre__texte { padding: 0 var(--gutter); }
-  .chapitre__surtitre { margin: 0 0 10px; font-size: 18px; color: var(--grey); text-align: left; }   /* hébreu lu de droite à gauche, aligné avec le titre */
-  .chapitre__titre { font-size: clamp(44px, 12vw, 120px); line-height: 1; margin: 0 0 14px; }
-  .chapitre__phrase { margin: 0 0 22px; max-width: 34ch; font-weight: 300; font-size: 17px; line-height: 1.5; }
-  @media (min-width: 990px) {
-    .chapitre { grid-template-columns: 7fr 5fr; align-items: center; gap: clamp(40px, 5vw, 96px); padding: 0 var(--gutter); }
-    .chapitre--droite { grid-template-columns: 5fr 7fr; }
-    .chapitre--droite .chapitre__media { order: 2; }
-    .chapitre__texte { padding: 0; }
-    .chapitre__media { aspect-ratio: 4 / 5; max-height: calc(100svh - 120px); }
-  }
-</style>
 
 
 </div><div id="shopify-section-template--1__catalogue" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" />
@@ -375,7 +349,7 @@
   </a><a class="link-btn card__add" href="products/bracelet-cordon-fire.html" data-anim="card-choose">Choisir</a></li>
 <li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal>
   <a class="card__link" href="products/sweat.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F213E08E-252E-4428-A893-9715BCE38DDF.webp" srcset="/photos/800/F213E08E-252E-4428-A893-9715BCE38DDF.webp 640w, /photos/1600/F213E08E-252E-4428-A893-9715BCE38DDF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Sweat" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp" srcset="/photos/800/breslev-gang_sweat_rav-israel_blanc_face.webp 760w, /photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp 760w" width="760" height="760" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Sweat" data-card-img></div>
     <h3 class="card__name">Sweat</h3>
     <p class="card__price"><span class="price"><span class="price__value">120 €</span>
 </span>
@@ -389,7 +363,7 @@
       data-name="Sweat"
       data-variant="Rav Israël / Blanc / XS"
       data-price="12000"
-      data-image="/photos/800/F213E08E-252E-4428-A893-9715BCE38DDF.webp"
+      data-image="/photos/800/breslev-gang_sweat_rav-israel_blanc_face.webp"
       data-url="products/sweat.html"
       data-requires-size
       
@@ -445,7 +419,7 @@
     </a>
   </li><li class="categories__item" data-reveal data-anim="categorie" >
     <a class="categories__link" href="categorie-cat-vetements.html">
-      <div class="categories__media media media--square"><img src="/photos/1600/F213E08E-252E-4428-A893-9715BCE38DDF.webp" srcset="/photos/800/F213E08E-252E-4428-A893-9715BCE38DDF.webp 640w, /photos/1600/F213E08E-252E-4428-A893-9715BCE38DDF.webp 1280w" width="1280" height="1600" loading="lazy" sizes="(min-width: 750px) 33vw, 50vw" alt="Vêtements"></div>
+      <div class="categories__media media media--square"><img src="/photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp" srcset="/photos/800/breslev-gang_sweat_rav-israel_blanc_face.webp 760w, /photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp 760w" width="760" height="760" loading="lazy" sizes="(min-width: 750px) 33vw, 50vw" alt="Vêtements"></div>
       <span class="categories__name">Vêtements</span>
     </a>
   </li><li class="categories__item" data-reveal data-anim="categorie" >
@@ -493,7 +467,7 @@
         </li></ul>
 </section>
 </div><div id="shopify-section-template--1__histoire" class="shopify-section section-histoire"><section class="histoire section" id="histoire" data-anim="histoire">
-  <div class="section__head"><h2 class="display section__title" data-anim="histoire-title" data-reveal>Une flamme qui ne s'éteint pas</h2></div><ol class="histoire__steps" role="list"><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--remplir"><img class="histoire__img" src="assets/histoire-nom.webp" alt="Le logo Breslev Gang au mur de la boutique" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
+  <div class="section__head"><h2 class="display section__title" data-anim="histoire-title" data-reveal>Une flamme qui ne s'éteint pas</h2></div><ol class="histoire__steps" role="list"><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--entier"><img class="histoire__img" src="assets/histoire-nom.webp" alt="Collier Breslev Fire &amp; Petek" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
           <span class="histoire__num" aria-hidden="true">01</span><h3 class="display histoire__title" data-anim="parallax-title"><em>Le</em> nom</h3><div class="histoire__text" data-anim="histoire-text"><p>Breslev. En hébreu, les mêmes lettres que « un cœur content » et « un cœur de chair ». La ville où Rabbi Na’hman s’installe en 1802, et le nom qu’il laisse aux siens : « Nos fidèles seront pour toujours appelés du nom de la ville de Breslev. »</p></div>
         </div>
       </li><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--entier"><img class="histoire__img" src="assets/histoire-flamme.webp" alt="Flamme Diamant" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
@@ -505,7 +479,7 @@
       </li><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--entier"><img class="histoire__img" src="assets/histoire-symboles.webp" alt="Maguen David Diamant" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
           <span class="histoire__num" aria-hidden="true">04</span><h3 class="display histoire__title" data-anim="parallax-title"><em>Les</em> symboles</h3><div class="histoire__text" data-anim="histoire-text"><p>La Mezouza, qui garde les portes des maisons juives avec son parchemin du Chema Israël. Le Maguen David, « bouclier de David ». Haï, <span lang="he" dir="rtl" class="hebreu">חי</span>, « vivant », dont les lettres valent 18. Pas qu’un collier : une protection.</p></div>
         </div>
-      </li><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--remplir"><img class="histoire__img" src="assets/histoire-joie.webp" alt="L&#39;entrée de la boutique" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
+      </li><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--entier"><img class="histoire__img" src="assets/histoire-joie.webp" alt="Bracelet Flamme coloré or rose" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
           <span class="histoire__num" aria-hidden="true">05</span><h3 class="display histoire__title" data-anim="parallax-title"><em>La</em> joie</h3><div class="histoire__text" data-anim="histoire-text"><p>« C’est une grande mitsva d’être tout le temps joyeux ! » « Le désespoir n’existe pas. » « Le monde entier est un pont très étroit. L’essentiel est de ne pas avoir peur du tout ! » Des mots à garder près du cœur.</p></div>
         </div>
       </li><li class="histoire__step histoire__step--image" data-anim="histoire-step" data-reveal ><figure class="histoire__figure histoire__figure--entier"><img class="histoire__img" src="assets/histoire-presse.webp" alt="Collier pendentif Mezouza" width="1200" height="1500" loading="lazy" decoding="async"></figure><div class="histoire__corps">
@@ -542,7 +516,9 @@
           </button>
         </div></div>
 
-    <p class="footer__copy">© 2026 Breslev Gang</p><p class="footer__concept">Concept de refonte — démonstration réalisée par BRUNFRAME. Boutique officielle : breslevgang.com</p></div>
+    <p class="footer__copy">© 2026 Breslev Gang</p>
+
+  </div>
 </footer>
 
 

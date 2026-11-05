@@ -2,7 +2,8 @@
  * premières vitrines jusqu'à la première pièce ; puis on marche de vitrine en vitrine autour du cercle, et la visite
  * finit face au grand logo Breslev Gang, au fond de la salle (le film de la marque est déjà en haut de l'accueil).
  *
- * Arrêts : 0 entrée · 1 à 7 les sept vitrines (une par pièce de data/products.json) · 8 le mur au logo.
+ * Arrêts : 0 entrée · 1 à 6 les six vitrines (une par pièce de data/products.json) · 7 la table des bracelets · 8 le mur au logo.
+ * Depuis le 5 novembre, les images et les marches sont faites en 2,5D (_build/v2/) : buste neutre, colliers tirés de leurs photos.
  * À chaque arrêt, une image fixe ; entre deux arrêts (en avançant), une vidéo de marche calculée en 4K à 60 images/s,
  * lue par le décodeur matériel du navigateur (fluide, aucune image à décoder par le script). Le dernier plan d'une vidéo
  * est identique à l'image de l'arrêt suivant : le relais est invisible. En reculant, fondu enchaîné entre les arrêts.
@@ -43,7 +44,8 @@
   const CODEC = HEVC ? 'hevc' : 'h264';
   const VIDEO_OK = HEVC || !!essai.canPlayType('video/mp4; codecs="avc1.640033"');
   // boutique allumée (site en Blanc) ou éteinte (site en Noir) : le bouton Blanc/Noir du site éteint vraiment la boutique
-  const lireVersion = () => { try { return localStorage.getItem('bg-mode') === 'noir' ? 'eteint' : 'allume'; } catch (e) { return 'allume'; } };
+  // une seule salle, allumée (5 novembre : six colliers, buste neutre ; l'ancienne salle éteinte montrait les anciens colliers)
+  const lireVersion = () => 'allume';
   let VERSION = lireVersion();
   const NV = PRODUITS.length;                                         // vitrines, une pièce chacune
   // segment i : de l'arrêt i à l'arrêt i + 1 (i : l'entrée ; v2… : d'une vitrine à la suivante ; f : vers le logo)
@@ -51,9 +53,24 @@
   const FIN = SEGMENTS.length;                                        // dernier arrêt : le mur au logo
   const DERNIER = NV;                                                 // dernière vitrine
   const deux = (n) => String(n).padStart(2, '0');
-  const arretSrc = (f, i) => `assets/film/${VERSION}/${f}/arrets/arret-${i}.webp`;
+  // définition (6 novembre) : chaque écran reçoit des images et des vidéos au moins aussi grandes que ses pixels réels
+  // (téléphone 900 × 1600 ou 1440 × 2560 ; ordinateur et télé 1920 × 1080, 2560 × 1440 ou 3840 × 2160) ;
+  // connexion lente ou « économie de données » : la plus légère. Les gros plans et la levée des bracelets restent communs.
+  const reseau = navigator.connection || {};
+  const LENT = !!reseau.saveData || /(^|-)2g|3g/.test(reseau.effectiveType || '');
+  let F_ = fmt();             // format affiché (9x16 ou 16x9) ; DEF : sa définition ('', '-hd', '-uhd')
+  let DEF = '';
+  function definition(f) {
+    if (LENT) return '';
+    const p = window.devicePixelRatio || 1;
+    const w = (f === '9x16' ? Math.max(vw, vh * 9 / 16) : Math.max(vw, vh * 16 / 9)) * p;   // largeur affichée (cover)
+    if (f === '9x16') return w > 1000 ? '-hd' : '';
+    return w > 2700 ? '-uhd' : w > 1980 ? '-hd' : '';
+  }
+  const dossier = (f) => `${f}${f === F_ ? DEF : ''}`;
+  const arretSrc = (f, i) => `assets/film/${VERSION}/${dossier(f)}/arrets/arret-${i}.webp`;
   // segment i joué à l'endroit (de l'arrêt i à i + 1) ou à l'envers (de i + 1 à i : on revient sans fondu)
-  const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${f}/${CODEC}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
+  const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${dossier(f)}/${CODEC}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
 
   // ---------------------------------------------------------------- version statique (mouvement réduit)
   const liste = $('.diaporama-liste');
@@ -106,7 +123,8 @@
   const dots = $$('.point', points);
 
   // ---------------------------------------------------------------- état
-  let F_ = fmt();
+  const BAS_PENDENTIFS = 0.76;   // portrait : bas du plus long pendentif (fraction de l'image 9:16, cadrage du 6 novembre)
+  let ANCRE_Y = 1;
   let at = 0;                 // arrêt courant (entier)
   let pos = 0;                // position continue (pour les textes et les fondus)
   let lecture = null;         // { i, v, inv } : vidéo de marche en cours (inv : à l'envers)
@@ -218,8 +236,10 @@
     entreeFaite = entreeFaite || entree;
     poseTable();
     if (v.currentTime) v.currentTime = 0;
+    v.playbackRate = Math.min(1.9, 1 + 0.45 * Math.abs(enAttente));   // plus vive si d'autres pas attendent
     const p = v.play();                      // appelé dans le geste de l'utilisateur (iPhone, mode économie d'énergie)
-    v.classList.add('is-on');                // l'affiche de la vidéo est l'image de l'arrêt : rien ne bouge avant la première image
+    Object.values(pistes).forEach((x) => { if (x !== v) x.classList.remove('devant'); });
+    v.classList.add('is-on', 'devant');      // l'affiche de la vidéo est l'image de l'arrêt : rien ne bouge avant la première image
     // entre deux vitrines, jamais d'attente visible : une marche qui ne démarre pas tout de suite laisse place à un fondu
     const secours = entree ? 0 : setTimeout(() => {
       if (lecture && lecture.v === v && v.currentTime === 0 && v.readyState < 3) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
@@ -241,6 +261,7 @@
       if (entree && !geste) { entreeFaite = false; return; } // lecture refusée sans geste (iPhone en économie d'énergie) : on attend le geste
       sautVers(but);
     });
+    prepare(i, !inv);                        // la même marche dans l'autre sens : demi-tour possible à tout moment
     if (inv) { prepare(i - 1, true); precharge(i - 1); } else { prepare(i + 1, false); precharge(i + 2); }
     wake();
   }
@@ -270,7 +291,44 @@
     prepare(at, false);                     // la marche suivante (et le retour) se chargent pendant qu'on regarde la vitrine
     prepare(at - 1, true);
     precharge(at + 1);
-    if (enAttente) { const d = enAttente; enAttente = 0; setTimeout(() => step(d), 120); }
+    // pas demandés pendant la marche : on repart aussitôt, un pas à la fois (le relais est la même image)
+    if (enAttente) {
+      const d = Math.sign(enAttente);
+      enAttente -= d;
+      if (at + d < 0 || at + d > FIN) enAttente = 0;
+      else goTo(at + d);
+    }
+  }
+  // vitesse de la marche : un peu plus vive quand on a déjà demandé les vitrines suivantes (on fait défiler)
+  function cadence() {
+    if (!lecture) return;
+    const r = Math.min(1.9, 1 + 0.45 * Math.abs(enAttente));
+    if (Math.abs(lecture.v.playbackRate - r) > 0.01) lecture.v.playbackRate = r;
+  }
+  // demi-tour pendant une marche : la même marche à l'envers, depuis l'image où l'on est (aucune attente, aucun fondu)
+  function demiTour() {
+    const cur = lecture;
+    const autre = piste(cur.i, !cur.inv);
+    const t = cur.v.duration ? cur.v.duration - cur.v.currentTime : NaN;
+    if (!VIDEO_OK || !autre.dataset.src || autre.readyState < 1 || !(t >= 0)) { enAttente = cur.inv ? 1 : -1; return false; }
+    enAttente = 0;
+    autre.playbackRate = 1;
+    const part = () => {
+      if (lecture !== suite) return;
+      cur.v.pause();
+      autre.classList.add('is-on', 'devant');
+      cur.v.classList.remove('devant');
+      const p = autre.play();
+      if (p && p.catch) p.catch(() => { if (lecture === suite) { lecture = null; sautVers(suite.inv ? suite.i : suite.i + 1); } });
+      setTimeout(() => { if (!(lecture && lecture.v === cur.v)) cur.v.classList.remove('is-on'); }, 140);
+    };
+    const suite = { i: cur.i, v: autre, inv: !cur.inv };
+    lecture = suite;
+    cur.v.playbackRate = 1;
+    try { autre.currentTime = Math.max(0, Math.min(t, (autre.duration || t) - 0.04)); } catch (e) { /* sans effet */ }
+    if (autre.seeking) autre.addEventListener('seeked', part, { once: true }); else part();
+    wake();
+    return true;
   }
   function goTo(n, immediat) {
     n = clamp(Math.round(n), 0, FIN);
@@ -287,7 +345,14 @@
     else sautVers(n);
   }
   function step(d) {
-    if (lecture) { enAttente = d; return; }
+    if (lecture) {
+      const sens = lecture.inv ? -1 : 1;
+      if (d === sens || enAttente) {          // même sens : le pas attend son tour (jusqu'à trois), la marche accélère
+        enAttente = clamp(enAttente + d, -3, 3);
+        cadence();
+      } else demiTour();                      // l'autre sens : demi-tour tout de suite
+      return;
+    }
     goTo(at + d);
   }
 
@@ -300,6 +365,7 @@
     F.nom.textContent = p.nom;
     F.ref.textContent = p.ref;
     F.refl.firstChild.textContent = p.liste ? '' : 'Réf. ';
+    F.refl.hidden = !p.ref || p.ref === p.nom;             // la référence qui redit le nom ne s'affiche pas
     F.prix.textContent = prixArret(p);
     F.lien.href = lienArret(p);
     F.lien.textContent = p.bouton || 'Découvrir la pièce';
@@ -374,7 +440,8 @@
   function versEcran(fx, fy) {               // fraction de l'image (16:9 ou 9:16) -> pixels de la fenêtre (object-fit: cover ou contain)
     const ar = F_ === '16x9' ? 16 / 9 : 9 / 16;
     const h = F_ === fmtVoulu() ? Math.max(vh, vw / ar) : Math.min(vh, vw / ar), w = h * ar;
-    return [(vw - w) / 2 + fx * w, (vh - h) / 2 + fy * h];
+    const ancre = F_ === fmtVoulu() ? ANCRE_Y : 0.5;           // même calage que les images (object-position)
+    return [(vw - w) / 2 + fx * w, (vh - h) * ancre + fy * h];
   }
   function sparkle(dt) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -622,7 +689,8 @@
   // ---------------------------------------------------------------- lumière : allumée ou éteinte comme le site
   function changeVersion(mode) {
     // le mode vient du message du site (boutique hébergée ailleurs : pas de stockage commun), sinon du stockage partagé
-    const v = mode ? (mode === 'noir' ? 'eteint' : 'allume') : lireVersion();
+    // depuis le 5 novembre, une seule salle (allumée) : le mode Noir du site ne change plus la boutique
+    const v = lireVersion(mode);
     if (v === VERSION) return;
     VERSION = v;
     if (lecture) { lecture.v.pause(); lecture.v.classList.remove('is-on'); lecture = null; }
@@ -641,6 +709,23 @@
 
   // ---------------------------------------------------------------- mise en page
   let pret = false;
+  // téléphone et tablette en portrait : la fiche (nom, prix) est posée en bas de l'image. On coupe le moins possible du
+  // haut (le cou, le départ de la chaîne), tant que le bas des pendentifs (BAS_PENDENTIFS de la hauteur de l'image) reste
+  // au-dessus de la fiche. iPad : l'image descend et montre le cou ; petit téléphone : elle reste calée en bas.
+  // Recalculé quand la fiche change de taille (police chargée, nom sur deux lignes).
+  function calage(f) {
+    if (f === '9x16') {
+      const ih = Math.max(vh, vw * 16 / 9), libre = 1 - vh / ih;      // part de l'image qui ne tient pas à l'écran
+      // hauteur occupée par le texte de la fiche (son voile dégradé au-dessus peut passer sur le pendentif), plus 12 px
+      const num = fiche && fiche.querySelector('.fiche-num');
+      const texteH = fiche && num && fiche.offsetHeight ? fiche.offsetHeight - num.offsetTop + 12 : 0.24 * vh;
+      const coupe = Math.max(0, Math.min(libre, BAS_PENDENTIFS - (vh - texteH) / ih));
+      ANCRE_Y = libre > 0.001 ? coupe / libre : 1;
+    } else ANCRE_Y = 0.5;
+    document.documentElement.style.setProperty('--ancre-y', `${(ANCRE_Y * 100).toFixed(2)}%`);
+  }
+  if (window.ResizeObserver && fiche) new ResizeObserver(() => { if (vw) calage(F_); }).observe(fiche);
+
   function layout() {
     vw = cadre.clientWidth; vh = cadre.clientHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -649,7 +734,13 @@
     tableSale = true;
     const f = fmt();
     root.classList.toggle('format-secours', f !== fmtVoulu());
-    if (f !== F_ || !pret) {
+    calage(f);
+    // définition : on ne redescend jamais en cours de visite (une rotation de l'écran ne recharge pas tout)
+    const d = definition(f);
+    const plus = (x) => ['', '-hd', '-uhd'].indexOf(x);
+    const changeDef = f !== F_ ? d : (plus(d) > plus(DEF) ? d : DEF);
+    if (f !== F_ || !pret || changeDef !== DEF) {
+      DEF = changeDef;
       F_ = f;
       pret = true;
       if (lecture) { lecture.v.pause(); lecture = null; }
@@ -690,6 +781,7 @@
       if (e.source !== window.parent || !e.data || e.data.boutique !== 'cadre') return;
       parentRepond = true;
       aligne = !!e.data.aligne;
+      root.classList.toggle('plein', aligne);                  // plein écran : l'en-tête du site s'efface (portrait)
       stage.style.touchAction = pris() ? 'none' : 'pan-y';   // à moitié visible, le doigt fait défiler le site
       if (aligne) entreeAuto(1100); else clearTimeout(entreeMinuteur);   // la boutique remplit l'écran : on entre
     });
@@ -706,21 +798,29 @@
     if (grosOuvert()) { if (dir > 0) grosVoisin(1); else grosVoisin(-1); return; }
     entreeFaite = true;
     clearTimeout(entreeMinuteur);
-    const cible = (lecture ? (lecture.inv ? lecture.i : lecture.i + 1) : at) + dir;
+    // la vitrine visée compte les pas déjà demandés (on peut faire défiler plusieurs vitrines d'affilée)
+    const cible = (lecture ? (lecture.inv ? lecture.i : lecture.i + 1) : at) + enAttente + dir;
     if (cible < 0 || cible > FIN) { bord(dir); return; }
     step(dir);
   }
-  let wheelGesture = false, wheelTimer = 0, wheelAcc = 0;
+  // molette et pavé tactile : un geste = un pas ; un long défilement continu en demande encore un ou deux
+  let wheelGesture = false, wheelTimer = 0, wheelAcc = 0, wheelPas = 0, wheelLong = 0;
   stage.addEventListener('wheel', (e) => {
     e.preventDefault();
     const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? vh : 1);
     clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => { wheelGesture = false; wheelAcc = 0; }, 180);
-    if (wheelGesture) return;
+    wheelTimer = setTimeout(() => { wheelGesture = false; wheelAcc = 0; wheelPas = 0; wheelLong = 0; }, 180);
+    if (wheelGesture) {
+      if (!pris() || Math.sign(dy) !== wheelPas) return;
+      wheelLong += Math.abs(dy);
+      if (wheelLong >= 650 * (Math.abs(enAttente) + 1) && Math.abs(enAttente) < 2) { wheelLong = 0; avance(wheelPas); }
+      return;
+    }
     wheelAcc += dy;
     if (Math.abs(wheelAcc) >= 24) {
       wheelGesture = true;
-      if (pris()) avance(wheelAcc > 0 ? 1 : -1); else aligner(wheelAcc > 0 ? 1 : -1);
+      wheelPas = wheelAcc > 0 ? 1 : -1;
+      if (pris()) avance(wheelPas); else aligner(wheelPas);
       wheelAcc = 0;
     }
   }, { passive: false });
@@ -789,6 +889,8 @@
     get format() { return F_; },
     get niveau() { return CODEC; },
     get version() { return VERSION; },
+    get definition() { return F_ + DEF; },
+    get ancre() { return ANCRE_Y; },
     get enCours() { return !!lecture || !!fondu; },
     get prend() { return pris(); },
     get chargees() { return Object.values(pistes).filter((v) => v.readyState >= 3).length; },

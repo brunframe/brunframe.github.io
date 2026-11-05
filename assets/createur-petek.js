@@ -61,7 +61,8 @@
   // Pas d'emoji à l'écran (règle de la marque) : certains noms de couleur venus de Shopify en contiennent.
   const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]/gu;
   const propre = (t) => String(t || '').replace(EMOJI, '').replace(/ {2,}/g, ' ').trim();
-  const nomCouleur = (v) => propre(v.couleur || (v.titre === 'Default Title' ? '' : v.titre));
+  // v.nom : le nom donné par la marque, sans le numéro que Shopify ajoute à deux noms identiques (snippets/color-label)
+  const nomCouleur = (v) => propre(v.nom || v.couleur || (v.titre === 'Default Title' ? '' : v.titre));
 
   // photo introuvable : le cadre reste vide, jamais l'icône d'image cassée
   const surveiller = (img) => {
@@ -267,16 +268,16 @@
           disque.style.background = teinte;
           b.appendChild(disque);
         } else {
-          // même vignette que la pastille de la fiche produit (carrée, 160 px, centrée)
+          // même vignette que la pastille de la fiche produit : la photo recadrée sur le pendentif (snippets/pastille-url)
           const image = this.imageDe(v);
-          if (image) {
+          if (image || v.pastille) {
             const img = document.createElement('img');
             img.alt = '';
             img.width = 80;
             img.height = 80;
             img.loading = 'lazy';
             img.decoding = 'async';
-            img.src = adresseImage(image.src, 160, true);
+            img.src = v.pastille || adresseImage(image.src, 160, true);
             surveiller(img);
             b.appendChild(img);
           }
