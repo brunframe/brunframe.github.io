@@ -118,7 +118,7 @@
    ]
   ]
  },
- "note": "7 novembre : film en vraie 3D rendu ici (scene3d.py, film3d.py) en 900 × 1600 et 1920 × 1080 ; les définitions -hd et -uhd ne sont pas livrées (la page retombe sur la définition de base).",
+ "note": "7 novembre : film en vraie 3D (scene3d.py, film3d.py), rendu à 20 images/s puis interpolé par RIFE (post3d.py) en 60 images/s (dossiers h264, hevc) et 120 images/s (h264-120, hevc-120 : la page les choisit sur les écrans à 100 Hz et plus) ; définitions 900 × 1600 et 1920 × 1080.",
  "definitions": {
   "9x16": [
    ""
@@ -126,5 +126,6 @@
   "16x9": [
    ""
   ]
- }
+ },
+ "hz120": []
 }

@@ -74,7 +74,10 @@
   const dossier = (f) => `${f}${f === F_ ? DEF : ''}`;
   const arretSrc = (f, i) => `assets/film/${VERSION}/${dossier(f)}/arrets/arret-${i}.webp`;
   // segment i joué à l'endroit (de l'arrêt i à i + 1) ou à l'envers (de i + 1 à i : on revient sans fondu)
-  const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${dossier(f)}/${CODEC}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
+  // 7 novembre : marches à 60 images/s partout, à 120 sur les écrans rapides (rafraîchissement mesuré au démarrage,
+  // data/salle.json « hz120 » : formats où les fichiers existent) ; iPhone en économie d'énergie (30 Hz) : 60
+  let HZ120 = false;
+  const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${dossier(f)}/${CODEC}${HZ120 && (SALLE.hz120 || []).indexOf(f) >= 0 ? '-120' : ''}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
 
   // ---------------------------------------------------------------- version statique (mouvement réduit)
   const liste = $('.diaporama-liste');
@@ -177,19 +180,47 @@
     Object.values(memoire).forEach((p) => p.then((u) => { if (u) URL.revokeObjectURL(u); }));
     memoire = {};
   }
+  // amorce : la vidéo est lue une fraction de seconde puis remise au début, cachée ; le décodeur est prêt, la marche
+  // démarre dans l'image qui suit le geste (iPhone ne décode rien tant qu'on n'a pas demandé la lecture)
+  function amorce(v) {
+    if (v.dataset.amorce || (lecture && lecture.v === v)) return;
+    v.dataset.amorce = '1';
+    const p = v.play();
+    const stop = () => { if (lecture && lecture.v === v) return; v.pause(); try { v.currentTime = 0; } catch (e) { /* sans effet */ } };
+    if (p && p.then) p.then(stop, () => { delete v.dataset.amorce; }); else stop();
+  }
   function prepare(i, inv) {
-    if (!VIDEO_OK || i < 0 || i >= SEGMENTS.length) return;
+    if (!VIDEO_OK || i < 0 || i >= SEGMENTS.length) return Promise.resolve();
     const v = piste(i, inv);
-    if (v.dataset.charge) return;
+    if (v.dataset.charge) return v.pret || Promise.resolve();
     v.dataset.charge = '1';
     v.poster = arretSrc(F_, inv ? i + 1 : i);
-    telecharge(videoSrc(F_, i, inv)).then((u) => {
+    v.pret = telecharge(videoSrc(F_, i, inv)).then((u) => {
       if (!u || pistes[inv ? `${i}r` : String(i)] !== v || v.dataset.src) return;
       v.dataset.src = 'memoire';
       v.preload = 'auto';
       v.src = u;
       v.load();
+      amorce(v);
     });
+    return v.pret;
+  }
+  // toutes les marches, une à une (la plus probable d'abord) : un pas rapide ne tombe jamais sur une vidéo absente
+  let fileTout = 0, toutEnAttente = false;
+  function prepareTout() {
+    // sous l'accueil, la boutique encore hors de l'écran ne télécharge que sa première marche ; connexion lente :
+    // seulement la marche suivante et le retour (le reste arrive pas à pas)
+    if (LENT) return;
+    if (embarque && !aligne && !entreeFaite) { toutEnAttente = true; return; }
+    toutEnAttente = false;
+    const jeton = ++fileTout;
+    const ordre = [];
+    for (let k = at; k < SEGMENTS.length; k += 1) ordre.push([k, false]);
+    for (let k = at - 1; k >= 0; k -= 1) ordre.push([k, true]);
+    for (let k = 0; k < at; k += 1) ordre.push([k, false]);
+    for (let k = at; k < SEGMENTS.length; k += 1) ordre.push([k, true]);
+    const suite = (n) => { if (n >= ordre.length || jeton !== fileTout) return; prepare(ordre[n][0], ordre[n][1]).then(() => suite(n + 1), () => suite(n + 1)); };
+    suite(0);
   }
   function source(i, inv) {                 // la vidéo n'est pas encore en mémoire : lecture directe depuis le réseau
     const v = piste(i, inv);
@@ -245,9 +276,11 @@
     Object.values(pistes).forEach((x) => { if (x !== v) x.classList.remove('devant'); });
     v.classList.add('is-on', 'devant');      // l'affiche de la vidéo est l'image de l'arrêt : rien ne bouge avant la première image
     // entre deux vitrines, jamais d'attente visible : une marche qui ne démarre pas tout de suite laisse place à un fondu
+    const attente = entree ? 0 : setTimeout(() => { if (lecture && lecture.v === v && v.currentTime === 0) chargement.classList.add('is-on'); }, 220);
     const secours = entree ? 0 : setTimeout(() => {
+      chargement.classList.remove('is-on');
       if (lecture && lecture.v === v && v.currentTime === 0 && v.readyState < 3) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
-    }, 450);
+    }, v.dataset.src === 'memoire' ? 2500 : 1600);
     let filet = 0;
     if (entree && v.readyState < 3) {        // l'entrée se charge encore : un trait discret, puis la marche dès qu'elle est là
       chargement.classList.add('is-on');
@@ -256,9 +289,9 @@
         if (lecture && lecture.v === v && v.currentTime === 0) { v.pause(); v.classList.remove('is-on'); lecture = null; sautVers(but); }
       }, 12000);
     }
-    v.addEventListener('playing', () => { clearTimeout(secours); clearTimeout(filet); chargement.classList.remove('is-on'); }, { once: true });
+    v.addEventListener('playing', () => { clearTimeout(attente); clearTimeout(secours); clearTimeout(filet); chargement.classList.remove('is-on'); }, { once: true });
     if (p && p.catch) p.catch(() => {
-      clearTimeout(secours); clearTimeout(filet);
+      clearTimeout(attente); clearTimeout(secours); clearTimeout(filet);
       chargement.classList.remove('is-on');
       if (!(lecture && lecture.v === v)) return;
       v.classList.remove('is-on'); lecture = null;           // vidéo en échec : elle ne reste pas affichée (son affiche est l'arrêt de départ)
@@ -292,8 +325,9 @@
   }
   function arrive() {
     if (at === ARRET_TABLE) chargeTable();
-    prepare(at, false);                     // la marche suivante (et le retour) se chargent pendant qu'on regarde la vitrine
+    prepare(at, false);                     // la marche suivante (et le retour) d'abord, puis toutes les autres
     prepare(at - 1, true);
+    prepareTout();
     precharge(at + 1);
     // pas demandés pendant la marche : on repart aussitôt, un pas à la fois (le relais est la même image)
     if (enAttente) {
@@ -396,31 +430,39 @@
       if (k >= 1) { fondu = null; pos = at; }
     } else if (!lecture) pos = at;
   }
+  const ecrit = new Map();                  // dernière valeur écrite par élément et par propriété
+  function style(el, prop, val) {
+    let m = ecrit.get(el);
+    if (!m) { m = {}; ecrit.set(el, m); }
+    if (m[prop] === val) return;
+    m[prop] = val;
+    el.style[prop] = val;
+  }
   function render() {
     const p = pos;
     const ouv = 1 - smooth(p, 0, 0.12);
-    ouverture.style.opacity = ouv;
-    ouverture.style.visibility = ouv < 0.01 ? 'hidden' : 'visible';
+    style(ouverture, 'opacity', ouv.toFixed(3));
+    style(ouverture, 'visibility', ouv < 0.01 ? 'hidden' : 'visible');
     // « Sept vitrines. Choisissez la vôtre. » : pendant l'entrée, quand on passe devant les deux premières vitrines
     const arr = lecture && lecture.i === 0 ? smooth(p, 0.18, 0.34) * (1 - smooth(p, 0.62, 0.8)) : 0;
-    arrivee.style.opacity = arr;
-    arrivee.style.visibility = arr < 0.01 ? 'hidden' : 'visible';
+    style(arrivee, 'opacity', arr.toFixed(3));
+    style(arrivee, 'visibility', arr < 0.01 ? 'hidden' : 'visible');
     // la fin (« Votre pièce vous attend ») monte pendant la dernière marche, vers le logo
     const fo = smooth(p, FIN - 0.45, FIN);
-    fin.style.opacity = fo;
+    style(fin, 'opacity', fo.toFixed(3));
     fin.classList.toggle('visible', fo > 0.6);
-    fin.style.visibility = fo < 0.01 ? 'hidden' : 'visible';
+    style(fin, 'visibility', fo < 0.01 ? 'hidden' : 'visible');
     const hs = clamp(Math.round(p), 1, DERNIER);
     const dist = p < 1 ? 1 - p : p > DERNIER ? p - DERNIER : Math.abs(p - hs);
     const fo2 = 1 - smooth(dist, 0.04, 0.16);
     if (fo2 > 0.01 && hs - 1 !== ficheIdx) setFiche(hs - 1);
-    fiche.style.opacity = fo2;
-    fiche.style.transform = portraitMQ.matches ? `translateY(${(1 - fo2) * 18}px)` : `translateY(calc(-50% + ${(1 - fo2) * 14}px))`;
+    style(fiche, 'opacity', fo2.toFixed(3));
+    style(fiche, 'transform', portraitMQ.matches ? `translateY(${((1 - fo2) * 18).toFixed(2)}px)` : `translateY(calc(-50% + ${((1 - fo2) * 14).toFixed(2)}px))`);
     fiche.classList.toggle('visible', fo2 > 0.6);
-    if (fo2 < 0.25) fiche.setAttribute('inert', ''); else fiche.removeAttribute('inert');
-    fiche.style.visibility = fo2 < 0.01 ? 'hidden' : 'visible';
+    if ((fo2 < 0.25) !== fiche.hasAttribute('inert')) { if (fo2 < 0.25) fiche.setAttribute('inert', ''); else fiche.removeAttribute('inert'); }
+    style(fiche, 'visibility', fo2 < 0.01 ? 'hidden' : 'visible');
     const cur = Math.round(p);
-    dots.forEach((d, n) => { if (n === cur) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    if (cur !== render.cur) { render.cur = cur; dots.forEach((d, n) => { if (n === cur) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); }); }
   }
 
   // ---------------------------------------------------------------- éclats sur le pendentif (canvas 2D), aux arrêts devant une vitrine
@@ -788,7 +830,8 @@
       aligne = !!e.data.aligne;
       root.classList.toggle('plein', aligne);                  // plein écran : l'en-tête du site s'efface (portrait)
       stage.style.touchAction = pris() ? 'none' : 'pan-y';   // à moitié visible, le doigt fait défiler le site
-      if (aligne) entreeAuto(1100); else clearTimeout(entreeMinuteur);   // la boutique remplit l'écran : on entre
+      if (aligne) entreeAuto(550); else clearTimeout(entreeMinuteur);   // la boutique remplit l'écran : on entre
+      if (aligne && toutEnAttente) prepareTout();                    // et toutes les marches se chargent
     });
     try { window.parent.postMessage({ boutique: 'pret' }, '*'); } catch (e) { /* sans effet */ }
   }
@@ -850,9 +893,21 @@
     // la boutique ne tient pas encore le doigt : le site défile sous lui ; on mesure alors le geste sur l'écran
     t0 = pris() ? { y: t.clientY, x: t.clientX, pris: true } : { y: t.screenY, x: t.screenX, pris: false };
   }, { passive: true });
-  stage.addEventListener('touchmove', (e) => { if (t0 && t0.pris) e.preventDefault(); }, { passive: false });
+  // 7 novembre : la marche part dès que le doigt a glissé de 26 px (pendant le geste), sans attendre qu'il se lève
+  stage.addEventListener('touchmove', (e) => {
+    if (!t0) return;
+    if (t0.pris) e.preventDefault();
+    if (!t0.pris || t0.fait || grosOuvert()) return;
+    const t = e.touches[0];
+    const dy = t.clientY - t0.y, dx = t.clientX - t0.x;
+    const d = Math.abs(dy) >= Math.abs(dx) ? dy : dx;
+    if (Math.abs(d) < 26) return;
+    t0.fait = true;
+    avance(d < 0 ? 1 : -1);                 // glisser vers le haut (ou vers la gauche) : on avance
+  }, { passive: false });
   stage.addEventListener('touchend', (e) => {
     if (!t0) return;
+    if (t0.fait) { t0 = null; return; }     // le pas est déjà parti pendant le glissé
     const t = e.changedTouches[0];
     const tenu = t0.pris;
     const dy = (tenu ? t.clientY : t.screenY) - t0.y, dx = (tenu ? t.clientX : t.screenX) - t0.x;
@@ -878,12 +933,29 @@
   // ---------------------------------------------------------------- démarrage
   const depart = parseInt(new URLSearchParams(location.search).get('arret'), 10);
   if (depart >= 0 && depart <= FIN) { at = depart; pos = depart; entreeFaite = true; }
+  // rafraîchissement de l'écran : 12 images mesurées (≈ 0,1 à 0,2 s) ; ≥ 100 Hz → marches à 120 images/s
+  (function mesure() {
+    const t = [];
+    const pas = (now) => {
+      t.push(now);
+      if (t.length < 13) { requestAnimationFrame(pas); return; }
+      const d = t.slice(1).map((x, n) => x - t[n]).sort((a, b) => a - b);
+      const hz = 1000 / d[Math.floor(d.length / 2)];
+      if (hz >= 100 && !LENT && (SALLE.hz120 || []).length) {
+        HZ120 = true;
+        oublie(); creeVideos();               // rien n'a encore joué : les marches se rechargent en 120 images/s
+        prepare(at, false); prepare(at - 1, true); prepareTout();
+      }
+      root.dataset.hz = String(Math.round(hz));
+    };
+    requestAnimationFrame(pas);
+  })();
   layout();
   // page ouverte seule (sans l'accueil au-dessus) : le film de la marque d'abord, puis la marche d'entrée
   let introVue = false;
   try { introVue = sessionStorage.getItem('bg-intro') === '1'; } catch (e) { /* sans effet */ }
   if (!embarque && at === 0 && !introVue && intro) lanceIntro();
-  else if (!embarque && at === 0) entreeAuto(1500);
+  else if (!embarque && at === 0) entreeAuto(900);
 
   window.__boutique = {
     goTo, step,
@@ -895,6 +967,7 @@
     get niveau() { return CODEC; },
     get version() { return VERSION; },
     get definition() { return F_ + DEF; },
+    get hz120() { return HZ120; },
     get ancre() { return ANCRE_Y; },
     get enCours() { return !!lecture || !!fondu; },
     get prend() { return pris(); },

@@ -1160,3 +1160,6 @@ option { background: var(--surface); color: var(--text); }
   .footer__links a { min-height: 56px; }
   .menu__link { font-size: 64px; min-height: 84px; }
 }
+
+/* 7 novembre : liens courriel et téléphone des mentions légales, cible tactile d'au moins 24 px de haut */
+.details__row dd a { display: inline-block; min-height: 24px; padding: 3px 0; }
