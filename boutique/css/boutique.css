@@ -71,7 +71,7 @@ html.embarque .points { top: 50%; }
 /* téléphone, dans l'accueil : l'en-tête du site (60 px) recouvre le haut de l'iframe ; « Passer » et les points passent dessous */
 @media (max-aspect-ratio: 9/10) {
   html.embarque .passer { bottom: auto; top: 70px; right: 14px; left: auto; min-height: 30px; padding: 0 11px 1px; font-size: 10px; letter-spacing: .18em; background: rgba(246, 240, 229, .82); transition: top .5s cubic-bezier(.2, .7, .2, 1); }
-  /* plein écran (6 novembre) : l'en-tête du site s'est effacé, « Passer » remonte en haut */
+  /* plein écran (5 novembre) : l'en-tête du site s'est effacé, « Passer » remonte en haut */
   html.embarque.plein .passer { top: calc(env(safe-area-inset-top) + 14px); }
   .passer-suite { display: none; }
 }
@@ -197,7 +197,7 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
   .fiche .bouton { display: flex; width: max-content; }
   .fiche-prix { display: block; margin: 0 0 2px; }
 }
-/* tablette en portrait (6 novembre) : la même fiche que sur téléphone, à l'échelle de l'écran (elle paraissait minuscule) */
+/* tablette en portrait (5 novembre) : la même fiche que sur téléphone, à l'échelle de l'écran (elle paraissait minuscule) */
 @media (max-aspect-ratio: 9/10) and (min-width: 700px) {
   .fiche { padding: 96px 48px calc(40px + env(safe-area-inset-bottom)); }
   .fiche-num { font-size: 13px; margin-bottom: 10px; }
@@ -277,7 +277,7 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
 .intro__entrer:hover, .intro__entrer:focus-visible { background: var(--ivoire); color: var(--encre); }
 @media (prefers-reduced-motion: reduce) { .gros__img { transition: opacity .2s ease; transform: none; } }
 
-/* --- télé (6 novembre) : au-delà de 1900 px en paysage, la fiche et les commandes lisibles à trois mètres --- */
+/* --- télé (5 novembre) : au-delà de 1900 px en paysage, la fiche et les commandes lisibles à trois mètres --- */
 @media (min-width: 1900px) and (min-aspect-ratio: 9/10) {
   .fiche { width: clamp(430px, 26vw, 640px); padding: clamp(42px, 2.4vw, 60px); }
   .fiche-num { font-size: 16px; margin-bottom: 26px; }

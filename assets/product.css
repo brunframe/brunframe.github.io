@@ -201,7 +201,7 @@
   .product__details .breadcrumb { margin-bottom: 8px; }
 }
 
-/* ---------- 7 novembre : fiche plus riche — signature (catégorie · univers), nombre de couleurs, faits visibles
+/* ---------- 6 novembre : fiche plus riche — signature (catégorie · univers), nombre de couleurs, faits visibles
    (fabrication, matière, dimensions, longueur), lien vers la vitrine de la boutique immersive ---------- */
 .product__signature { margin-top: 10px; display: flex; flex-wrap: wrap; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
 .product__signature span + span::before { content: '·'; margin: 0 8px; }

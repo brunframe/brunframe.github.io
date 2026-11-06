@@ -53,7 +53,7 @@
   const FIN = SEGMENTS.length;                                        // dernier arrêt : le mur au logo
   const DERNIER = NV;                                                 // dernière vitrine
   const deux = (n) => String(n).padStart(2, '0');
-  // définition (6 novembre) : chaque écran reçoit des images et des vidéos au moins aussi grandes que ses pixels réels
+  // définition (5 novembre) : chaque écran reçoit des images et des vidéos au moins aussi grandes que ses pixels réels
   // (téléphone 900 × 1600 ou 1440 × 2560 ; ordinateur et télé 1920 × 1080, 2560 × 1440 ou 3840 × 2160) ;
   // connexion lente ou « économie de données » : la plus légère. Les gros plans et la levée des bracelets restent communs.
   const reseau = navigator.connection || {};
@@ -74,7 +74,7 @@
   const dossier = (f) => `${f}${f === F_ ? DEF : ''}`;
   const arretSrc = (f, i) => `assets/film/${VERSION}/${dossier(f)}/arrets/arret-${i}.webp`;
   // segment i joué à l'endroit (de l'arrêt i à i + 1) ou à l'envers (de i + 1 à i : on revient sans fondu)
-  // 7 novembre : marches à 60 images/s partout, à 120 sur les écrans rapides (rafraîchissement mesuré au démarrage,
+  // 6 novembre : marches à 60 images/s partout, à 120 sur les écrans rapides (rafraîchissement mesuré au démarrage,
   // data/salle.json « hz120 » : formats où les fichiers existent) ; iPhone en économie d'énergie (30 Hz) : 60
   let HZ120 = false;
   const videoSrc = (f, i, inv) => `assets/film/${VERSION}/${dossier(f)}/${CODEC}${HZ120 && (SALLE.hz120 || []).indexOf(f) >= 0 ? '-120' : ''}/${SEGMENTS[i]}${inv ? '-inverse' : ''}.mp4`;
@@ -130,7 +130,7 @@
   const dots = $$('.point', points);
 
   // ---------------------------------------------------------------- état
-  const BAS_PENDENTIFS = 0.76;   // portrait : bas du plus long pendentif (fraction de l'image 9:16, cadrage du 6 novembre)
+  const BAS_PENDENTIFS = 0.76;   // portrait : bas du plus long pendentif (fraction de l'image 9:16, cadrage du 5 novembre)
   let ANCRE_Y = 1;
   let at = 0;                 // arrêt courant (entier)
   let pos = 0;                // position continue (pour les textes et les fondus)
@@ -893,7 +893,7 @@
     // la boutique ne tient pas encore le doigt : le site défile sous lui ; on mesure alors le geste sur l'écran
     t0 = pris() ? { y: t.clientY, x: t.clientX, pris: true } : { y: t.screenY, x: t.screenX, pris: false };
   }, { passive: true });
-  // 7 novembre : la marche part dès que le doigt a glissé de 26 px (pendant le geste), sans attendre qu'il se lève
+  // 6 novembre : la marche part dès que le doigt a glissé de 26 px (pendant le geste), sans attendre qu'il se lève
   stage.addEventListener('touchmove', (e) => {
     if (!t0) return;
     if (t0.pris) e.preventDefault();
