@@ -13,6 +13,20 @@
   'use strict';
   const D = window.DONNEES;
   const C = Object.assign({ SITE_URL: '', EXT: '', COLLECTION: '/collections/all', ACCUEIL: '/' }, D.config || {});
+  // 6 novembre : sur la vraie boutique, cette page est hébergée ailleurs (GitHub Pages) et affichée dans le site Shopify ;
+  // ses liens doivent mener aux fiches du site qui l'affiche, pas à celles de la démo. La section donne l'adresse du site
+  // (?site=…) ; à défaut, celle de la page qui l'affiche. Même site (la démo) : rien ne change.
+  (() => {
+    if (window.parent === window) return;
+    try { if (window.parent.location.href) return; } catch (e) { /* autre site : on continue */ }
+    let o = '';
+    try {
+      const u = new URL(new URLSearchParams(location.search).get('site') || '');
+      if (u.protocol === 'https:' || u.hostname === 'localhost' || u.hostname === '127.0.0.1') o = u.origin;
+    } catch (e) { /* adresse absente ou invalide */ }
+    if (!o) { try { o = new URL(document.referrer).origin; } catch (e) { o = ''; } }
+    if (o && o !== 'null' && o !== location.origin) Object.assign(C, { SITE_URL: o, EXT: '', COLLECTION: '/collections/all', ACCUEIL: '/' });
+  })();
   const PRODUITS = D.products.produits;
   const SALLE = D.salle || {};
   const root = document.documentElement;
@@ -210,6 +224,7 @@
   function prepareTout() {
     // sous l'accueil, la boutique encore hors de l'écran ne télécharge que sa première marche ; connexion lente :
     // seulement la marche suivante et le retour (le reste arrive pas à pas)
+    prechargeArrets();
     if (LENT) return;
     if (embarque && !aligne && !entreeFaite) { toutEnAttente = true; return; }
     toutEnAttente = false;
@@ -220,7 +235,7 @@
     for (let k = 0; k < at; k += 1) ordre.push([k, false]);
     for (let k = at; k < SEGMENTS.length; k += 1) ordre.push([k, true]);
     const suite = (n) => { if (n >= ordre.length || jeton !== fileTout) return; prepare(ordre[n][0], ordre[n][1]).then(() => suite(n + 1), () => suite(n + 1)); };
-    suite(0);
+    prechargeArrets().then(() => suite(0));               // les images fixes d'abord (la marche suivante part déjà de son côté)
   }
   function source(i, inv) {                 // la vidéo n'est pas encore en mémoire : lecture directe depuis le réseau
     const v = piste(i, inv);
@@ -235,14 +250,31 @@
     im.decoding = 'async';
     im.src = arretSrc(F_, i);
   }
+  // les neuf images fixes (≈ 0,8 Mo) avant les vidéos, les plus proches d'abord : sur réseau lent, un fondu de secours a
+  // toujours son image d'arrivée, au lieu d'attendre derrière le téléchargement des marches
+  const arretsCharges = {};
+  function prechargeArrets() {
+    if (!arretsCharges[F_]) {
+      const ordre = Array.from({ length: FIN + 1 }, (_, i) => i).sort((a, b) => Math.abs(a - at) - Math.abs(b - at));
+      arretsCharges[F_] = Promise.all(ordre.map((i) => new Promise((ok) => {
+        const im = new Image();
+        im.decoding = 'async';
+        im.onload = im.onerror = () => ok();
+        im.src = arretSrc(F_, i);
+      })));
+    }
+    return arretsCharges[F_];
+  }
 
   // image d'arrêt : fondu (true) ou relais instantané (false)
-  function montreArret(i, fonduOn) {
+  function montreArret(i, fonduOn, quandPose) {
     const suiv = stills[1 - actif];
     const prec = stills[actif];
     const src = arretSrc(F_, i);
     return new Promise((res) => {
       const pose = () => {
+        if (quandPose) quandPose();
+
         suiv.classList.toggle('fondu', !!fonduOn);
         suiv.classList.add('dessus');
         prec.classList.remove('dessus');
@@ -318,12 +350,22 @@
     if (lecture) { lecture.v.pause(); lecture.v.classList.remove('is-on'); lecture = null; }
     const de = at;
     at = n;
-    fondu = { de, vers: n, t0: performance.now(), dur: 750 };
-    montreArret(n, true);
+    // le fondu (et la fiche qui le suit) ne part qu'avec l'image d'arrivée : sur réseau lent, elle peut tarder ; en
+    // attendant, l'image de départ reste et un trait de chargement discret apparaît
+    const f = { de, vers: n, t0: performance.now(), dur: 750, pret: false };
+    fondu = f;
+    const lent = setTimeout(() => { if (fondu === f && !f.pret) chargement.classList.add('is-on'); }, 220);
+    montreArret(n, true, () => {
+      clearTimeout(lent);
+      if (fondu !== f) return;
+      f.pret = true; f.t0 = performance.now();
+      chargement.classList.remove('is-on');
+    });
     arrive();
     wake();
   }
   function arrive() {
+    try { sessionStorage.setItem('bg-arret', JSON.stringify({ at, t: Date.now() })); } catch (e) { /* sans effet */ }
     if (at === ARRET_TABLE) chargeTable();
     prepare(at, false);                     // la marche suivante (et le retour) d'abord, puis toutes les autres
     prepare(at - 1, true);
@@ -425,10 +467,14 @@
       pos = lecture.inv ? lecture.i + 1 - k : lecture.i + k;
     }
     else if (fondu) {
-      const k = clamp((now - fondu.t0) / fondu.dur, 0, 1);
-      pos = fondu.de + (fondu.vers - fondu.de) * k;
-      if (k >= 1) { fondu = null; pos = at; }
+      if (fondu.pret === false) pos = fondu.de;               // l'image d'arrivée se charge encore : on reste sur place
+      else {
+        const k = clamp((now - fondu.t0) / fondu.dur, 0, 1);
+        pos = fondu.de + (fondu.vers - fondu.de) * k;
+        if (k >= 1) { fondu = null; pos = at; }
+      }
     } else if (!lecture) pos = at;
+    if (!lecture && !fondu && chargement.classList.contains('is-on')) chargement.classList.remove('is-on');
   }
   const ecrit = new Map();                  // dernière valeur écrite par élément et par propriété
   function style(el, prop, val) {
@@ -827,6 +873,8 @@
     addEventListener('message', (e) => {
       if (e.source !== window.parent || !e.data || e.data.boutique !== 'cadre') return;
       parentRepond = true;
+      // en-tête du site posé sur le haut de la boutique (ordinateur) : les boutons du haut descendent d'autant
+      if (typeof e.data.haut === 'number') root.style.setProperty('--haut-site', `${Math.max(0, Math.min(160, e.data.haut))}px`);
       aligne = !!e.data.aligne;
       root.classList.toggle('plein', aligne);                  // plein écran : l'en-tête du site s'efface (portrait)
       stage.style.touchAction = pris() ? 'none' : 'pan-y';   // à moitié visible, le doigt fait défiler le site
@@ -933,6 +981,17 @@
   // ---------------------------------------------------------------- démarrage
   const depart = parseInt(new URLSearchParams(location.search).get('arret'), 10);
   if (depart >= 0 && depart <= FIN) { at = depart; pos = depart; entreeFaite = true; }
+  else {
+    // retour depuis une fiche (bouton Précédent) : la boutique reprend à la vitrine que l'on regardait
+    let retour = false;
+    try { retour = (performance.getEntriesByType('navigation')[0] || {}).type === 'back_forward'; } catch (e) { /* sans effet */ }
+    if (retour) {
+      try {
+        const m = JSON.parse(sessionStorage.getItem('bg-arret') || 'null');
+        if (m && m.at > 0 && m.at <= FIN && Date.now() - m.t < 2 * 3600 * 1000) { at = m.at; pos = m.at; entreeFaite = true; }
+      } catch (e) { /* sans effet */ }
+    }
+  }
   // rafraîchissement de l'écran : 12 images mesurées (≈ 0,1 à 0,2 s) ; ≥ 100 Hz → marches à 120 images/s
   (function mesure() {
     const t = [];

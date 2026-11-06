@@ -254,7 +254,7 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
   width: min(400px, calc(100vw - 36px)); padding: clamp(20px, 2.2vw, 30px); background: rgba(246, 240, 229, .88); }
 .gros__nom { margin: 0 0 8px; font: 400 clamp(26px, 2.4vw, 38px)/1 var(--police-titre); text-transform: uppercase; letter-spacing: -.01em; }
 .gros__prix { margin: 0 0 18px; font-size: 15px; font-weight: 300; }
-.gros__fermer { position: absolute; top: calc(env(safe-area-inset-top) + 14px); right: clamp(14px, 3vw, 44px); min-height: 44px; padding: 0 16px;
+.gros__fermer { position: absolute; top: calc(var(--haut-site, 0px) + env(safe-area-inset-top) + 14px); right: clamp(14px, 3vw, 44px); min-height: 44px; padding: 0 16px;
   border: 0; background: rgba(246, 240, 229, .88); color: var(--encre); font: 400 11px var(--police-texte); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
 .gros__nav { position: absolute; right: clamp(18px, 3vw, 48px); bottom: calc(env(safe-area-inset-bottom) + clamp(22px, 5svh, 56px)); display: flex; gap: 10px; }
 .gros__nav .rond { background: rgba(246, 240, 229, .88); }

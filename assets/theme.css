@@ -962,7 +962,8 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .signature { padding: 0 var(--gutter) var(--space-section); text-align: center; }
 .signature__texte { font-size: clamp(34px, 7vw, 96px); max-width: 13ch; margin: 0 auto; }
 .signature__lien { display: inline-block; margin-top: 28px; min-height: 44px; }
-.reco:empty { display: none; }
+/* vide le temps du chargement : sans place, mais toujours observable (display: none empêchait son chargement) */
+.reco:empty { padding: 0; min-height: 1px; }
 
 /* ---------- Tiroir panier ---------- */
 .drawer { position: fixed; inset: 0; z-index: 60; visibility: hidden; transition: visibility 0s linear 0.5s; }

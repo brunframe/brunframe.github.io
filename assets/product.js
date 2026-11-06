@@ -220,7 +220,9 @@
         if (!variant) return;
       }
       const sizeKnown = this.data.sizeIndex < 0 || index === this.data.sizeIndex || this.state[this.data.sizeIndex] !== null;
-      this.apply(variant, { history: 'push', sizeKnown, keep: wanted });
+      // 6 novembre : l'adresse suit la couleur sans ajouter d'étape à l'historique ; « Précédent » ramène à la page
+      // d'où l'on vient (la boutique, le catalogue), pas à la couleur d'avant
+      this.apply(variant, { history: 'replace', sizeKnown, keep: wanted });
     }
 
     apply(variant, opts = {}) {
@@ -268,7 +270,7 @@
       const pos = variant.imagePos || (this.data.images[0] && this.data.images[0].pos) || 0;
       if (pos !== this.shownPos) this.showImages(variant);
       this.updateAvailability();
-      this.writeUrl(variant, opts.history || 'push');
+      this.writeUrl(variant, opts.history || 'replace');
       this.root.dispatchEvent(new CustomEvent('variant:change', { bubbles: true, detail: { variant, previous } }));
     }
 
