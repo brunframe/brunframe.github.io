@@ -185,6 +185,13 @@
     var root = document.querySelector('[data-boutique-immersive]');
     var frame = root && root.querySelector('iframe');
     if (!frame) return;
+    // #vitrine-3 (lien « Voir dans la boutique » d'une fiche) : la boutique s'ouvre à la vitrine 3 et vient à l'écran
+    var vit = /^#vitrine-(\d+)$/.exec(location.hash || '');
+    if (vit) {
+      var src = frame.getAttribute('src') || '';
+      frame.setAttribute('src', src + (src.indexOf('?') >= 0 ? '&' : '?') + 'arret=' + vit[1]);
+      setTimeout(function () { caler(); }, 60);
+    }
     var aligne = null, attente = 0;
     function dire(msg) { try { frame.contentWindow.postMessage(msg, '*'); } catch (e) { /* sans effet */ } }
     function vers(y) {

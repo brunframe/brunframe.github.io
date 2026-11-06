@@ -958,6 +958,10 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 
 /* ---------- Recommandations ---------- */
 .reco { padding-bottom: var(--space-section); }
+/* ---------- Signature de la marque (bas de fiche, 7 novembre) : la devise en Anton, centrée ---------- */
+.signature { padding: 0 var(--gutter) var(--space-section); text-align: center; }
+.signature__texte { font-size: clamp(34px, 7vw, 96px); max-width: 13ch; margin: 0 auto; }
+.signature__lien { display: inline-block; margin-top: 28px; min-height: 44px; }
 .reco:empty { display: none; }
 
 /* ---------- Tiroir panier ---------- */

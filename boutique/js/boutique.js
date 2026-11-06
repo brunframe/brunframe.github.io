@@ -60,12 +60,16 @@
   const LENT = !!reseau.saveData || /(^|-)2g|3g/.test(reseau.effectiveType || '');
   let F_ = fmt();             // format affiché (9x16 ou 16x9) ; DEF : sa définition ('', '-hd', '-uhd')
   let DEF = '';
+  const DEFS = SALLE.definitions || {};           // définitions livrées par format (data/salle.json) ; absentes : toutes
   function definition(f) {
     if (LENT) return '';
     const p = window.devicePixelRatio || 1;
     const w = (f === '9x16' ? Math.max(vw, vh * 9 / 16) : Math.max(vw, vh * 16 / 9)) * p;   // largeur affichée (cover)
-    if (f === '9x16') return w > 1000 ? '-hd' : '';
-    return w > 2700 ? '-uhd' : w > 1980 ? '-hd' : '';
+    let d = f === '9x16' ? (w > 1000 ? '-hd' : '') : (w > 2700 ? '-uhd' : w > 1980 ? '-hd' : '');
+    const ok = DEFS[f] || ['', '-hd', '-uhd'];
+    const ordre = ['', '-hd', '-uhd'];
+    while (d && ok.indexOf(d) < 0) d = ordre[ordre.indexOf(d) - 1];      // définition absente : la plus proche en dessous
+    return d;
   }
   const dossier = (f) => `${f}${f === F_ ? DEF : ''}`;
   const arretSrc = (f, i) => `assets/film/${VERSION}/${dossier(f)}/arrets/arret-${i}.webp`;
@@ -524,9 +528,10 @@
     const r = respireEl.getBoundingClientRect();
     const e = r.width / vw || 1;
     const lx = (x - r.left) / e, ly = (y - r.top) / e;
-    for (let k = 0; k < BRACELETS.length; k += 1) {
+    // les zones se chevauchent (cloches en couronne) : on teste d'abord les cloches de devant (bas de zone le plus bas)
+    const ordre = BRACELETS.map((b, k) => k).filter((k) => zoneEcran(k)).sort((a, b) => { const za = zoneEcran(a), zb = zoneEcran(b); return (zb[1] + zb[3]) - (za[1] + za[3]); });
+    for (const k of ordre) {
       const z = zoneEcran(k);
-      if (!z) continue;
       const m = 0.14;                                        // la zone calculée comprend la cloche et une marge
       if (lx > z[0] + z[2] * m && lx < z[0] + z[2] * (1 - m) && ly > z[1] + z[3] * m && ly < z[1] + z[3] * (1 - m)) return k;
     }
