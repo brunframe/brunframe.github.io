@@ -1,6 +1,6 @@
 /* Breslev Gang — Trouve ta flamme (sections/main-trouve-ta-flamme.liquid, assets/trouve-ta-flamme.js).
    Chargé seulement sur cette page. Variables (couleurs, polices, gouttières, courbes) : assets/theme.css, rien n'est
-   redéfini : le mode Blanc / Noir suit tout seul. Classes reprises du thème : .display, .btn, .link-btn, et pour les
+   redéfini. Classes reprises du thème : .display, .btn, .link-btn, et pour les
    pièces la grille .reco__grid et la carte .card (.card__media, .card__name, .card__price), comme le catalogue.
    Une question à la fois : réponses en lignes fines, une vraie photo de pièce à droite de chaque réponse.
    Ordinateur (990 px et plus) : le titre reste à gauche, les questions et les pièces à droite. */

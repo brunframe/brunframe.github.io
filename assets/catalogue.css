@@ -40,7 +40,7 @@
 /* Filtres : liens. Sur grand écran, la rangée reste en ligne (theme.css). */
 .catalogue--liste .filters { position: static; margin-top: 0; }
 .filters__head { display: none; }
-.filters__backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
+.filters__backdrop { position: fixed; inset: 0; z-index: 40; background: var(--veil); }
 a.filter { display: inline-flex; align-items: center; }
 a.filter:not(.is-active):hover { color: var(--black); }
 @media (min-width: 750px) {

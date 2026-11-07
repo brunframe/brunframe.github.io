@@ -1,66 +1,11 @@
-/* Breslev Gang — mode Blanc / Noir et menu de l'en-tête.
-   Le mode est posé avant le premier rendu par le script en ligne de layout/theme.liquid ;
-   ici : le bouton, la mémoire du choix, le suivi de prefers-color-scheme, le menu mobile. */
+/* Breslev Gang — menu de l'en-tête (volet) et filet sous l'en-tête au défilement.
+   Le site est toujours blanc (7 novembre : plus de mode Noir). */
 (() => {
   'use strict';
 
   const html = document.documentElement;
-  const config = (window.themeConfig && window.themeConfig.mode) || {};
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-  /* ---------- Mode ---------- */
-  const Mode = {
-    key: 'bg-mode',
-    media: window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null,
-
-    current() { return html.getAttribute('data-theme') === 'noir' ? 'noir' : 'blanc'; },
-
-    stored() {
-      try { return window.localStorage.getItem(this.key); } catch (e) { return null; }
-    },
-
-    apply(mode, remember) {
-      html.setAttribute('data-theme', mode);
-      html.style.colorScheme = mode === 'noir' ? 'dark' : 'light';
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', mode === 'noir' ? '#111010' : '#FFFFFF');
-      if (remember) { try { window.localStorage.setItem(this.key, mode); } catch (e) {} }
-      this.paint();
-      // la boutique immersive (iframe, parfois sur une autre adresse) s'allume ou s'éteint avec le site
-      $$('[data-boutique-immersive] iframe').forEach((f) => { try { f.contentWindow.postMessage({ boutique: 'mode', mode }, '*'); } catch (e) {} });
-      document.dispatchEvent(new CustomEvent('mode:change', { detail: { mode } }));
-    },
-
-    paint() {
-      const mode = this.current();
-      $$('[data-mode-toggle]').forEach((btn) => {
-        btn.setAttribute('aria-pressed', mode === 'noir' ? 'true' : 'false');
-        const label = mode === 'noir' ? config.toBlanc : config.toNoir;
-        if (label) btn.setAttribute('aria-label', label);
-        $$('[data-mode-opt]', btn).forEach((opt) => {
-          opt.classList.toggle('is-active', opt.dataset.modeOpt === mode);
-        });
-      });
-    },
-
-    init() {
-      if (config.enabled === false) { $$('[data-mode-toggle]').forEach((b) => { b.hidden = true; }); return; }
-      this.paint();
-      document.addEventListener('click', (event) => {
-        const btn = event.target.closest('[data-mode-toggle]');
-        if (!btn) return;
-        event.preventDefault();
-        this.apply(this.current() === 'noir' ? 'blanc' : 'noir', true);
-      });
-      // Sans choix mémorisé, le site suit le réglage de l'appareil quand il change.
-      if (this.media && this.media.addEventListener) {
-        this.media.addEventListener('change', (e) => {
-          if (this.stored()) return;
-          this.apply(e.matches ? 'noir' : 'blanc', false);
-        });
-      }
-    }
-  };
+  // un ancien choix « Noir » mémorisé sur l'appareil ne sert plus : on l'efface
+  try { window.localStorage.removeItem('bg-mode'); } catch (e) { /* stockage indisponible */ }
 
   /* ---------- Menu mobile de l'en-tête ---------- */
   const Menu = {
@@ -124,9 +69,8 @@
     update();
   }
 
-  const start = () => { Mode.init(); Menu.init(); initScrolled(); };
+  const start = () => { Menu.init(); initScrolled(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 
-  window.themeMode = Mode;
 })();

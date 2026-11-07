@@ -1,6 +1,6 @@
 /* Breslev Gang — Créateur de Petek (sections/main-createur-petek.liquid, assets/createur-petek.js).
    Chargé seulement sur cette page. Variables (couleurs, polices, gouttières, courbes) : assets/theme.css, rien n'est
-   redéfini : le mode Blanc / Noir suit tout seul. Classes reprises du thème : .display, .picker__legend, .swatches,
+   redéfini. Classes reprises du thème : .display, .picker__legend, .swatches,
    .swatch--lg (pastilles), .btn, .link-btn.
    Téléphone : la scène (photo, nom, prix) reste collée sous l'en-tête pendant qu'on choisit ; bouton d'ajout fixé en bas.
    Ordinateur (990 px et plus) : photo à gauche à la hauteur de l'écran, choix à droite, comme la fiche produit. */
@@ -38,7 +38,7 @@
   overflow: hidden;
 }
 /* la photo occupe toute la hauteur, à sa vraie proportion (--ratio, donnée par Shopify), centrée ;
-   fond des photos comme partout dans le thème : transparent en mode Blanc, blanc (--media-bg) en mode Noir */
+   fond des photos comme partout dans le thème : transparent, sur le blanc de la page */
 .cp__calque {
   position: absolute;
   top: 0;

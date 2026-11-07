@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#FFFFFF" data-theme-color>
+    <meta name="color-scheme" content="only light">
     <title>Colliers – Page 3 – Breslev Gang</title>
       <meta name="description" content="">
 
@@ -19,23 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tous les produits">
 <meta name="twitter:description" content="Breslev Gang">
-<script>
-      (function () {
-        var html = document.documentElement;
-        html.classList.replace('no-js', 'js');
-        var mode = 'blanc';
-        var defaut = "blanc";
-        var memo = null;
-        try { memo = window.localStorage.getItem('bg-mode'); } catch (e) {}
-        if (memo === 'blanc' || memo === 'noir') mode = memo;
-        else if (defaut === 'noir' || defaut === 'blanc') mode = defaut;
-        else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) mode = 'noir';
-        html.setAttribute('data-theme', mode);
-        html.style.colorScheme = mode === 'noir' ? 'dark' : 'light';
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', mode === 'noir' ? '#111010' : '#FFFFFF');
-      })();
-    </script>
+<script>document.documentElement.classList.replace('no-js', 'js');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
@@ -57,9 +42,6 @@
     <link rel="icon" href="assets/logo-flamme.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/icone-180.png">
     <link href="assets/theme.css" rel="stylesheet" type="text/css" media="all" />
-    <style>
-      :root { --soie-image: url(/assets/fond-soie-ivoire.jpg); --soie-image-noir: url(/assets/fond-soie-ivoire-noir.jpg); }
-    </style>
 
     <script>
       window.themeConfig = {
@@ -73,11 +55,6 @@
         },
         locale: "fr-FR",
         currency: "EUR",
-        mode: {
-          enabled: true,
-          toBlanc: "Passer en mode blanc",
-          toNoir: "Passer en mode noir"
-        },
         chabbat: {
           actif: false,
           message: "Fermé pendant Chabbat",
@@ -114,11 +91,8 @@
     </a>
 
     <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
-      </a><button type="button" class="header__link header__link--wide mode-toggle" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">
-          <span class="mode-toggle__opt" data-mode-opt="blanc">Blanc</span>
-          <span class="mode-toggle__sep" aria-hidden="true">/</span>
-          <span class="mode-toggle__opt" data-mode-opt="noir">Noir</span>
-        </button><button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
+      </a>
+      <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
   </div>
 
@@ -129,14 +103,8 @@
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
       <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
-      </nav><div class="menu__foot">
-          <span class="menu__label">Affichage</span>
-          <button type="button" class="mode-toggle mode-toggle--menu" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">
-            <span class="mode-toggle__opt" data-mode-opt="blanc">Blanc</span>
-            <span class="mode-toggle__sep" aria-hidden="true">/</span>
-            <span class="mode-toggle__opt" data-mode-opt="noir">Noir</span>
-          </button>
-        </div></div>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -785,14 +753,7 @@
               </option><option value="CA">Canada (CAD $)
               </option><option value="GB">Royaume-Uni (GBP £)
               </option></select>
-          <noscript><button type="submit">Valider</button></noscript></form><div class="footer__mode">
-          <span class="footer__label">Affichage</span>
-          <button type="button" class="mode-toggle" data-mode-toggle aria-pressed="false" aria-label="Passer en mode noir">
-            <span class="mode-toggle__opt" data-mode-opt="blanc">Blanc</span>
-            <span class="mode-toggle__sep" aria-hidden="true">/</span>
-            <span class="mode-toggle__opt" data-mode-opt="noir">Noir</span>
-          </button>
-        </div></div>
+          <noscript><button type="submit">Valider</button></noscript></form></div>
 
     <p class="footer__copy">© 2026 Breslev Gang</p>
 

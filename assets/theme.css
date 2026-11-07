@@ -1,13 +1,13 @@
-/* Breslev Gang — thème Shopify. Fond ivoire, serif fine, la seule couleur est celle des bijoux.
+/* Breslev Gang — thème Shopify. Fond blanc partout, la seule couleur est celle des bijoux.
 
    VARIABLES GLOBALES (à utiliser dans cart.css, product.css et les sections) :
-     --bg        fond de page            Blanc #FFFFFF   Noir #111010
-     --surface   surfaces (tiroir, menu, champs, nuancier)   #FCFBF8 / #1B1A1A
-     --text      texte                   #171512 / #F2EFEA
-     --grey      texte secondaire        #5F5A54 / #A39E96   (AA sur --bg et --surface)
-     --line      filets 1 px             #E4E0D8 / #2A2826
-     --veil      voile derrière un tiroir ou un menu
-     --media-bg  fond des photos produit : #FFFFFF dans les deux modes (jamais inversées)
+     --bg        fond de page            #FFFFFF (le site est toujours blanc)
+     --surface   surfaces (tiroir, menu, champs, nuancier)   #FFFFFF
+     --text      texte                   #000000
+     --grey      texte secondaire        #767676   (AA sur blanc)
+     --line      filets 1 px             #E4E0D8
+     --veil      voile blanc derrière un tiroir ou un menu
+     --media-bg  fond des photos produit : #FFFFFF
      --font-display  Anton 400 (titres, classe .display, capitales)
      --font-text     Inter Tight 300/400 (textes, menus, prix)   alias : --font-body
      --font-hebrew   Frank Ruhl Libre (hébreu, classe .hebreu ou lang="he")
@@ -19,29 +19,21 @@
      .display      titre en capitales espacées ; <em> à l'intérieur = italique bas de casse
                    (snippet 'titre' : les mots entre astérisques deviennent <em>)
      .hebreu       texte en hébreu : Frank Ruhl Libre, direction droite à gauche
-     .fond-soie    fond tissu soyeux ivoire (image --soie-image / --soie-image-noir en cover,
-                   flou léger, luminosité) ; sans image : dégradé ivoire très doux
      .label        petites capitales Inter Tight (menus, légendes)
      .btn .btn--primary .btn--ghost .btn--block  boutons fins ; .link-btn  lien souligné
      .section .section__head .section__title (.section__title--md)
      .media .media--square .media--landscape  cadre photo sur fond blanc
-     .mode-toggle  bouton Blanc / Noir ([data-mode-toggle], géré par mode.js)
 
-   Le mode est porté par html[data-theme="blanc" | "noir"], posé avant le premier rendu. */
+   Le site est toujours blanc : html[data-theme="blanc"] (7 novembre : plus de mode Noir ni de fond de soie). */
 
 :root {
   --bg: #FFFFFF;
   --surface: #FFFFFF;
-  --text: #171512;
-  --grey: #5F5A54;
+  --text: #000000;
+  --grey: #767676;
   --line: #E4E0D8;
   --veil: rgba(255, 255, 255, 0.86);
   --media-bg: #FFFFFF;
-  --soie-a: #FBFAF7;
-  --soie-b: #F3F0EA;
-  --soie-c: #ECE8E0;
-  --soie-image: none;
-  --soie-image-noir: none;
 
   --white: var(--bg);
   --black: var(--text);
@@ -59,19 +51,6 @@
   --space-section: clamp(88px, 9vw, 160px);
   --buy-h: 0px;
   color-scheme: light;
-}
-
-:root[data-theme='noir'] {
-  --bg: #111010;
-  --surface: #1B1A1A;
-  --text: #F2EFEA;
-  --grey: #A39E96;
-  --line: #2A2826;
-  --veil: rgba(17, 16, 16, 0.84);
-  --soie-a: #1A1918;
-  --soie-b: #141313;
-  --soie-c: #0F0E0E;
-  color-scheme: dark;
 }
 
 @media (min-width: 750px) {
@@ -176,8 +155,7 @@ legend { padding: 0; }
 .footer__links,
 .header__link,
 .menu__close,
-.catalogue__count,
-.mode-toggle {
+.catalogue__count {
   font-family: var(--font-text);
   font-weight: 400;
   font-size: 11px;
@@ -185,7 +163,7 @@ legend { padding: 0; }
   text-transform: uppercase;
 }
 @media (min-width: 750px) {
-  .label, .footer__links, .header__link, .mode-toggle, .filter, .link-btn { font-size: 12px; }
+  .label, .footer__links, .header__link, .filter, .link-btn { font-size: 12px; }
 }
 
 /* ---------- Boutons : fins, jamais lourds ---------- */
@@ -227,9 +205,7 @@ legend { padding: 0; }
 }
 @media (hover: hover) { .link-btn:hover { text-decoration-color: currentColor; } }
 
-/* ---------- Médias : photos jamais inversées ----------
-   Blanc : fond transparent et fusion « multiply » : le blanc du studio se fond dans l'ivoire, le bijou garde sa teinte.
-   Noir : la photo reste telle quelle, sur son blanc (--media-bg). */
+/* ---------- Médias : photos jamais inversées, sur le blanc de la page ---------- */
 .media { position: relative; overflow: hidden; background: var(--media-bg); }
 .media img { width: 100%; height: 100%; object-fit: contain; }
 :root[data-theme='blanc'] .media { background: transparent; }
@@ -237,38 +213,6 @@ legend { padding: 0; }
 .media--square { aspect-ratio: 1 / 1; }
 .media--landscape { aspect-ratio: 3 / 2; }
 .media--landscape img { object-fit: cover; }
-
-/* ---------- Fond de soie ---------- */
-.fond-soie {
-  position: relative;
-  isolation: isolate;
-  background-color: var(--bg);
-}
-.fond-soie::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  z-index: -1;
-  pointer-events: none;
-  background-color: var(--bg);
-  background-image:
-    var(--soie-image),
-    radial-gradient(120% 90% at 18% 12%, var(--soie-a) 0%, transparent 58%),
-    radial-gradient(90% 80% at 84% 78%, var(--soie-c) 0%, transparent 60%),
-    linear-gradient(168deg, var(--soie-a) 0%, var(--soie-b) 48%, var(--soie-c) 100%);
-  background-size: cover, auto, auto, auto;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-:root[data-theme='noir'] .fond-soie::before {
-  background-image:
-    var(--soie-image-noir),
-    radial-gradient(120% 90% at 18% 12%, var(--soie-a) 0%, transparent 58%),
-    radial-gradient(90% 80% at 84% 78%, var(--soie-c) 0%, transparent 60%),
-    linear-gradient(168deg, var(--soie-a) 0%, var(--soie-b) 48%, var(--soie-c) 100%);
-  opacity: 0.92;
-}
-.fond-soie > * { position: relative; }
 
 /* ---------- Sections ---------- */
 .section { padding: var(--space-section) var(--gutter) 0; }
@@ -322,7 +266,6 @@ hr, .rule { border: 0; height: 1px; background: var(--line); margin: 0; }
 .header__logo { display: flex; align-items: center; gap: 12px; min-height: 44px; transition: opacity var(--dur) var(--ease); }
 .header__gothique svg { height: 34px; width: auto; display: block; }   /* logo officiel : flamme, « Breslev gang », ligne en hébreu */
 @media (min-width: 750px) { .header__gothique svg { height: 40px; } }
-@media (max-width: 749px) { .header__nav .mode-toggle { display: none; } }   /* téléphone : Blanc / Noir dans le volet du menu */
 .header__nav { display: flex; align-items: center; gap: 4px; }
 .header__link {
   display: inline-flex;
@@ -362,27 +305,8 @@ hr, .rule { border: 0; height: 1px; background: var(--line); margin: 0; }
 .header--home.is-over-hero::after { opacity: 0; }
 .header--home.is-over-hero .header__logo { opacity: 0; pointer-events: none; }
 .header--home.is-over-hero .header__count { color: inherit; }
-.header--home.is-over-hero .mode-toggle__opt { color: inherit; }
 body:has(.hero--sans-media) .header--home.is-over-hero,
 body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.is-over-hero { color: var(--text); }
-
-/* Bouton Blanc / Noir */
-.mode-toggle { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; min-width: 44px; }
-.mode-toggle::after { display: none; }
-.mode-toggle__opt { position: relative; color: var(--grey); transition: color var(--dur) var(--ease); padding: 4px 0; }
-.mode-toggle__opt::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transition: transform var(--dur) var(--ease);
-}
-.mode-toggle__opt.is-active { color: inherit; }
-.mode-toggle__opt.is-active::after { transform: scaleX(1); }
-.header--home.is-over-hero .mode-toggle__opt:not(.is-active) { opacity: 0.6; }
-.mode-toggle__sep { color: var(--grey); }
 
 /* Volet du menu (tous les écrans : liens secondaires) */
 .menu {
@@ -1144,7 +1068,7 @@ option { background: var(--surface); color: var(--text); }
 @media (min-width: 1900px) {
   :root { --gutter: 112px; --header-h: 96px; }
   body { font-size: 21px; }
-  .label, .footer__links, .header__link, .mode-toggle, .filter, .link-btn { font-size: 16px; }
+  .label, .footer__links, .header__link, .filter, .link-btn { font-size: 16px; }
   .header__logo svg, .header__gothique svg { height: 48px; }
   .btn { min-height: 64px; padding: 0 40px; font-size: 15px; }
   .section__title { font-size: clamp(72px, 5vw, 112px); }
