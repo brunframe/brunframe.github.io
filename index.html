@@ -236,6 +236,40 @@
       }, 180);
     }, { passive: true });
     window.addEventListener('resize', function () { etat(false); });
+    // 6 novembre (soir) : depuis la vidéo d'accueil, le geste vers le bas mène toujours à la boutique, entière ; un
+    // glissé lancé ne peut plus la sauter (« Passer l'animation » reste là pour ceux qui veulent aller au catalogue)
+    function auDessus() {
+      var t = root.getBoundingClientRect().top;
+      return t > 4 && t < window.innerHeight * 1.25;
+    }
+    // un geste capté le reste jusqu'au bout (doigt levé, fin de l'inertie de la molette) : sa fin ne fait pas dépasser la boutique
+    var vise = 0, tient = false, roue = 0;
+    function versBoutique(e, garder) {
+      var c = e && e.target && e.target.closest ? e.target : null;
+      if (c && c.closest('dialog,[role="dialog"],[aria-modal="true"],.drawer,[data-cart-drawer],[data-menu],[data-sheet]')) return false;
+      if (!tient && !auDessus()) return false;
+      if (garder) tient = true;
+      if (e && e.cancelable) e.preventDefault();
+      if (Date.now() - vise > 900) { vise = Date.now(); caler(); }
+      return true;
+    }
+    window.addEventListener('wheel', function (e) {
+      var t = Date.now();
+      if (t - roue > 260) tient = false;
+      roue = t;
+      if (e.deltaY > 0 || tient) versBoutique(e, true);
+    }, { passive: false });
+    var y0 = null;
+    window.addEventListener('touchstart', function (e) { tient = false; y0 = e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true });
+    window.addEventListener('touchmove', function (e) { if (tient || (y0 !== null && y0 - e.touches[0].clientY > 6)) versBoutique(e, true); }, { passive: false });
+    window.addEventListener('touchend', function () { tient = false; }, { passive: true });
+    window.addEventListener('touchcancel', function () { tient = false; }, { passive: true });
+    window.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (t && t.closest && t.closest('input,textarea,select,[contenteditable]')) return;
+      if (e.key === ' ' && t && t.closest && t.closest('a,button,summary,[role="button"]')) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) versBoutique(e);
+    });
     frame.addEventListener('load', function () { etat(true); });
     window.addEventListener('message', function (e) {
       var d = e.data;
