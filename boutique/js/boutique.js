@@ -654,7 +654,9 @@
       const n = TABLE.n;
       const i = Math.round(l.t * (n - 1));
       const fw = im.naturalWidth / n;
-      sctx.drawImage(im, i * fw, 0, fw, im.naturalHeight, z[0], z[1], z[2], z[3]);
+      // 7 novembre : chaque image de la bande dessinée 1 px en retrait de ses bords (aucun trait noir, rien de l'image voisine)
+      const ex = z[2] / fw, ey = z[3] / im.naturalHeight;
+      sctx.drawImage(im, i * fw + 1, 1, fw - 2, im.naturalHeight - 2, z[0] + ex, z[1] + ey, z[2] - 2 * ex, z[3] - 2 * ey);
     });
     if (!anime && leves.every((l) => l.t === 0)) { sctx.clearRect(0, 0, vw, vh); return false; }
     return anime;
