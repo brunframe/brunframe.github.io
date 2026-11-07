@@ -32,6 +32,8 @@
       img.srcset = WIDTHS.map((w) => `${sized(src, w)} ${w}w`).join(', ');
       img.src = sized(src, 640);
     }
+    // 7 novembre : le survol n'est qu'un aperçu de la photo ; le lien et l'ajout gardent la pastille choisie (clic, clavier)
+    if (!persist) return;
     if (link && swatch.dataset.url) link.href = swatch.dataset.url;
     if (add) {
       if (swatch.dataset.variantId) add.dataset.variantId = swatch.dataset.variantId;
@@ -41,10 +43,8 @@
       if (swatch.dataset.url) add.dataset.url = swatch.dataset.url;
       add.disabled = swatch.dataset.available === 'false';
     }
-    if (persist) {
-      card.dataset.chosen = swatch.dataset.variantId || swatch.dataset.url || '';
-      $$('[data-card-swatch]', card).forEach((b) => b.classList.toggle('is-active', b === swatch));
-    }
+    card.dataset.chosen = swatch.dataset.variantId || swatch.dataset.url || '';
+    $$('[data-card-swatch]', card).forEach((b) => b.classList.toggle('is-active', b === swatch));
   }
 
   function chosenSwatch(card) {

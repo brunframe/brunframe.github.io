@@ -481,16 +481,17 @@
       return picked;
     },
     demoItem(p, base) {
-      const url = escapeHtml(new URL(`../products/${p.h}.html`, base).href);
+      // 7 novembre : la suggestion ouvre la variante proposée ; une pièce à taille se choisit sur la fiche
+      const url = escapeHtml(new URL(`../products/${p.h}.html${p.tl ? '' : `?variant=${p.v}`}`, base).href);
       const img = p.i ? `<img src="${escapeHtml(sized(p.i, 360))}" alt="" width="360" height="360" loading="lazy">` : '';
       const el = document.createElement('div');
       el.className = 'suggest';
       el.setAttribute('data-suggest-item', '');
       el.dataset.productId = p.id;
       el.innerHTML = `<a class="suggest__media media media--square" href="${url}" tabindex="-1" aria-hidden="true">${img}</a>
-        <a class="suggest__name" href="${url}">${escapeHtml(p.t)}</a>
+        <a class="suggest__name" href="${url}">${escapeHtml(p.t)}${p.vt && !p.tl ? ` — ${escapeHtml(p.vt)}` : ''}</a>
         <p class="suggest__price">${money(p.p, state.currency)}</p>
-        <button type="button" class="link-btn suggest__add" data-suggest-variant="${p.v}" data-title="${escapeHtml(p.t)}" data-name="${escapeHtml(p.t)}" data-variant="${escapeHtml(p.vt)}" data-price="${p.p}" data-image="${escapeHtml(p.i)}" data-url="${url}" data-product-id="${p.id}"></button>`;
+        ${p.tl ? `<a class="link-btn suggest__add" href="${url}" data-suggest-choose></a>` : `<button type="button" class="link-btn suggest__add" data-suggest-variant="${p.v}" data-title="${escapeHtml(p.t)}" data-name="${escapeHtml(p.t)}" data-variant="${escapeHtml(p.vt)}" data-price="${p.p}" data-image="${escapeHtml(p.i)}" data-url="${url}" data-product-id="${p.id}"></button>`}`;
       return el;
     },
     fill(box, picked) {
@@ -498,6 +499,7 @@
       if (!picked.length || !state.items.length) { box.hidden = true; return; }
       const titre = box.dataset.suggestTitle || (Drawer.el && Drawer.el.dataset.suggestTitle) || '';
       const label = box.dataset.suggestAdd || (Drawer.el && Drawer.el.dataset.suggestAdd) || '';
+      const choisir = box.dataset.suggestChoose || (Drawer.el && Drawer.el.dataset.suggestChoose) || label;
       if (titre) {
         const title = document.createElement('h3');
         title.className = 'drawer__suggest-title';
@@ -508,6 +510,8 @@
       list.className = 'suggest-list';
       picked.forEach((el) => {
         const node = document.importNode(el, true);
+        const lien = $('[data-suggest-choose]', node);
+        if (lien) lien.textContent = choisir;
         const button = $('[data-suggest-variant]', node);
         if (button) {
           button.textContent = label;
@@ -583,6 +587,21 @@
   }
 
   async function addFromButton(button, form) {
+    // 7 novembre : garde-fou commun (cartes, suggestions, raccourcis, fiche) : jamais d'ajout sans la taille choisie.
+    // Hors fiche : on ouvre la fiche ; sur la fiche : on montre le choix de la taille, le panier ne change pas.
+    if (button.hasAttribute('data-requires-size')) {
+      const picker = (form && form.querySelector('[data-size-picker]')) || document.querySelector('[data-size-picker]');
+      if (form && form.matches('[data-product-form]') && picker) {
+        const hint = document.querySelector('[data-size-hint]');
+        if (hint) hint.hidden = false;
+        picker.scrollIntoView({ block: 'center' });
+        const first = picker.querySelector('[data-value]:not(.is-unavailable)');
+        if (first) first.focus({ preventScroll: true });
+      } else if (button.dataset.url) {
+        window.location.href = button.dataset.url.split('?')[0];
+      }
+      return;
+    }
     const line = lineFromButton(button, form);
     const target = errorTarget(button, form);
     target.hidden = true;

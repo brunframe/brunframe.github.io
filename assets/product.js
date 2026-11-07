@@ -286,7 +286,8 @@
         .filter((o) => o && o !== 'Default Title').join(' / ');
       this.button.dataset.price = String(variant.priceCents);
       this.button.dataset.image = image ? sized(image.src, 600) : '';
-      this.button.dataset.url = variant.url || '';
+      // 7 novembre : l'adresse de la fiche où l'on est, avec la variante (Shopify comme démo statique en .html)
+      this.button.dataset.url = variant.id ? `${location.pathname}?variant=${variant.id}` : (variant.url || '');
       if (sizeMissing) this.button.setAttribute('data-requires-size', '');
       else this.button.removeAttribute('data-requires-size');
     }
