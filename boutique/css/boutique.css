@@ -180,17 +180,18 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
     padding: 52px 20px calc(16px + env(safe-area-inset-bottom)); border: 0; border-radius: 0;
     background: linear-gradient(to top, rgba(14, 10, 7, .8) 0%, rgba(14, 10, 7, .6) 52%, rgba(14, 10, 7, 0) 100%);
     -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .fiche-num { margin: 0 0 6px; font-size: 11px; color: rgba(246, 240, 229, .72); }
+  .fiche-num { margin: 0 0 4px; font-size: 11px; line-height: 34px; color: rgba(246, 240, 229, .72); }
   .fiche-nom { font-size: clamp(24px, 7.2vw, 30px); margin: 0 0 8px; }
   .fiche-ref, .fiche-details { display: none; }
   .fiche-prix { display: inline-block; margin: 0 20px 0 0; font-size: 15px; vertical-align: middle; }
   .fiche .fiche-astuce { margin: 0 0 4px; font-size: 12px; color: rgba(246, 240, 229, .78); }
   .fiche .bouton { display: inline-flex; width: auto; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ivoire);
     vertical-align: middle; font-size: 11px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
-  .fiche-nav { position: absolute; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); margin: 0; gap: 8px; }
+  /* 7 novembre : « Précédente / Suivante » sur la ligne du compteur (en bas, ils chevauchaient « Découvrir la pièce ») */
+  .fiche-nav { position: absolute; right: 20px; top: 52px; bottom: auto; margin: 0; gap: 6px; }
   .fiche .rond { width: 40px; height: 40px; border-color: rgba(246, 240, 229, .5); color: var(--ivoire); }
   .fiche .rond:hover, .fiche .rond:focus-visible { background: var(--ivoire); color: var(--encre); }
-  .fiche .pas { min-height: 40px; padding: 0 12px; font-size: 10px; border-color: rgba(246, 240, 229, .5); color: var(--ivoire); }
+  .fiche .pas { min-height: 34px; padding: 0 10px; font-size: 9.5px; border-color: rgba(246, 240, 229, .5); color: var(--ivoire); }
   .fiche .pas:hover, .fiche .pas:focus-visible { background: var(--ivoire); color: var(--encre); }
   .pas__mot { display: none; }
   .points { display: none; }
@@ -209,12 +210,12 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
 /* tablette en portrait (5 novembre) : la même fiche que sur téléphone, à l'échelle de l'écran (elle paraissait minuscule) */
 @media (max-aspect-ratio: 9/10) and (min-width: 700px) {
   .fiche { padding: 96px 48px calc(40px + env(safe-area-inset-bottom)); }
-  .fiche-num { font-size: 13px; margin-bottom: 10px; }
+  .fiche-num { font-size: 13px; margin-bottom: 10px; line-height: 52px; }
   .fiche-nom { font-size: clamp(40px, 6vw, 60px); margin-bottom: 14px; }
   .fiche-prix { font-size: 20px; margin-right: 28px; }
   .fiche .fiche-astuce { font-size: 15px; }
   .fiche .bouton { font-size: 13px; min-height: 52px; }
-  .fiche-nav { right: 40px; bottom: calc(40px + env(safe-area-inset-bottom)); gap: 12px; }
+  .fiche-nav { right: 48px; top: 96px; bottom: auto; gap: 12px; }
   .fiche .rond { width: 56px; height: 56px; }
   .fiche .pas { min-height: 52px; }
   .fin { padding: 96px 48px calc(48px + env(safe-area-inset-bottom)); }
