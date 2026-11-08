@@ -90,7 +90,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -102,7 +102,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="catalogue.html">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -112,19 +112,31 @@
 </div>
 
     <main id="main" class="main" tabindex="-1">
-      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue"><div class="section__head">
+      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue" data-decouverte data-pas="24"><div class="section__head">
         <h1 class="display section__title section__title--md" data-anim="catalogue-title">Vêtements</h1>
-      </div><div class="catalogue__bar">
-      <p class="catalogue__count" data-catalogue-count>4 pièces · Vêtements</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true"></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
+      </div><form class="catalogue__recherche" action="catalogue.html" method="get" role="search" data-recherche-form>
+        <label class="visually-hidden" for="catalogue-q">Rechercher dans le catalogue</label>
+        <input class="catalogue__champ" type="search" id="catalogue-q" name="q" placeholder="Rechercher une pièce" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-recherche>
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="link-btn catalogue__effacer-champ" data-recherche-effacer hidden>Effacer</button>
+      </form><div class="catalogue__bar">
+      <p class="catalogue__count" data-catalogue-count aria-live="polite">
+        <span data-nb>4 pièces</span> · Vêtements</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true" data-filter-dot></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
         <div class="filters__panel">
           <div class="filters__head">
             <p class="filters__title display">Filtrer</p>
             <button type="button" class="link-btn filters__close" data-sheet-close>Fermer</button>
           </div>
           <nav class="filters__row" aria-label="Filtrer par catégorie">
-            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter is-active" href="categorie-cat-vetements.html" aria-current="true">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav></div>
+            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter is-active" href="categorie-cat-vetements.html" aria-current="true">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav><div class="filters__facettes" data-facettes></div>
+            <div class="filters__pied">
+              <button type="button" class="btn filters__voir" data-sheet-close data-voir-resultats>4 pièces</button>
+            </div></div>
       </div>
-      <div class="filters__backdrop" data-sheet-close hidden></div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal>
+      <div class="filters__backdrop" data-sheet-close hidden></div><div class="catalogue__actifs" data-actifs>
+        <ul class="catalogue__pastilles" role="list" aria-label="Filtres actifs" data-pastilles><li><a class="pastille-filtre" href="catalogue.html" data-garde-etat aria-label="Retirer : Vêtements">Vêtements<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li></ul>
+        <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
+      </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Pull Vêtements  Rav Israël Na Nah’ Israël Nahman Classic Blanc Gris Noir Marron XS S M L XL 2XL" data-couleurs="Blanc|Gris|Noir|Marron" data-tailles="XS|S|M|L|XL|2XL">
   <a class="card__link" href="products/pull.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/breslev-gang_pull_rav-israel_blanc_face.webp" srcset="/photos/800/breslev-gang_pull_rav-israel_blanc_face.webp 797w, /photos/1600/breslev-gang_pull_rav-israel_blanc_face.webp 797w" width="797" height="797" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Pull" data-card-img></div>
     <h3 class="card__name">Pull</h3>
@@ -188,7 +200,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/breslev-gang_pull_rav-israel_marron_face.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul><a class="link-btn card__add" href="products/pull.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Sweat Vêtements  Rav Israël Na Nah’ Israël Nahman Classic Blanc Gris Noir Marron XS S M L XL 2XL" data-couleurs="Blanc|Gris|Noir|Marron" data-tailles="XS|S|M|L|XL|2XL">
   <a class="card__link" href="products/sweat.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp" srcset="/photos/800/breslev-gang_sweat_rav-israel_blanc_face.webp 760w, /photos/1600/breslev-gang_sweat_rav-israel_blanc_face.webp 760w" width="760" height="760" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Sweat" data-card-img></div>
     <h3 class="card__name">Sweat</h3>
@@ -252,7 +264,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/breslev-gang_sweat_rav-israel_marron_face.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul><a class="link-btn card__add" href="products/sweat.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="T-shirt Vêtements  Classic Rav Israël Na Nah’ Israël Nahman Blanc Gris Noir XS S M L XL 2XL" data-couleurs="Blanc|Gris|Noir" data-tailles="XS|S|M|L|XL|2XL">
   <a class="card__link" href="products/t-shirt.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/breslev-gang_t-shirt_classic_blanc_face.webp" srcset="/photos/800/breslev-gang_t-shirt_classic_blanc_face.webp 689w, /photos/1600/breslev-gang_t-shirt_classic_blanc_face.webp 689w" width="689" height="689" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="T-shirt" data-card-img></div>
     <h3 class="card__name">T-shirt</h3>
@@ -302,7 +314,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/breslev-gang_t-shirt_classic_noir_face.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul><a class="link-btn card__add" href="products/t-shirt.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="vetements" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Jogging Breslev Gang Vêtements  Blanc Gris Noir Marron XS S M L XL 2XL" data-couleurs="Blanc|Gris|Noir|Marron" data-tailles="XS|S|M|L|XL|2XL">
   <a class="card__link" href="products/jogging-breslev-gang.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/breslev-gang_jogging_breslev-gang_blanc_face.webp" srcset="/photos/800/breslev-gang_jogging_breslev-gang_blanc_face.webp 800w, /photos/1600/breslev-gang_jogging_breslev-gang_blanc_face.webp 2000w" width="2000" height="2000" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Jogging Breslev Gang" data-card-img></div>
     <h3 class="card__name">Jogging Breslev Gang</h3>
@@ -366,7 +378,39 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/breslev-gang_jogging_breslev-gang_marron_face.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul><a class="link-btn card__add" href="products/jogging-breslev-gang.html" data-anim="card-choose">Choisir</a></li>
-</ul></section>
+</ul><div class="catalogue__vide" data-vide hidden>
+        <p class="catalogue__vide-titre" data-vide-titre aria-live="polite"></p>
+        <p class="catalogue__vide-aide">Essayez un autre mot ou retirez un filtre.</p>
+        <button type="button" class="btn btn--ghost" data-tout-effacer>Réinitialiser</button>
+      </div>
+      <div class="catalogue__more" data-catalogue-more hidden>
+        <button type="button" class="btn btn--ghost catalogue__more-btn" data-voir-plus-local>Voir plus</button>
+      </div><script type="application/json" data-catalogue-config>
+        {
+          "seuils": "80,100,150",
+          "t": {
+            "un": "[n] pièce", "plus": "[n] pièces",
+            "voir_un": "Voir [n] pièce", "voir_plus": "Voir les [n] pièces",
+            "tri": "Trier", "tri_defaut": "Par défaut",
+            "tri_croissant": "Prix croissant", "tri_decroissant": "Prix décroissant",
+            "prix": "Prix", "prix_moins": "Jusqu'à [a]",
+            "prix_entre": "De [a] à [b]", "prix_plus": "Plus de [a]",
+            "couleur": "Couleur", "dispo": "Disponibilité",
+            "dispo_oui": "Disponible", "taille": "Taille",
+            "matiere": "Matière", "longueur": "Longueur",
+            "retirer": "Retirer : [x]", "recherche": "« [q] »",
+            "vide": "Aucune pièce ne correspond.", "vide_recherche": "Aucune pièce pour « [q] ».",
+            "familles": {
+              "noir": "Noir", "blanc": "Blanc",
+              "gris": "Gris", "dore": "Doré",
+              "argente": "Couleur argent", "rose": "Rose",
+              "violet": "Violet", "bleu": "Bleu",
+              "vert": "Vert", "rouge": "Rouge",
+              "camel": "Camel", "multicolore": "Multicolore"
+            }
+          }
+        }
+      </script></section>
   <script src="assets/catalogue.js" defer></script>
   <script>
     /* Catalogue : panneau de filtres (mobile) et « Voir plus ». Progressive enhancement : tout fonctionne sans ce script. */
@@ -565,7 +609,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>

@@ -107,6 +107,16 @@
     } catch (e) { return src; }
   }
 
+  // 8 novembre : adresse rangée dans le panier en chemin absolu. Une adresse relative prise sur l'accueil
+  // (« products/x.html ») ne mène nulle part depuis une fiche (« products/products/x.html »).
+  function absPath(src) {
+    if (!src) return '';
+    try {
+      const url = new URL(src, window.location.href);
+      return url.origin === window.location.origin ? url.pathname + url.search + url.hash : url.href;
+    } catch (e) { return src; }
+  }
+
   /* ---------- Verrou de défilement (partagé avec theme.js) ---------- */
   const lock = () => (window.BG && window.BG.scrollLock ? window.BG.scrollLock.acquire('cart') : (document.documentElement.style.overflow = 'hidden'));
   const unlock = () => {
@@ -152,26 +162,37 @@
     };
   }
 
+  // 8 novembre : coupure réseau ou erreur serveur → « La mise à jour a échoué. Réessayez. » ;
+  // refus de Shopify (422 : épuisé, plus de stock) → le message de Shopify, dans la langue de la boutique.
   async function shopifyRequest(url, body) {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(body)
-    });
+    let response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body)
+      });
+    } catch (e) { throw new Error(text('retry') || text('error')); }
     let data = {};
     try { data = await response.json(); } catch (e) { data = {}; }
-    if (!response.ok || data.status) throw new Error(data.description || data.message || text('error') || config.strings.cartError);
+    if (!response.ok || data.status) {
+      const refus = response.status === 422 && typeof data.description === 'string' ? data.description : '';
+      throw new Error(refus || text(response.status === 422 ? 'error' : 'retry') || text('error'));
+    }
     return data;
   }
 
   async function shopifyFetch() {
-    const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-    if (!response.ok) throw new Error('cart');
+    let response;
+    try { response = await fetch('/cart.js', { headers: { Accept: 'application/json' } }); } catch (e) { throw new Error(text('retry')); }
+    if (!response.ok) throw new Error(text('retry'));
     return fromShopify(await response.json());
   }
 
   /* ---------- Mode démo (localStorage) ---------- */
+  let demoMemory = null;
   function demoLoad() {
+    if (demoMemory) return demoMemory.map((it) => Object.assign({}, it));
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? JSON.parse(raw) : null;
@@ -179,7 +200,10 @@
     } catch (e) { return []; }
   }
   function demoSave(items) {
-    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, savedAt: Date.now() })); } catch (e) { /* stockage indisponible */ }
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, savedAt: Date.now() }));
+      demoMemory = null;
+    } catch (e) { demoMemory = items.map((it) => Object.assign({}, it)); }
   }
   function fromDemo(items) {
     const lines = items.map((it) => Object.assign({}, it, {
@@ -211,7 +235,7 @@
     const compare = item.originalLinePrice > item.linePrice
       ? `<s class="price__compare">${money(item.originalLinePrice, state.currency)}</s>`
       : '';
-    return `<li class="line" data-line="${index + 1}" data-key="${escapeHtml(item.key)}" data-variant-id="${escapeHtml(item.variantId)}" data-product-id="${escapeHtml(item.productId || '')}" data-product-type="${escapeHtml(item.productType || '')}" data-anim="cart-line">
+    return `<li class="line" data-line="${index + 1}" data-qty="${item.quantity}" data-key="${escapeHtml(item.key)}" data-variant-id="${escapeHtml(item.variantId)}" data-product-id="${escapeHtml(item.productId || '')}" data-product-type="${escapeHtml(item.productType || '')}" data-anim="cart-line">
       <a class="line__media" href="${url}" tabindex="-1" aria-hidden="true">${img}</a>
       <div class="line__info">
         <a class="line__name" href="${url}">${name}</a>
@@ -276,7 +300,7 @@
         lines.innerHTML = state.items.length
           ? `<ul class="lines" role="list">${state.items.map(lineHtml).join('')}</ul>`
           : emptyHtml(root);
-        lines.classList.remove('is-busy');
+        lines.removeAttribute('aria-busy');
         if (options.highlight) {
           const added = $(`[data-line][data-variant-id="${options.highlight}"]`, lines);
           if (added) added.classList.add('is-new');
@@ -295,13 +319,18 @@
       });
     });
     if (window.BG && window.BG.reveal) roots().forEach((root) => window.BG.reveal(root));
+    // « Retirer » sur la dernière ligne : le bouton disparaît, le focus revient au tiroir.
+    if (Drawer.isOpen() && !Drawer.el.contains(document.activeElement)) {
+      const close = $('[data-cart-close].link-btn', Drawer.el);
+      if (close) close.focus({ preventScroll: true });
+    }
   }
 
   function setBusy(on) {
     roots().forEach((root) => {
-      const lines = $('[data-cart-lines] .lines', root);
+      const lines = $('[data-cart-lines]', root);
       const foot = $('[data-cart-foot]', root);
-      if (lines) lines.classList.toggle('is-busy', on);
+      if (lines) { if (on) lines.setAttribute('aria-busy', 'true'); else lines.removeAttribute('aria-busy'); }
       if (foot) foot.classList.toggle('is-busy', on);
     });
   }
@@ -358,6 +387,7 @@
   const Drawer = {
     el: null,
     lastFocus: null,
+    openedAt: 0,
     isOpen() { return !!this.el && this.el.classList.contains('is-open'); },
     open() {
       if (!this.el) { if (routes.cart) window.location.href = routes.cart; return; }
@@ -366,7 +396,9 @@
       this.el.removeAttribute('inert');
       this.el.setAttribute('aria-hidden', 'false');
       this.el.classList.add('is-open');
+      this.openedAt = Date.now();
       lock();
+      if (stale) API.refresh().catch(() => {});
       const close = $('[data-cart-close].link-btn', this.el);
       if (close) close.focus({ preventScroll: true });
       if (state.items.length && !Suggest.shownFor) Suggest.load(state.items[0]);
@@ -474,7 +506,7 @@
       const picked = [];
       order.forEach((k) => {
         const p = data.produits[k];
-        if (!p || picked.length >= 4 || seen.has(String(p.id))) return;
+        if (!p || p.ep || picked.length >= 4 || seen.has(String(p.id))) return;
         seen.add(String(p.id));
         picked.push(this.demoItem(p, data.base));
       });
@@ -535,8 +567,8 @@
       name: d.name || '',
       variant: d.variant || '',
       price: parseCents(d.price),
-      image: d.image || '',
-      url: d.url || '',
+      image: absPath(d.image || ''),
+      url: absPath(d.url || ''),
       productId: Number(d.productId) || 0,
       productType: d.productType || '',
       optionMissing: d.optionMissing || ''
@@ -622,6 +654,27 @@
   }
 
   /* ---------- API ---------- */
+  // 8 novembre : les changements passent un par un, dans l'ordre des appuis (jamais deux requêtes croisées
+  // dont la plus ancienne répondrait en dernier). queued compte les changements en cours ou en attente.
+  let chain = Promise.resolve();
+  let queued = 0;
+  function serial(task) {
+    queued += 1;
+    const run = chain.then(() => task().finally(() => { queued -= 1; }));
+    chain = run.catch(() => {});
+    return run;
+  }
+  // Shopify injoignable au chargement : le panier rendu par Liquid reste affiché, relu au premier usage.
+  let stale = false;
+  const readState = async () => (mode === 'shopify' ? shopifyFetch() : fromDemo(demoLoad()));
+  // Après un échec : l'écran suit de nouveau le vrai panier (lignes, total, compteur), les boutons
+  // redeviennent actifs, le message reste affiché jusqu'au prochain changement réussi.
+  async function recover(message) {
+    try { state = await readState(); stale = false; } catch (e) { /* hors ligne : on garde l'état connu */ }
+    if (!stale) { render({ keepError: true }); emit(); }
+    if (message) showCartError(message);
+  }
+
   const API = {
     get ready() { return ready; },
     get mode() { return mode; },
@@ -630,7 +683,8 @@
 
     async refresh() {
       await ready;
-      state = mode === 'shopify' ? await shopifyFetch() : fromDemo(demoLoad());
+      state = await readState();
+      stale = false;
       render();
       emit();
       return state;
@@ -641,11 +695,15 @@
       const variantId = Number(line && line.variantId);
       const quantity = Math.max(1, Number(line && line.quantity) || 1);
       if (!variantId) throw new Error(text('error'));
+      return serial(() => API.addNow(line, variantId, quantity));
+    },
+    async addNow(line, variantId, quantity) {
       setBusy(true);
       try {
         if (mode === 'shopify') {
           await shopifyRequest(`${routes.cartAdd || '/cart/add'}.js`, { items: [{ id: variantId, quantity }] });
           state = await shopifyFetch();
+          stale = false;
         } else {
           const items = demoLoad();
           const found = items.find((it) => it.variantId === variantId);
@@ -657,8 +715,8 @@
               name: line.name || '',
               variant: line.variant || '',
               price: parseCents(line.price),
-              image: line.image || '',
-              url: line.url || '',
+              image: absPath(line.image || ''),
+              url: absPath(line.url || ''),
               productId: Number(line.productId) || 0,
               productType: line.productType || ''
             });
@@ -666,7 +724,12 @@
           demoSave(items);
           state = fromDemo(items);
         }
-      } finally { setBusy(false); }
+      } catch (err) {
+        setBusy(false);
+        await recover();
+        throw err;
+      }
+      setBusy(false);
       render({ highlight: variantId });
       emit();
       const status = $('[data-cart-status]');
@@ -681,11 +744,15 @@
     async change(keyOrId, quantity) {
       await ready;
       quantity = Math.max(0, Number(quantity) || 0);
+      return serial(() => API.changeNow(keyOrId, quantity));
+    },
+    async changeNow(keyOrId, quantity) {
       setBusy(true);
       try {
         if (mode === 'shopify') {
           const cart = await shopifyRequest(`${routes.cartChange || '/cart/change'}.js`, { id: String(keyOrId), quantity });
           state = cart && cart.items ? fromShopify(cart) : await shopifyFetch();
+          stale = false;
         } else {
           const items = demoLoad();
           const index = items.findIndex((it) => String(it.variantId) === String(keyOrId));
@@ -698,12 +765,18 @@
         }
       } catch (err) {
         setBusy(false);
-        showCartError(err.message || text('error'));
+        await recover(err.message || text('error'));
         throw err;
       }
+      // d'autres appuis attendent : seule la dernière réponse s'affiche (pas de quantité qui recule puis avance)
+      if (queued > 1) return state;
+      setBusy(false);
       render();
       emit();
       Suggest.filter();
+      // Shopify ramène la quantité au stock disponible : on le dit au lieu d'ignorer l'appui.
+      const line = quantity > 0 && state.items.find((it) => String(it.key) === String(keyOrId) || String(it.variantId) === String(keyOrId));
+      if (line && line.quantity < quantity) showCartError(text('max'));
       return state;
     },
 
@@ -714,30 +787,59 @@
   };
 
   /* ---------- Détection du mode, une seule fois ---------- */
+  // 8 novembre : sur Shopify, une panne passagère de /cart.js ne fait plus basculer en démo (autre panier,
+  // paiement désactivé) : deux nouveaux essais, puis mode Shopify avec le panier rendu par Liquid.
   async function detect() {
     if (window.Shopify) {
-      try {
-        const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-        const type = response.headers.get('content-type') || '';
-        if (response.ok && type.indexOf('json') !== -1) {
-          const cart = await response.json();
+      let panne = false;
+      for (let essai = 0; essai < 3 && !mode; essai += 1) {
+        if (essai) await new Promise((resolve) => { setTimeout(resolve, 700 * essai); });
+        try {
+          const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+          panne = response.status >= 500;
+          if (panne) continue;
+          const type = response.headers.get('content-type') || '';
+          const cart = response.ok && type.indexOf('json') !== -1 ? await response.json() : null;
           if (cart && Array.isArray(cart.items)) {
             mode = 'shopify';
             state = fromShopify(cart);
           }
-        }
-      } catch (e) { /* pas d'API : démo */ }
+          break;
+        } catch (e) { panne = true; }
+      }
+      if (!mode && panne) { mode = 'shopify'; stale = true; }
     }
     if (!mode) {
       mode = 'demo';
       state = fromDemo(demoLoad());
     }
     document.documentElement.setAttribute('data-cart-mode', mode);
-    render();
-    emit();
+    if (!stale) { render(); emit(); }
     resolveReady(state);
     // page panier : les suggestions sont là dès l'arrivée
-    if (state.items.length && $('[data-cart-page] [data-cart-suggestions]')) Suggest.load(state.items[0]);
+    if (!stale && state.items.length && $('[data-cart-page] [data-cart-suggestions]')) Suggest.load(state.items[0]);
+  }
+
+  /* ---------- Quantités : les appuis rapides s'additionnent ---------- */
+  // 8 novembre : la ligne affiche tout de suite la quantité voulue, les requêtes partent une à une (serial),
+  // la dernière réponse fait foi. « − » sur 1 retire la ligne ; un appui qui ne change rien n'envoie rien.
+  const voulu = new Map();
+  function changeLine(line, button) {
+    const key = line.dataset.key || line.dataset.variantId;
+    const value = $('.qty-value', line);
+    const shown = Number(line.dataset.qty || (value && value.textContent)) || 0;
+    const asked = Math.max(0, Number(button.dataset.lineQty) || 0);
+    const base = voulu.has(key) ? voulu.get(key) : shown;
+    const target = button.classList.contains('qty-btn') ? Math.max(0, base + (asked - shown)) : asked;
+    if (target === base && voulu.has(key)) return;
+    voulu.set(key, target);
+    $$('[data-line]').forEach((l) => {
+      if ((l.dataset.key || l.dataset.variantId) !== key) return;
+      const v = $('.qty-value', l);
+      if (v) v.textContent = target;
+      if (target === 0) l.hidden = true;
+    });
+    API.change(key, target).catch(() => {}).then(() => { if (voulu.get(key) === target) voulu.delete(key); });
   }
 
   /* ---------- Écouteurs ---------- */
@@ -747,6 +849,13 @@
     document.addEventListener('bg:cart:updated', (event) => updateCount(event.detail));
 
     document.addEventListener('click', (event) => {
+      // 8 novembre : double appui sur « Ajouter » : le second appui tombait sur le tiroir qui venait de s'ouvrir
+      // (le fond le refermait, « Retirer » pouvait être touché). Une demi-seconde après l'ouverture, le tiroir
+      // ignore les appuis du doigt ou de la souris (pas ceux du clavier : event.detail vaut 0).
+      if (event.detail && Drawer.isOpen() && Drawer.el.contains(event.target) && Date.now() - Drawer.openedAt < 500) {
+        event.preventDefault();
+        return;
+      }
       const opener = event.target.closest('[data-cart-open]');
       if (opener) { event.preventDefault(); Drawer.open(); return; }
 
@@ -761,7 +870,7 @@
       const qty = event.target.closest('[data-line-qty]');
       if (qty && qty.closest('[data-cart-root]')) {
         const line = qty.closest('[data-line]');
-        if (line) API.change(line.dataset.key || line.dataset.variantId, Number(qty.dataset.lineQty)).catch(() => {});
+        if (line) changeLine(line, qty);
         return;
       }
 
@@ -770,7 +879,7 @@
         event.preventDefault();
         suggest.disabled = true;
         API.add(Object.assign(lineFromButton(suggest, null), { variantId: Number(suggest.dataset.suggestVariant) }))
-          .catch(() => { suggest.disabled = false; });
+          .catch((err) => { suggest.disabled = false; showCartError(err.message || text('error')); });
         return;
       }
 

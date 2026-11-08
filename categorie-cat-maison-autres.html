@@ -90,7 +90,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -102,7 +102,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="catalogue.html">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -112,19 +112,31 @@
 </div>
 
     <main id="main" class="main" tabindex="-1">
-      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue"><div class="section__head">
+      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue" data-decouverte data-pas="24"><div class="section__head">
         <h1 class="display section__title section__title--md" data-anim="catalogue-title">Maison & autres</h1>
-      </div><div class="catalogue__bar">
-      <p class="catalogue__count" data-catalogue-count>10 pièces · Maison & autres</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true"></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
+      </div><form class="catalogue__recherche" action="catalogue.html" method="get" role="search" data-recherche-form>
+        <label class="visually-hidden" for="catalogue-q">Rechercher dans le catalogue</label>
+        <input class="catalogue__champ" type="search" id="catalogue-q" name="q" placeholder="Rechercher une pièce" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-recherche>
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="link-btn catalogue__effacer-champ" data-recherche-effacer hidden>Effacer</button>
+      </form><div class="catalogue__bar">
+      <p class="catalogue__count" data-catalogue-count aria-live="polite">
+        <span data-nb>10 pièces</span> · Maison & autres</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true" data-filter-dot></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
         <div class="filters__panel">
           <div class="filters__head">
             <p class="filters__title display">Filtrer</p>
             <button type="button" class="link-btn filters__close" data-sheet-close>Fermer</button>
           </div>
           <nav class="filters__row" aria-label="Filtrer par catégorie">
-            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter is-active" href="categorie-cat-maison-autres.html" aria-current="true">Maison & autres</a></nav></div>
+            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter is-active" href="categorie-cat-maison-autres.html" aria-current="true">Maison & autres</a></nav><div class="filters__facettes" data-facettes></div>
+            <div class="filters__pied">
+              <button type="button" class="btn filters__voir" data-sheet-close data-voir-resultats>10 pièces</button>
+            </div></div>
       </div>
-      <div class="filters__backdrop" data-sheet-close hidden></div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+      <div class="filters__backdrop" data-sheet-close hidden></div><div class="catalogue__actifs" data-actifs>
+        <ul class="catalogue__pastilles" role="list" aria-label="Filtres actifs" data-pastilles><li><a class="pastille-filtre" href="catalogue.html" data-garde-etat aria-label="Retirer : Maison &amp; autres">Maison & autres<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li></ul>
+        <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
+      </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="2000" data-dispo="1" data-texte="Kippa Maison &amp; autres  Velour Grise Aech Cheli נ נח Velour Grise Aech Cheli +נ נח or rose Zebré Noir Aech Cheli נ נח or rose Zebré Noir Rabi Israël נ נח or rose Velour Noir Rabi Israël נ נח Velour Noir Aech Cheli נ נח Velour Beige Aech Cheli נ נח" data-couleurs="Velour Grise Aech Cheli נ נח|Velour Grise Aech Cheli +נ נח or rose|Zebré Noir Aech Cheli נ נח or rose|Zebré Noir Rabi Israël נ נח or rose|Velour Noir Rabi Israël נ נח|Velour Noir Aech Cheli נ נח|Velour Beige Aech Cheli נ נח">
   <a class="card__link" href="products/kippa.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp" srcset="/photos/800/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 640w, /photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Kippa" data-card-img></div>
     <h3 class="card__name">Kippa</h3>
@@ -202,7 +214,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/3E88343A-66B8-4821-8720-C5271681CC07.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+2</li></ul><a class="link-btn card__add" href="products/kippa.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Figurine Maison &amp; autres  Black Harley Black silver Gold limited edition Décorative" data-couleurs="Black Harley|Black silver|Gold limited edition|Décorative">
   <a class="card__link" href="products/figurine.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp" srcset="/photos/800/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 640w, /photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Figurine" data-card-img></div>
     <h3 class="card__name">Figurine</h3>
@@ -279,7 +291,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Bougeoir Maison &amp; autres  White Black 2.0 Bougeoir Breslev Gang" data-couleurs="White|Black 2.0|Bougeoir Breslev Gang">
   <a class="card__link" href="products/bougeoir.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp" srcset="/photos/800/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 640w, /photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bougeoir" data-card-img></div>
     <h3 class="card__name">Bougeoir</h3>
@@ -342,7 +354,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="6000" data-dispo="1" data-texte="Plateaux de Chabbat Maison &amp; autres  Combo Yom Tov ( hallot boutargue) Plateau boutargue deluxe Plateau" data-couleurs="Combo Yom Tov ( hallot boutargue)|Plateau boutargue deluxe|Plateau">
   <a class="card__link" href="products/plateaux-de-chabbat.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp" srcset="/photos/800/60DFE61D-3F47-4452-84CF-14346E78429B.webp 640w, /photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Plateaux de Chabbat" data-card-img></div>
     <h3 class="card__name">Plateaux de Chabbat</h3>
@@ -405,7 +417,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Box Maison &amp; autres  Noir Beige" data-couleurs="Noir|Beige">
   <a class="card__link" href="products/box.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp" srcset="/photos/800/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 640w, /photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Box" data-card-img></div>
     <h3 class="card__name">Box</h3>
@@ -454,7 +466,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="4900" data-dispo="1" data-texte="Mapa de Chabbat Maison &amp; autres  Chabat Aech Cheli Beige Chabat Aech Cheli Noir" data-couleurs="Chabat Aech Cheli Beige|Chabat Aech Cheli Noir">
   <a class="card__link" href="products/mapa-de-chabbat.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp" srcset="/photos/800/2096A3FF-3F80-4268-A968-1306533B27DF.webp 640w, /photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Mapa de Chabbat" data-card-img></div>
     <h3 class="card__name">Mapa de Chabbat</h3>
@@ -469,10 +481,10 @@
               data-image="/photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp"
               data-url="products/mapa-de-chabbat.html?variant=45100000918"
               data-variant-id="45100000918"
-              data-variant="Chabat Aech Cheli Beige"
+              data-variant="Chabbat Aech Cheli Beige"
               data-price="4900"
               data-available="true"
-              aria-label="Voir en Chabat Aech Cheli Beige"
+              aria-label="Voir en Chabbat Aech Cheli Beige"
               data-anim="card-swatch"
             ><img src="/photos/pastille/2096A3FF-3F80-4268-A968-1306533B27DF.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li>
@@ -483,10 +495,10 @@
               data-image="/photos/1600/31B6F647-BA7B-4079-A21A-D8399114A431.webp"
               data-url="products/mapa-de-chabbat.html?variant=45100000919"
               data-variant-id="45100000919"
-              data-variant="Chabat Aech Cheli Noir"
+              data-variant="Chabbat Aech Cheli Noir"
               data-price="4900"
               data-available="true"
-              aria-label="Voir en Chabat Aech Cheli Noir"
+              aria-label="Voir en Chabbat Aech Cheli Noir"
               data-anim="card-swatch"
             ><img src="/photos/pastille/31B6F647-BA7B-4079-A21A-D8399114A431.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul><button
@@ -503,7 +515,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="CARTE CADEAU Maison &amp; autres  100,00 € 200,00 € 300,00 € 400,00 € 500,00 € 1 000,00 €">
   <a class="card__link" href="products/carte-cadeau-breslev-gang.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"></div>
     <h3 class="card__name">CARTE CADEAU</h3>
@@ -524,7 +536,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="1490" data-dispo="1" data-texte="Paquet de cartes Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/paquet-de-cartes-breslev-gang.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp" srcset="/photos/800/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 640w, /photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Paquet de cartes Breslev Gang" data-card-img></div>
     <h3 class="card__name">Paquet de cartes Breslev Gang</h3>
@@ -545,7 +557,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Please return to Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/please-return-to-breslev-gang.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp" srcset="/photos/800/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 640w, /photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Please return to Breslev Gang" data-card-img></div>
     <h3 class="card__name">Please return to Breslev Gang</h3>
@@ -566,7 +578,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Pochette en cuir noir Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/pochette-d-ete-2k26.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp" srcset="/photos/800/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 640w, /photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Pochette en cuir noir Breslev Gang" data-card-img></div>
     <h3 class="card__name">Pochette en cuir noir Breslev Gang</h3>
@@ -587,7 +599,39 @@
       
       
     >Ajouter</button></li>
-</ul></section>
+</ul><div class="catalogue__vide" data-vide hidden>
+        <p class="catalogue__vide-titre" data-vide-titre aria-live="polite"></p>
+        <p class="catalogue__vide-aide">Essayez un autre mot ou retirez un filtre.</p>
+        <button type="button" class="btn btn--ghost" data-tout-effacer>Réinitialiser</button>
+      </div>
+      <div class="catalogue__more" data-catalogue-more hidden>
+        <button type="button" class="btn btn--ghost catalogue__more-btn" data-voir-plus-local>Voir plus</button>
+      </div><script type="application/json" data-catalogue-config>
+        {
+          "seuils": "80,100,150",
+          "t": {
+            "un": "[n] pièce", "plus": "[n] pièces",
+            "voir_un": "Voir [n] pièce", "voir_plus": "Voir les [n] pièces",
+            "tri": "Trier", "tri_defaut": "Par défaut",
+            "tri_croissant": "Prix croissant", "tri_decroissant": "Prix décroissant",
+            "prix": "Prix", "prix_moins": "Jusqu'à [a]",
+            "prix_entre": "De [a] à [b]", "prix_plus": "Plus de [a]",
+            "couleur": "Couleur", "dispo": "Disponibilité",
+            "dispo_oui": "Disponible", "taille": "Taille",
+            "matiere": "Matière", "longueur": "Longueur",
+            "retirer": "Retirer : [x]", "recherche": "« [q] »",
+            "vide": "Aucune pièce ne correspond.", "vide_recherche": "Aucune pièce pour « [q] ».",
+            "familles": {
+              "noir": "Noir", "blanc": "Blanc",
+              "gris": "Gris", "dore": "Doré",
+              "argente": "Couleur argent", "rose": "Rose",
+              "violet": "Violet", "bleu": "Bleu",
+              "vert": "Vert", "rouge": "Rouge",
+              "camel": "Camel", "multicolore": "Multicolore"
+            }
+          }
+        }
+      </script></section>
   <script src="assets/catalogue.js" defer></script>
   <script>
     /* Catalogue : panneau de filtres (mobile) et « Voir plus ». Progressive enhancement : tout fonctionne sans ce script. */
@@ -786,7 +830,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>

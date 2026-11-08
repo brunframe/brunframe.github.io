@@ -56,7 +56,11 @@
   const essai = document.createElement('video');
   const HEVC = !!essai.canPlayType('video/mp4; codecs="hvc1.1.6.L120.90"');
   const CODEC = HEVC ? 'hevc' : 'h264';
-  const VIDEO_OK = HEVC || !!essai.canPlayType('video/mp4; codecs="avc1.640033"');
+  // 8 novembre (audit) : « économie de données » : images fixes seulement, aucune vidéo téléchargée (fondus entre les
+  // arrêts). VIDEO_OK peut aussi tomber en route : codec annoncé mais illisible, réseau coupé (voir panne()).
+  const ECONOMIE = !!(navigator.connection && navigator.connection.saveData);
+  let VIDEO_OK = !ECONOMIE && (HEVC || !!essai.canPlayType('video/mp4; codecs="avc1.640033"'));
+  if (!VIDEO_OK) root.classList.add('sans-video');
   // boutique allumée (site en Blanc) ou éteinte (site en Noir) : le bouton Blanc/Noir du site éteint vraiment la boutique
   // une seule salle, allumée (5 novembre : six colliers, buste neutre ; l'ancienne salle éteinte montrait les anciens colliers)
   const lireVersion = () => 'allume';
@@ -103,6 +107,22 @@
       <span class="d-prix">${prixArret(p)}</span><a class="bouton" href="${lienArret(p)}">${p.bouton || 'Découvrir la pièce'}</a></figcaption></figure>`;
     liste.appendChild(li);
   });
+  // ---------------------------------------------------------------- « Passer l'animation » (8 novembre, audit)
+  // Dans l'accueil (le site répond à la boutique), le site va au catalogue ; sans réponse du site (ancienne version du
+  // thème, page affichée ailleurs), le lien ouvre le catalogue dans la fenêtre principale (<base target="_top">), jamais
+  // dans le cadre. Posé avant la version statique : il sert aussi en mouvement réduit.
+  const embarque = window.parent !== window;
+  let parentRepond = false;
+  if (embarque) {
+    root.classList.add('embarque');
+    addEventListener('message', (e) => { if (e.source === window.parent && e.data && e.data.boutique === 'cadre') parentRepond = true; });
+    $$('.passer, .evitement').forEach((a) => a.addEventListener('click', (e) => {
+      if (!parentRepond) return;
+      e.preventDefault();
+      // « bord » pour les thèmes d'avant le 8 novembre (le site défile jusqu'à la section suivante) ; « passer » : le catalogue
+      try { window.parent.postMessage({ boutique: 'bord', dir: 1, passer: true }, '*'); } catch (err) { /* sans effet */ }
+    }));
+  }
   const rmQuery = matchMedia('(prefers-reduced-motion: reduce)');
   rmQuery.addEventListener && rmQuery.addEventListener('change', () => root.classList.toggle('rm', rmQuery.matches));
   if (root.classList.contains('rm')) return;
@@ -171,6 +191,8 @@
       v.preload = 'none';
       v.dataset.seg = SEGMENTS[i] + (inv ? '-inverse' : '');
       v.addEventListener('ended', () => finDeMarche(i, inv));
+      v.addEventListener('error', () => panne(v));
+      v.addEventListener('playing', () => { dejaLu = true; });
       marches.appendChild(v);
       pistes[k] = v;
     }
@@ -180,13 +202,48 @@
     marches.innerHTML = '';
     Object.keys(pistes).forEach((k) => { delete pistes[k]; });
   }
+  // 8 novembre (audit) : une marche illisible (codec annoncé mais absent, fichier abîmé, réseau coupé) ne reste jamais à
+  // l'écran : l'image fixe de l'arrêt (son affiche) demeure et l'on passe à l'arrêt visé en fondu. Fichier reçu en entier
+  // mais illisible alors qu'aucune marche n'a encore été lue : plus aucune vidéo pour la visite (fondus seulement, plus
+  // aucun téléchargement) ; sinon (réseau, décodeur saturé) : à la troisième panne. « Passer l'animation » reste à
+  // l'écran dans tous les cas.
+  let pannes = 0, dejaLu = false;
+  const echecs = {};                        // marches dont le téléchargement a échoué : on ne les attend plus
+  const jouable = (i, inv) => VIDEO_OK && !echecs[videoSrc(F_, i, inv)];
+  function sansVideo() {
+    if (!VIDEO_OK) return;
+    VIDEO_OK = false;
+    root.classList.add('sans-video');
+    fileTout += 1;                          // la file de préchargement s'arrête
+    const enCours = lecture;
+    lecture = null;
+    Object.values(pistes).forEach((x) => { x.pause(); x.removeAttribute('src'); x.load(); });
+    oublie();
+    creeVideos();
+    if (enCours) sautVers(enCours.inv ? enCours.i : enCours.i + 1);
+  }
+  function panne(v, cale) {
+    const k = Object.keys(pistes).find((x) => pistes[x] === v);
+    const code = v.error ? v.error.code : 0;
+    if (k === undefined || code === 1) return;          // vidéo déjà oubliée, ou chargement interrompu par la page
+    const enCours = lecture && lecture.v === v ? lecture : null;
+    if (enCours) { lecture = null; v.classList.remove('is-on'); chargement.classList.remove('is-on'); }
+    if (!cale && !dejaLu && (v.dataset.src === 'memoire' || code === 3)) sansVideo();
+    else if (++pannes >= 3) sansVideo();
+    else { v.pause(); v.removeAttribute('src'); v.remove(); delete pistes[k]; }
+    if (enCours) sautVers(enCours.inv ? enCours.i : enCours.i + 1);
+  }
   // Chaque vidéo de marche est téléchargée à l'avance en entier (en mémoire) pendant qu'on regarde la vitrine :
   // la marche démarre alors instantanément, même sur iPhone (qui ne précharge pas les vidéos de lui-même).
   let memoire = {};
+  let codecVerifie = Promise.resolve();     // réponse de mediaCapabilities (démarrage) : aucune marche téléchargée avant
   function telecharge(url) {
     if (!memoire[url]) {
       memoire[url] = fetch(url).then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.blob(); })
-        .then((b) => URL.createObjectURL(b)).catch(() => null);
+        .then((b) => URL.createObjectURL(b)).catch(() => {
+          if (memoire[url]) { echecs[url] = true; if (++pannes >= 3) sansVideo(); }
+          return null;
+        });
     }
     return memoire[url];
   }
@@ -209,7 +266,8 @@
     if (v.dataset.charge) return v.pret || Promise.resolve();
     v.dataset.charge = '1';
     v.poster = arretSrc(F_, inv ? i + 1 : i);
-    v.pret = telecharge(videoSrc(F_, i, inv)).then((u) => {
+    const url = videoSrc(F_, i, inv);
+    v.pret = codecVerifie.then(() => (VIDEO_OK ? telecharge(url) : null)).then((u) => {
       if (!u || pistes[inv ? `${i}r` : String(i)] !== v || v.dataset.src) return;
       v.dataset.src = 'memoire';
       v.preload = 'auto';
@@ -296,7 +354,7 @@
     const v = piste(i, inv);
     prepare(i, inv);
     source(i, inv);
-    lecture = { i, v, inv: !!inv };
+    lecture = { i, v, inv: !!inv, t0: performance.now() };
     const but = inv ? i : i + 1;
     const entree = i === 0 && !inv;          // la marche d'entrée : on la voit toujours, quitte à l'attendre
     const geste = !autoEnCours;
@@ -420,13 +478,22 @@
       return;
     }
     if (lecture) { enAttente = clamp(n - (lecture.inv ? lecture.i : lecture.i + 1), -1, 1); return; }
-    if (n === at + 1 && at < FIN && VIDEO_OK) marcher(at, false);
-    else if (n === at - 1 && at > 0 && VIDEO_OK) marcher(at - 1, true);
+    if (n === at + 1 && at < FIN && jouable(at, false)) marcher(at, false);
+    else if (n === at - 1 && at > 0 && jouable(at - 1, true)) marcher(at - 1, true);
     else sautVers(n);
   }
   function step(d) {
     if (lecture) {
       const sens = lecture.inv ? -1 : 1;
+      // 8 novembre (audit) : une marche qui ne démarre pas (réseau lent ou coupé) ne retient pas le visiteur qui insiste :
+      // au-delà de 1,5 s, son geste passe par un fondu (même sens) ou annule la marche (l'autre sens)
+      const l = lecture;
+      if (l.t0 && l.v.currentTime === 0 && l.v.readyState < 3 && performance.now() - l.t0 > 1500) {
+        l.v.pause(); l.v.classList.remove('is-on'); lecture = null; enAttente = 0;
+        chargement.classList.remove('is-on');
+        if (d === sens) sautVers(l.inv ? l.i : l.i + 1);
+        return;
+      }
       if (d === sens || enAttente) {          // même sens : le pas attend son tour (jusqu'à trois), la marche accélère
         enAttente = clamp(enAttente + d, -3, 3);
         cadence();
@@ -462,6 +529,11 @@
   }
   function majPos(now) {
     if (lecture && lecture.v.ended) finDeMarche(lecture.i, lecture.inv);   // au cas où l'événement « ended » se perd
+    // 8 novembre (audit) : une marche qui cale en route (réseau coupé) ne reste pas figée : au bout de 3 s, fondu
+    if (lecture && lecture.v.currentTime > 0 && !lecture.v.paused && lecture.v.readyState < 3) {
+      if (!lecture.cale) lecture.cale = now;
+      else if (now - lecture.cale > 3000) panne(lecture.v, true);
+    } else if (lecture) lecture.cale = 0;
     if (lecture && lecture.v.duration) {
       const k = clamp(lecture.v.currentTime / lecture.v.duration, 0, 1);
       pos = lecture.inv ? lecture.i + 1 - k : lecture.i + k;
@@ -734,7 +806,7 @@
     if (entreeFaite || !VIDEO_OK) return;
     clearTimeout(entreeMinuteur);
     entreeMinuteur = setTimeout(() => {
-      if (entreeFaite || at !== 0 || lecture || fondu || !pris() || document.hidden || introOuverte() || grosOuvert()) return;
+      if (entreeFaite || at !== 0 || lecture || fondu || !pris() || document.hidden || introOuverte() || grosOuvert() || !jouable(0, false)) return;
       autoEnCours = true;
       goTo(1);
       autoEnCours = false;
@@ -853,20 +925,12 @@
   }
 
   // ---------------------------------------------------------------- gestes
-  const embarque = window.parent !== window;
-  if (embarque) {
-    root.classList.add('embarque');
-    // sur l'accueil, « Passer l'animation » fait défiler le site jusqu'à la section suivante (catalogue, personnalités,
-    // histoire) au lieu de quitter la page : on n'est jamais obligé de faire tout le tour pour voir la suite
-    $$('.passer, .evitement').forEach((a) => a.addEventListener('click', (e) => {
-      e.preventDefault();
-      try { window.parent.postMessage({ boutique: 'bord', dir: 1 }, '*'); } catch (err) { /* sans effet */ }
-    }));
-  }
+  // sur l'accueil, « Passer l'animation » mène le site au catalogue (plus haut, avant la version statique) : on n'est
+  // jamais obligé de faire tout le tour pour voir la suite
   // Sur l'accueil, la boutique ne prend la molette et le doigt que lorsqu'elle remplit l'écran : le site le lui dit
   // (message « cadre »). À moitié visible, un geste la fait d'abord venir en entier (message « aligner ») au lieu
   // d'avancer ; dans l'autre sens, il la quitte. Un site qui ne répond pas (ancienne version) : la boutique garde la main.
-  let aligne = !embarque, parentRepond = false;
+  let aligne = !embarque;
   const pris = () => aligne || !parentRepond;
   function aligner(dir) {
     try { window.parent.postMessage({ boutique: 'aligner', dir }, '*'); } catch (e) { /* sans effet */ }
@@ -1011,11 +1075,19 @@
     };
     requestAnimationFrame(pas);
   })();
+  // codec annoncé par canPlayType mais refusé par le décodeur : mediaCapabilities est aussi consulté, avant tout
+  // téléchargement de marche (8 novembre, audit)
+  if (VIDEO_OK && navigator.mediaCapabilities && navigator.mediaCapabilities.decodingInfo) {
+    const [w, h] = portraitMQ.matches ? [1080, 1920] : [1920, 1080];
+    codecVerifie = navigator.mediaCapabilities.decodingInfo({ type: 'file', video: { contentType: `video/mp4; codecs="${HEVC ? 'hvc1.1.6.L120.90' : 'avc1.640033'}"`, width: w, height: h, bitrate: 8e6, framerate: 60 } })
+      .then((r) => { if (r && r.supported === false) sansVideo(); }, () => { /* sans effet */ });
+  }
   layout();
   // page ouverte seule (sans l'accueil au-dessus) : le film de la marque d'abord, puis la marche d'entrée
   let introVue = false;
   try { introVue = sessionStorage.getItem('bg-intro') === '1'; } catch (e) { /* sans effet */ }
-  if (!embarque && at === 0 && !introVue && intro) lanceIntro();
+  // sans vidéo lisible (codec absent, économie de données), pas de film de la marque : la boutique, directement
+  if (!embarque && at === 0 && !introVue && intro && VIDEO_OK) lanceIntro();
   else if (!embarque && at === 0) entreeAuto(900);
 
   window.__boutique = {

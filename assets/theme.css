@@ -776,16 +776,9 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .product__select { width: 100%; min-height: 44px; margin-bottom: 12px; font: inherit; border: 1px solid var(--line); background: var(--surface); color: var(--text); padding: 0 12px; border-radius: 0; }
 .product__error { margin-top: 10px; font-size: 13px; }
 
-.product__buy {
-  position: fixed;
-  z-index: 30;
-  left: 0; right: 0; bottom: 0;
-  padding: 10px var(--gutter);
-  padding-bottom: max(10px, env(safe-area-inset-bottom));
-  background: var(--bg);
-  border-top: 1px solid var(--line);
-  transition: background-color var(--dur) var(--ease);
-}
+/* 8 novembre : le bouton principal reste dans la page ; sur téléphone, la barre d'achat (.buybar, assets/product.css)
+   prend le relais quand il n'est pas à l'écran. --buy-h garde la place de cette barre en bas de page. */
+.product__buy { position: static; }
 .template-product { --buy-h: 72px; }
 
 .details { display: grid; }

@@ -211,3 +211,33 @@
 .product__fact dt { color: var(--grey); }
 .product__fact dd { margin: 0; }
 .product__vitrine { display: inline-block; margin-top: 20px; min-height: 44px; }
+
+/* ---------- 8 novembre : barre d'achat du téléphone (prix + action) ----------
+   Visible quand le bouton principal n'est pas à l'écran (assets/product.js) ; zones sûres de l'iPhone ;
+   jamais par-dessus le tiroir du panier, le nuancier, le guide des tailles ni le menu. */
+.buybar {
+  position: fixed;
+  z-index: 30;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px max(var(--gutter), env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform 0.35s var(--ease), visibility 0s linear 0.35s;
+}
+.buybar.is-visible { transform: none; visibility: visible; transition: transform 0.35s var(--ease), visibility 0s; }
+.buybar__info { flex: 1 1 auto; min-width: 0; display: grid; gap: 2px; }
+.buybar__variant { font-size: 12px; color: var(--grey); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.buybar__variant:empty { display: none; }
+.buybar__price { font-size: 15px; color: var(--text); white-space: nowrap; }
+.buybar__btn { flex: 0 0 auto; min-width: 52%; }
+html:has(.drawer.is-open, dialog[open], [data-menu][aria-expanded='true'], .is-menu-open) .buybar.is-visible { visibility: hidden; transform: translateY(100%); transition: none; }
+@media (prefers-reduced-motion: reduce) { .buybar, .buybar.is-visible { transition: none; } }
+@media (min-width: 990px) { .buybar { display: none !important; } }
+
+/* Clavier : l'anneau du focus se distingue de celui du choix (plus épais, plus loin). */
+.swatches .swatch:focus-visible { outline: 2px solid var(--text); outline-offset: 6px; }

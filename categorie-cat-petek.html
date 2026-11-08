@@ -90,7 +90,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -102,7 +102,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="catalogue.html">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -112,19 +112,31 @@
 </div>
 
     <main id="main" class="main" tabindex="-1">
-      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue"><div class="section__head">
+      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue" data-decouverte data-pas="24"><div class="section__head">
         <h1 class="display section__title section__title--md" data-anim="catalogue-title">Petek</h1>
-      </div><div class="catalogue__bar">
-      <p class="catalogue__count" data-catalogue-count>21 pièces · Petek</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true"></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
+      </div><form class="catalogue__recherche" action="catalogue.html" method="get" role="search" data-recherche-form>
+        <label class="visually-hidden" for="catalogue-q">Rechercher dans le catalogue</label>
+        <input class="catalogue__champ" type="search" id="catalogue-q" name="q" placeholder="Rechercher une pièce" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-recherche>
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="link-btn catalogue__effacer-champ" data-recherche-effacer hidden>Effacer</button>
+      </form><div class="catalogue__bar">
+      <p class="catalogue__count" data-catalogue-count aria-live="polite">
+        <span data-nb>21 pièces</span> · Petek</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true" data-filter-dot></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
         <div class="filters__panel">
           <div class="filters__head">
             <p class="filters__title display">Filtrer</p>
             <button type="button" class="link-btn filters__close" data-sheet-close>Fermer</button>
           </div>
           <nav class="filters__row" aria-label="Filtrer par catégorie">
-            <a class="filter" href="catalogue.html">Tout</a><a class="filter is-active" href="categorie-cat-petek.html" aria-current="true">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav></div>
+            <a class="filter" href="catalogue.html">Tout</a><a class="filter is-active" href="categorie-cat-petek.html" aria-current="true">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav><div class="filters__facettes" data-facettes></div>
+            <div class="filters__pied">
+              <button type="button" class="btn filters__voir" data-sheet-close data-voir-resultats>21 pièces</button>
+            </div></div>
       </div>
-      <div class="filters__backdrop" data-sheet-close hidden></div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+      <div class="filters__backdrop" data-sheet-close hidden></div><div class="catalogue__actifs" data-actifs>
+        <ul class="catalogue__pastilles" role="list" aria-label="Filtres actifs" data-pastilles><li><a class="pastille-filtre" href="catalogue.html" data-garde-etat aria-label="Retirer : Petek">Petek<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li></ul>
+        <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
+      </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Léopard / Tigre Petek  Chain Gold Pink Black Purple Red 2026 Bordeaux Black tiger 2.0 Blue Tiger Green Tiger Sunset Midnight Champagne Safari Pink Safari Red Wine Camel Pink Safari Burgundy" data-couleurs="Chain Gold Pink|Black|Purple|Red|2026|Bordeaux|Black tiger|2.0|Blue Tiger|Green Tiger|Sunset|Midnight|Champagne|Safari|Pink Safari|Red Wine|Camel|Pink|Safari Burgundy">
   <a class="card__link" href="products/petek-leopard-tigre.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/75653487-0320-429D-9DF2-22B666218B6D.webp" srcset="/photos/800/75653487-0320-429D-9DF2-22B666218B6D.webp 640w, /photos/1600/75653487-0320-429D-9DF2-22B666218B6D.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Léopard / Tigre" data-card-img></div>
     <h3 class="card__name">Petek Léopard / Tigre</h3>
@@ -202,7 +214,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/D8E7569B-1341-4A96-8756-6C8001C72892.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+14</li></ul><a class="link-btn card__add" href="products/petek-leopard-tigre.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Fire Petek Petek  Collier Breslev Fire &amp; Petek Collier Breslev Fire Petek" data-couleurs="Collier Breslev Fire &amp; Petek|Collier Breslev Fire Petek">
   <a class="card__link" href="products/collier-fire-petek.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4655582081_mzfq.webp" srcset="/photos/800/il_fullxfull.4655582081_mzfq.webp 640w, /photos/1600/il_fullxfull.4655582081_mzfq.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Petek" data-card-img></div>
     <h3 class="card__name">Collier Fire Petek</h3>
@@ -251,7 +263,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Cuir uni Petek  Full Black Full Tsahal Cream 26’ New Grey Full Gold Pink New White/Blue/Black Blue Mykonos Milk Natural Grey Black White Black Grain Leather Black Summer 26 Grey Summer 26’ Night Grey Green Black Tehelet Purple gold Blue green pink Black 2026 Blue Sky Black honey Gold Blue gold pink 2.0 Camel 00’s Blue pink Blue night 2.0 Jack cactus 2.0 White Summer Purple Summer White Summer Pink Canari Gold pink Blue purple Pink three Pale purple Pink green Purple ocean Blue gold pink Royal Worn blue Green cactus 2.0 purple améthyste New black 2026 2.0 grey Femme enceinte Fire hayal 2.0 Fire black 2.0 Gold pink 2 Gold multicolor Blue dark gold pink Dark Pink Dark red Light grey blue Blue night ocean Gold camel Green apple Green silver Barbie 2.0 Blue 2026 Barbie Multi color Silver Black Craked Purple Améthyste Gold Black White Grey Pink Black Green Grey Blue Ocean Pink Barbie Ocean Blue Purple Améthyste 2 Pastel Cream Multicolor Blue Ocean Saturne Rose Blueberry Michigan Green Black Grey Grained Black Smoke Grey Royal Blue Candy Pink Denim Blue University Gold Silver Black Star Camel Mocha Military Black Hayal Oxford Black Midnight Navy Diams Shiny Black Metallic Purple Light Pink Blue Metallic Grey University Blue Almond Green Ametyst Purple Coconut Milk Dark Black Cactus Off White Black Caviar Metallic Blue" data-couleurs="Full Black|Full Tsahal|Cream 26’|New Grey|Full Gold Pink|New White/Blue/Black|Blue Mykonos|Milk Natural|Grey Black White|Black Grain Leather|Black Summer 26|Grey Summer 26’|Night Grey|Green Black|Tehelet|Purple gold|Blue green pink|Black 2026|Blue Sky|Black honey Gold|Blue gold pink 2.0|Camel 00’s|Blue pink|Blue night 2.0|Jack cactus|2.0 White|Summer Purple|Summer White|Summer Pink|Canari|Gold pink|Blue purple|Pink three|Pale purple|Pink green|Purple ocean|Blue gold pink|Royal|Worn blue|Green cactus|2.0 purple améthyste|New black 2026|2.0 grey|Femme enceinte|Fire hayal 2.0|Fire black 2.0|Gold pink 2|Gold multicolor|Blue dark gold pink|Dark Pink|Dark red|Light grey blue|Blue night ocean|Gold camel|Green apple|Green silver|Barbie 2.0|Blue 2026|Barbie|Multi color|Silver Black Craked|Purple Améthyste|Gold|Black White|Grey Pink|Black Green|Grey Blue|Ocean|Pink Barbie|Ocean Blue|Purple Améthyste 2|Pastel Cream|Multicolor|Blue Ocean|Saturne Rose|Blueberry|Michigan Green|Black Grey|Grained Black|Smoke Grey|Royal Blue|Candy Pink|Denim Blue|University Gold|Silver Black|Star|Camel|Mocha|Military Black|Hayal|Oxford Black|Midnight Navy|Diams|Shiny Black|Metallic Purple Light|Pink Blue|Metallic Grey|University Blue|Almond Green|Ametyst Purple|Coconut Milk|Dark Black|Cactus|Off White|Black Caviar|Metallic Blue">
   <a class="card__link" href="products/petek-cuir-uni.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BC6E0441-5230-43AF-AFA0-3B07F6CE9091.webp" srcset="/photos/800/BC6E0441-5230-43AF-AFA0-3B07F6CE9091.webp 640w, /photos/1600/BC6E0441-5230-43AF-AFA0-3B07F6CE9091.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Cuir uni" data-card-img></div>
     <h3 class="card__name">Petek Cuir uni</h3>
@@ -329,7 +341,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/6FEBCD8A-85EB-43F1-ACB6-3A6B8A683517.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+101</li></ul><a class="link-btn card__add" href="products/petek-cuir-uni.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Perles Petek  Mix black white Summer pearl Blue night with diamond pearl Army Burgundy Mix Pearl Star Grey Pearl Grey Pastel Pearl Emerald Green Leather Black Silver Black Hayal Green White Pearl Mate Grey Black Pink Black Black Pearl Full Black Full Grey Blue Pearl Navy Blue" data-couleurs="Mix black white|Summer pearl|Blue night with diamond pearl|Army|Burgundy|Mix Pearl|Star Grey|Pearl Grey|Pastel Pearl|Emerald Green|Leather Black|Silver Black|Hayal Green|White Pearl|Mate Grey|Black|Pink Black|Black Pearl|Full Black|Full Grey|Blue Pearl|Navy Blue">
   <a class="card__link" href="products/petek-perles.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0A7D7CF1-5CBF-4764-92AC-952AC6420A8B.webp" srcset="/photos/800/0A7D7CF1-5CBF-4764-92AC-952AC6420A8B.webp 640w, /photos/1600/0A7D7CF1-5CBF-4764-92AC-952AC6420A8B.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Perles" data-card-img></div>
     <h3 class="card__name">Petek Perles</h3>
@@ -407,7 +419,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/il_fullxfull.4658186475_slpo.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+17</li></ul><a class="link-btn card__add" href="products/petek-perles.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Petek Croco 1/1 Petek  1/1 Black 1/1 Black Mini 1/1 Marron 1/1 Gris Pâle 1/1 Gris 1/1 Vert 1/1 Orange 1/1 Rouge Soleil 1/1 Rouge 1/1 Bleu Electric 1/1 Bleu Brillant 1/1 Bleu Nuit 1/1 Bleu Azur 1/1 Bleu Jean 1/1 Violet 1/1 Rose Pâle 1/1 Rose Foncée 1/1 Rose Fushia" data-couleurs="1/1 Black|1/1 Black Mini|1/1 Marron|1/1 Gris Pâle|1/1 Gris|1/1 Vert|1/1 Orange|1/1 Rouge Soleil|1/1 Rouge|1/1 Bleu Electric|1/1 Bleu Brillant|1/1 Bleu Nuit|1/1 Bleu Azur|1/1 Bleu Jean|1/1 Violet|1/1 Rose Pâle|1/1 Rose Foncée|1/1 Rose Fushia">
   <a class="card__link" href="products/petek-croco-1-1.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0490358D-BDBA-47CF-B3EF-146D32E2EAEA.webp" srcset="/photos/800/0490358D-BDBA-47CF-B3EF-146D32E2EAEA.webp 640w, /photos/1600/0490358D-BDBA-47CF-B3EF-146D32E2EAEA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Croco 1/1" data-card-img></div>
     <h3 class="card__name">Petek Croco 1/1</h3>
@@ -485,7 +497,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/4A80C351-50F8-4E63-B4A1-4BE51B5EDF7B.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+13</li></ul><a class="link-btn card__add" href="products/petek-croco-1-1.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Effets Petek  Half lava black Half black money Black thunder White thunder White ciment Moon gold Jupiter Team Gold Grey Saturne White Marbre Reverse Disco Disco White Karl Purple Laser Laser Engraved" data-couleurs="Half lava black|Half black money|Black thunder|White thunder|White ciment|Moon gold|Jupiter Team Gold|Grey Saturne|White Marbre|Reverse Disco|Disco|White Karl|Purple Laser|Laser Engraved">
   <a class="card__link" href="products/petek-effets.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B8C47A7F-CFC8-474E-A1D5-E4664B623C0B.webp" srcset="/photos/800/B8C47A7F-CFC8-474E-A1D5-E4664B623C0B.webp 640w, /photos/1600/B8C47A7F-CFC8-474E-A1D5-E4664B623C0B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Effets" data-card-img></div>
     <h3 class="card__name">Petek Effets</h3>
@@ -563,7 +575,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/9EA77147-3FF5-462D-A6FF-F5D3D04E28A9.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+9</li></ul><a class="link-btn card__add" href="products/petek-effets.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Kids Petek  H’ayal Black Black burgundy Black grey autruche 2 Full black 2 Black grey autruche Black red Rose Full black Black grey Leopard Bleu python Violet noir Bleu noir python" data-couleurs="H’ayal|Black|Black burgundy|Black grey autruche 2|Full black 2|Black grey autruche|Black red|Rose|Full black|Black grey|Leopard|Bleu python|Violet noir|Bleu noir python">
   <a class="card__link" href="products/petek-kids.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/65158B13-3B14-4EEB-93FC-D392DB337BE8.webp" srcset="/photos/800/65158B13-3B14-4EEB-93FC-D392DB337BE8.webp 640w, /photos/1600/65158B13-3B14-4EEB-93FC-D392DB337BE8.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Kids" data-card-img></div>
     <h3 class="card__name">Petek Kids</h3>
@@ -641,7 +653,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/B1032265-E649-47A7-BE2C-4FC3EEE36434.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+9</li></ul><a class="link-btn card__add" href="products/petek-kids.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="4000" data-dispo="1" data-texte="Broche Petek Bébé Petek  Cream Paillettes Rose Black Cream 2 Beige Blue ocean Blue night Tsahal Pink Rose 2 Black 2 Beige 2" data-couleurs="Cream|Paillettes|Rose|Black|Cream 2|Beige|Blue ocean|Blue night|Tsahal|Pink|Rose 2|Black 2|Beige 2">
   <a class="card__link" href="products/broche-petek-bebe.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/02621F27-DDA9-429A-B487-76565BAE9E77.webp" srcset="/photos/800/02621F27-DDA9-429A-B487-76565BAE9E77.webp 640w, /photos/1600/02621F27-DDA9-429A-B487-76565BAE9E77.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Broche Petek Bébé" data-card-img></div>
     <h3 class="card__name">Broche Petek Bébé</h3>
@@ -719,7 +731,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/0E1446ED-70EB-4979-BF06-818E9C2DDAD1.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+8</li></ul><a class="link-btn card__add" href="products/broche-petek-bebe.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Petek Maguen Petek  Cordon Chain Black David New Season 26’ Tsahal Chaine Jordan David New Season 26’ Gold pink Deluxe pistachio Purple Pink Full White Grey Black Hayal Full black" data-couleurs="Cordon Chain|Black David New Season 26’|Tsahal|Chaine Jordan David New Season 26’|Gold pink|Deluxe pistachio|Purple|Pink|Full White|Grey|Black|Hayal|Full black">
   <a class="card__link" href="products/petek-maguen.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1606E51C-DAEA-4805-889C-894D240F508D.webp" srcset="/photos/800/1606E51C-DAEA-4805-889C-894D240F508D.webp 640w, /photos/1600/1606E51C-DAEA-4805-889C-894D240F508D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Maguen" data-card-img></div>
     <h3 class="card__name">Petek Maguen</h3>
@@ -797,7 +809,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/9B27A507-0C91-4E05-A2A4-24A3665EC154.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+8</li></ul><a class="link-btn card__add" href="products/petek-maguen.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Python Petek  Mezouza Maguen Pink Pale Chaine Black Maguen David New Season 26’ Grey Grey 2 Noir Édition Silver Gold Orange Royal Camel Purple Carbon" data-couleurs="Mezouza Maguen|Pink Pale|Chaine Black Maguen David New Season 26’|Grey|Grey 2|Noir Édition|Silver|Gold|Orange|Royal|Camel|Purple|Carbon">
   <a class="card__link" href="products/petek-python.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F4FD5A1E-EF01-46B7-93C7-3A7C3D98427A.webp" srcset="/photos/800/F4FD5A1E-EF01-46B7-93C7-3A7C3D98427A.webp 640w, /photos/1600/F4FD5A1E-EF01-46B7-93C7-3A7C3D98427A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Python" data-card-img></div>
     <h3 class="card__name">Petek Python</h3>
@@ -875,7 +887,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/20CFF87A-0450-4C67-A24A-47267FE8B11F.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+8</li></ul><a class="link-btn card__add" href="products/petek-python.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Shark Petek  In The Sea Marble Summer Green Camel Blue Jean Green Multicolor Black Red Blue Grey Blue Lynx Blue Ocean Camel 2" data-couleurs="In The Sea|Marble|Summer Green|Camel|Blue Jean|Green|Multicolor|Black Red|Blue Grey|Blue Lynx|Blue Ocean|Camel 2">
   <a class="card__link" href="products/petek-shark.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9049D031-DD25-4CDC-BF14-81478B7D11FB.webp" srcset="/photos/800/9049D031-DD25-4CDC-BF14-81478B7D11FB.webp 640w, /photos/1600/9049D031-DD25-4CDC-BF14-81478B7D11FB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Shark" data-card-img></div>
     <h3 class="card__name">Petek Shark</h3>
@@ -953,7 +965,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/BB59316D-4DAF-4D80-94EE-01F65A0F7DC7.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+7</li></ul><a class="link-btn card__add" href="products/petek-shark.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Croco Petek  Black Haï New Season 26’ Vert Blue 26’ Purple 26’ Yellow 26’ Blue Pink Green Mix Pink 🐊 Pink Full green Purple Hot Black" data-couleurs="Black Haï New Season 26’|Vert|Blue 26’|Purple 26’|Yellow 26’|Blue Pink Green|Mix Pink 🐊|Pink|Full green|Purple|Hot Black">
   <a class="card__link" href="products/petek-croco.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9DC180F9-2EBC-4E3F-9BAF-8FFABDB5463A.webp" srcset="/photos/800/9DC180F9-2EBC-4E3F-9BAF-8FFABDB5463A.webp 640w, /photos/1600/9DC180F9-2EBC-4E3F-9BAF-8FFABDB5463A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Croco" data-card-img></div>
     <h3 class="card__name">Petek Croco</h3>
@@ -1031,7 +1043,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/7D7D6718-C8CC-4FBA-ADCD-3DA9D5A0806A.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+6</li></ul><a class="link-btn card__add" href="products/petek-croco.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Real Croco Petek  Green Purple Grey Cloud Grey Blue Night Black Camel Blue Bright Th’élét White Himalaya" data-couleurs="Green|Purple|Grey Cloud|Grey|Blue Night|Black|Camel|Blue Bright|Th’élét|White Himalaya">
   <a class="card__link" href="products/petek-real-croco.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/7C8CF67C-CC6B-4CCF-89C3-3CC4AC9336BA.webp" srcset="/photos/800/7C8CF67C-CC6B-4CCF-89C3-3CC4AC9336BA.webp 640w, /photos/1600/7C8CF67C-CC6B-4CCF-89C3-3CC4AC9336BA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Real Croco" data-card-img></div>
     <h3 class="card__name">Petek Real Croco</h3>
@@ -1109,7 +1121,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/D68AAFBB-308C-4164-A1EB-EA77DF950E90.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+5</li></ul><a class="link-btn card__add" href="products/petek-real-croco.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Autruche Petek  New Pink Grey Pink Camel Blue Tehelet Green Grey 2 Grey 3 Blue œil tigre cuir d’autruche" data-couleurs="New Pink|Grey|Pink|Camel|Blue Tehelet|Green|Grey 2|Grey 3|Blue œil tigre cuir d’autruche">
   <a class="card__link" href="products/petek-autruche.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/E0170558-6B1C-4683-A3A8-4CCF9C14D25B.webp" srcset="/photos/800/E0170558-6B1C-4683-A3A8-4CCF9C14D25B.webp 640w, /photos/1600/E0170558-6B1C-4683-A3A8-4CCF9C14D25B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Autruche" data-card-img></div>
     <h3 class="card__name">Petek Autruche</h3>
@@ -1187,7 +1199,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/360A1857-C18E-4CD4-9334-016BC5DCF1D0.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+4</li></ul><a class="link-btn card__add" href="products/petek-autruche.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="14000" data-dispo="1" data-texte="Petek X Aech Cheli Petek  Croco Grey New Season 26’ Blue Croco New Season 26’ Pink Python New Season 26’ Grey New Season 26’ Black Python New Season 26’ Grey Maguen David New Season 26’ Black Python New Season 26’ 2 Grey New Season 26’ 2" data-couleurs="Croco Grey New Season 26’|Blue Croco New Season 26’|Pink Python New Season 26’|Grey New Season 26’|Black Python New Season 26’|Grey Maguen David New Season 26’|Black Python New Season 26’ 2|Grey New Season 26’ 2">
   <a class="card__link" href="products/petek-x-aech-cheli.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9D2F2526-5347-4C5D-9F9A-B51433187CCD.webp" srcset="/photos/800/9D2F2526-5347-4C5D-9F9A-B51433187CCD.webp 640w, /photos/1600/9D2F2526-5347-4C5D-9F9A-B51433187CCD.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek X Aech Cheli" data-card-img></div>
     <h3 class="card__name">Petek X Aech Cheli</h3>
@@ -1265,7 +1277,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/FA49CEAB-A9DD-4A52-A127-7655FFEA208D.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+3</li></ul><a class="link-btn card__add" href="products/petek-x-aech-cheli.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Chaîne + Perles Petek  Gold 26’ Purple 26’ Grey 26’ Pink 26’ Black 26’" data-couleurs="Gold 26’|Purple 26’|Grey 26’|Pink 26’|Black 26’">
   <a class="card__link" href="products/petek-chaine-perles.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/074C2B15-D651-40FF-B313-90D379AD2998.webp" srcset="/photos/800/074C2B15-D651-40FF-B313-90D379AD2998.webp 640w, /photos/1600/074C2B15-D651-40FF-B313-90D379AD2998.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Chaîne + Perles" data-card-img></div>
     <h3 class="card__name">Petek Chaîne + Perles</h3>
@@ -1356,7 +1368,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="8000" data-dispo="1" data-texte="Bracelet Petek Cuir Petek  Python Noir Noir 2 Python 2" data-couleurs="Python|Noir|Noir 2|Python 2">
   <a class="card__link" href="products/bracelet-petek-cuir.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A97E7220-6C67-491C-BA23-ED656BC8C8BA.webp" srcset="/photos/800/A97E7220-6C67-491C-BA23-ED656BC8C8BA.webp 640w, /photos/1600/A97E7220-6C67-491C-BA23-ED656BC8C8BA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Petek Cuir" data-card-img></div>
     <h3 class="card__name">Bracelet Petek Cuir</h3>
@@ -1433,7 +1445,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Deluxe Petek  Blue Delux Pink Gold Green Full black Black white" data-couleurs="Blue Delux Pink Gold|Green|Full black|Black white">
   <a class="card__link" href="products/petek-deluxe.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp" srcset="/photos/800/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp 640w, /photos/1600/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Deluxe" data-card-img></div>
     <h3 class="card__name">Petek Deluxe</h3>
@@ -1448,10 +1460,10 @@
               data-image="/photos/1600/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp"
               data-url="products/petek-deluxe.html?variant=45100000291"
               data-variant-id="45100000291"
-              data-variant="Blue Delux Pink Gold"
+              data-variant="Blue Deluxe Pink Gold"
               data-price="12000"
               data-available="true"
-              aria-label="Voir en Blue Delux Pink Gold"
+              aria-label="Voir en Blue Deluxe Pink Gold"
               data-anim="card-swatch"
             ><img src="/photos/pastille/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li>
@@ -1510,7 +1522,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Petek Cordon Petek  Chain Blue Chaine Fleur Lys Chain Tube" data-couleurs="Chain Blue|Chaine Fleur Lys|Chain Tube">
   <a class="card__link" href="products/petek-cordon.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DC9CF525-AC0C-4770-ABEE-4662431D01EC.webp" srcset="/photos/800/DC9CF525-AC0C-4770-ABEE-4662431D01EC.webp 640w, /photos/1600/DC9CF525-AC0C-4770-ABEE-4662431D01EC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Cordon" data-card-img></div>
     <h3 class="card__name">Petek Cordon</h3>
@@ -1573,7 +1585,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Jordan Petek  Grey 1 Cream Grey 2" data-couleurs="Grey 1|Cream|Grey 2">
   <a class="card__link" href="products/petek-jordan.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/69E7868C-6389-4E61-AD70-4CF02DD9845C.webp" srcset="/photos/800/69E7868C-6389-4E61-AD70-4CF02DD9845C.webp 640w, /photos/1600/69E7868C-6389-4E61-AD70-4CF02DD9845C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Jordan" data-card-img></div>
     <h3 class="card__name">Petek Jordan</h3>
@@ -1636,7 +1648,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="petek" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Petek Chaîne Petek  Full Black Chain Black Chain Leather" data-couleurs="Full Black Chain|Black Chain Leather">
   <a class="card__link" href="products/petek-chaine.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AA6403D2-73A8-485D-BCC0-E1F6E83239E9.webp" srcset="/photos/800/AA6403D2-73A8-485D-BCC0-E1F6E83239E9.webp 640w, /photos/1600/AA6403D2-73A8-485D-BCC0-E1F6E83239E9.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Petek Chaîne" data-card-img></div>
     <h3 class="card__name">Petek Chaîne</h3>
@@ -1685,7 +1697,39 @@
       
       
     >Ajouter</button></li>
-</ul></section>
+</ul><div class="catalogue__vide" data-vide hidden>
+        <p class="catalogue__vide-titre" data-vide-titre aria-live="polite"></p>
+        <p class="catalogue__vide-aide">Essayez un autre mot ou retirez un filtre.</p>
+        <button type="button" class="btn btn--ghost" data-tout-effacer>Réinitialiser</button>
+      </div>
+      <div class="catalogue__more" data-catalogue-more hidden>
+        <button type="button" class="btn btn--ghost catalogue__more-btn" data-voir-plus-local>Voir plus</button>
+      </div><script type="application/json" data-catalogue-config>
+        {
+          "seuils": "80,100,150",
+          "t": {
+            "un": "[n] pièce", "plus": "[n] pièces",
+            "voir_un": "Voir [n] pièce", "voir_plus": "Voir les [n] pièces",
+            "tri": "Trier", "tri_defaut": "Par défaut",
+            "tri_croissant": "Prix croissant", "tri_decroissant": "Prix décroissant",
+            "prix": "Prix", "prix_moins": "Jusqu'à [a]",
+            "prix_entre": "De [a] à [b]", "prix_plus": "Plus de [a]",
+            "couleur": "Couleur", "dispo": "Disponibilité",
+            "dispo_oui": "Disponible", "taille": "Taille",
+            "matiere": "Matière", "longueur": "Longueur",
+            "retirer": "Retirer : [x]", "recherche": "« [q] »",
+            "vide": "Aucune pièce ne correspond.", "vide_recherche": "Aucune pièce pour « [q] ».",
+            "familles": {
+              "noir": "Noir", "blanc": "Blanc",
+              "gris": "Gris", "dore": "Doré",
+              "argente": "Couleur argent", "rose": "Rose",
+              "violet": "Violet", "bleu": "Bleu",
+              "vert": "Vert", "rouge": "Rouge",
+              "camel": "Camel", "multicolore": "Multicolore"
+            }
+          }
+        }
+      </script></section>
   <script src="assets/catalogue.js" defer></script>
   <script>
     /* Catalogue : panneau de filtres (mobile) et « Voir plus ». Progressive enhancement : tout fonctionne sans ce script. */
@@ -1884,7 +1928,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>

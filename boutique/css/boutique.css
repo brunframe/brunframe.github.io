@@ -20,6 +20,8 @@ a { color: inherit; }
 
 .evitement { position: absolute; left: 12px; top: -80px; z-index: 100; background: var(--ivoire); color: var(--encre); padding: 12px 18px; font-size: 13px; letter-spacing: .08em; text-decoration: none; }
 .evitement:focus { top: 12px; }
+/* 8 novembre (audit) : mouvement réduit dans l'accueil (liste fixe des pièces) : la sortie vers le catalogue reste à l'écran */
+html.rm.embarque .evitement { position: fixed; top: auto; left: clamp(18px, 3vw, 44px); bottom: calc(env(safe-area-inset-bottom) + 18px); padding: 11px 14px 12px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
 
 /* --- scène --- */
 .stage { position: fixed; inset: 0; overflow: hidden; background: #120e0a; }
@@ -240,6 +242,7 @@ html.rm, html.rm body, html:not(.js), html:not(.js) body { height: auto; backgro
 .marches video { opacity: 0; z-index: 3; pointer-events: none; transition: opacity .35s linear; }
 .marches video.is-on { opacity: 1; transition-duration: .12s; }
 .marches video.devant { z-index: 4; }                    /* la marche en cours passe devant (demi-tour) */
+html.sans-video .marches { display: none; }           /* 8 novembre : vidéo illisible, les images fixes seulement */
 .cadre .reflet, .cadre .balayage, .cadre .vignette { z-index: 6; }
 .cadre .eclats { z-index: 7; }
 .chargement { position: absolute; z-index: 30; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 22px); width: 46px; height: 2px; margin-left: -23px; background: rgba(246, 240, 229, .25); overflow: hidden; opacity: 0; transition: opacity .3s; pointer-events: none; }

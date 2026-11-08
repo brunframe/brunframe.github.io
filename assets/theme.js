@@ -117,6 +117,13 @@
 
     const setToggle = () => {
       if (!toggle) return;
+      // Mouvement réduit (8 novembre, audit) : l'image fixe, rien n'est téléchargé avant le choix du visiteur (Lecture).
+      if (!loaded && reducedMotion) {
+        toggle.hidden = false;
+        toggle.textContent = config.strings.play;
+        toggle.setAttribute('aria-pressed', 'true');
+        return;
+      }
       // Pas de bouton tant que la vidéo n'a aucune image à montrer (chargement lent ou échec).
       if (video.readyState < 2 || video.error) { toggle.hidden = true; return; }
       toggle.hidden = false;
@@ -141,11 +148,13 @@
     };
 
     const start = () => ('requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 1500 }) : setTimeout(load, 300));
-    if (document.readyState === 'complete') start();
+    if (reducedMotion) setToggle();
+    else if (document.readyState === 'complete') start();
     else window.addEventListener('load', start, { once: true });
 
     if (toggle) {
       toggle.addEventListener('click', () => {
+        if (!loaded) { userPaused = false; load(); setToggle(); return; }
         if (video.paused) { userPaused = false; video.play().catch(() => {}); }
         else { userPaused = true; video.pause(); }
         setToggle();

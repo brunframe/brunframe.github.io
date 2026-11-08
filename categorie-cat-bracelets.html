@@ -90,7 +90,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -102,7 +102,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="catalogue.html">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -112,19 +112,31 @@
 </div>
 
     <main id="main" class="main" tabindex="-1">
-      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue"><div class="section__head">
+      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue" data-decouverte data-pas="24"><div class="section__head">
         <h1 class="display section__title section__title--md" data-anim="catalogue-title">Bracelets</h1>
-      </div><div class="catalogue__bar">
-      <p class="catalogue__count" data-catalogue-count>20 pièces · Bracelets</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true"></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
+      </div><form class="catalogue__recherche" action="catalogue.html" method="get" role="search" data-recherche-form>
+        <label class="visually-hidden" for="catalogue-q">Rechercher dans le catalogue</label>
+        <input class="catalogue__champ" type="search" id="catalogue-q" name="q" placeholder="Rechercher une pièce" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-recherche>
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="link-btn catalogue__effacer-champ" data-recherche-effacer hidden>Effacer</button>
+      </form><div class="catalogue__bar">
+      <p class="catalogue__count" data-catalogue-count aria-live="polite">
+        <span data-nb>20 pièces</span> · Bracelets</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true" data-filter-dot></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
         <div class="filters__panel">
           <div class="filters__head">
             <p class="filters__title display">Filtrer</p>
             <button type="button" class="link-btn filters__close" data-sheet-close>Fermer</button>
           </div>
           <nav class="filters__row" aria-label="Filtrer par catégorie">
-            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter is-active" href="categorie-cat-bracelets.html" aria-current="true">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav></div>
+            <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter" href="categorie-cat-colliers.html">Colliers</a><a class="filter is-active" href="categorie-cat-bracelets.html" aria-current="true">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav><div class="filters__facettes" data-facettes></div>
+            <div class="filters__pied">
+              <button type="button" class="btn filters__voir" data-sheet-close data-voir-resultats>20 pièces</button>
+            </div></div>
       </div>
-      <div class="filters__backdrop" data-sheet-close hidden></div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+      <div class="filters__backdrop" data-sheet-close hidden></div><div class="catalogue__actifs" data-actifs>
+        <ul class="catalogue__pastilles" role="list" aria-label="Filtres actifs" data-pastilles><li><a class="pastille-filtre" href="catalogue.html" data-garde-etat aria-label="Retirer : Bracelets">Bracelets<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li></ul>
+        <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
+      </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="1" data-texte="Bracelet Eye Fire Bracelets  Bracelet Eye Fire Red Black Blue" data-couleurs="Bracelet Eye Fire|Red|Black|Blue">
   <a class="card__link" href="products/bracelet-eye-fire-collection.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp" srcset="/photos/800/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 640w, /photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Eye Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Eye Fire</h3>
@@ -201,7 +213,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="8500" data-dispo="1" data-texte="Bracelet Flamme Bracelets  Silver Gold Bleu nuit Coloré or rose Violet Blanc nacré Bleu ocean Multicolore Gris Poignet complet (gros modèle) Oeil tigre rose Noir pierre lave" data-couleurs="Silver|Gold|Bleu nuit|Coloré or rose|Violet|Blanc nacré|Bleu ocean|Multicolore|Gris|Poignet complet (gros modèle)|Oeil tigre rose|Noir pierre lave">
   <a class="card__link" href="products/bracelet-flamme.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp" srcset="/photos/800/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 640w, /photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet Flamme</h3>
@@ -279,7 +291,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/55800030-A47F-43FD-B5D8-639067B2F777.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+7</li></ul><a class="link-btn card__add" href="products/bracelet-flamme.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7000" data-dispo="1" data-texte="Bracelet double chaîne + perles Bracelets  Culture 2 Gris rose Full black Blacelet rose barbie Améthyste Noir gris Blanc culture Bleu oeil tigre" data-couleurs="Culture 2|Gris rose|Full black|Blacelet rose barbie|Améthyste|Noir gris|Blanc culture|Bleu oeil tigre">
   <a class="card__link" href="products/bracelet-double-chaine-perles.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp" srcset="/photos/800/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 640w, /photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double chaîne + perles" data-card-img></div>
     <h3 class="card__name">Bracelet double chaîne + perles</h3>
@@ -336,10 +348,10 @@
               data-image="/photos/1600/E615503D-1C05-40EF-8EEA-80E86A988501.webp"
               data-url="products/bracelet-double-chaine-perles.html?variant=45100000494"
               data-variant-id="45100000494"
-              data-variant="Blacelet rose barbie"
+              data-variant="Rose barbie"
               data-price="7000"
               data-available="true"
-              aria-label="Voir en Blacelet rose barbie"
+              aria-label="Voir en Rose barbie"
               data-anim="card-swatch"
             ><img src="/photos/pastille/E615503D-1C05-40EF-8EEA-80E86A988501.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li>
@@ -357,7 +369,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/703AF9DA-9A4B-441C-B53E-CE2231DAC094.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+3</li></ul><a class="link-btn card__add" href="products/bracelet-double-chaine-perles.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Iconique Fire Bracelets ">
   <a class="card__link" href="products/bracelet-iconique-fire.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp" srcset="/photos/800/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 640w, /photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Iconique Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Iconique Fire</h3>
@@ -378,7 +390,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Double Tour Flamme Bracelets ">
   <a class="card__link" href="products/bracelet-double-tour-flamme.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp" srcset="/photos/800/3FB617F8-7776-426C-91F0-5769600461B1.webp 640w, /photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet Double Tour Flamme</h3>
@@ -399,7 +411,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="1" data-texte="Bracelet Cordon Fire Bracelets  Bordeaux Camel Blue Night Red Blue Sea Black" data-couleurs="Bordeaux|Camel|Blue Night|Red|Blue Sea|Black">
   <a class="card__link" href="products/bracelet-cordon-fire.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp" srcset="/photos/800/DF536836-9154-4920-97DF-69FFB4C18248.webp 640w, /photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Cordon Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Cordon Fire</h3>
@@ -477,7 +489,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/38448521-44C5-48FA-81D7-2659545D4D72.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li><li class="card__more">+1</li></ul><a class="link-btn card__add" href="products/bracelet-cordon-fire.html" data-anim="card-choose">Choisir</a></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Bracelet de main Flamme Bracelets  Silver Or rose" data-couleurs="Silver|Or rose">
   <a class="card__link" href="products/bracelet-de-main-flamme.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp" srcset="/photos/800/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 640w, /photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet de main Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet de main Flamme</h3>
@@ -526,7 +538,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="0" data-texte="Bracelet double diam&#39;s Flamme Bracelets  Silver Or rose" data-couleurs="Silver|Or rose">
   <a class="card__link" href="products/bracelet-double-diam-s-flamme.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp" srcset="/photos/800/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 640w, /photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double diam's Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet double diam's Flamme</h3>
@@ -562,7 +574,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/974AB31C-55F9-4463-AACA-7BE2D7CA89E8.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="0" data-texte="Lot de bracelets Bracelets  X2 X3" data-couleurs="X2|X3">
   <a class="card__link" href="products/lot-de-bracelets.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp" srcset="/photos/800/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 640w, /photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Lot de bracelets" data-card-img></div>
     <h3 class="card__name">Lot de bracelets</h3>
@@ -598,7 +610,7 @@
               data-anim="card-swatch"
             ><img src="/photos/pastille/A5895B35-2913-4B1A-9582-251E19139E0E.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
           </li></ul></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet 3-1 Chain Fire Bracelets ">
   <a class="card__link" href="products/sans-titre-17juin_18-28.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp" srcset="/photos/800/B62196E1-69A9-41F5-913A-0F475C803105.webp 640w, /photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet 3-1 Chain Fire" data-card-img></div>
     <h3 class="card__name">Bracelet 3-1 Chain Fire</h3>
@@ -619,7 +631,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Double Tour Cadenas Bracelets ">
   <a class="card__link" href="products/bracelet-double-tour-cadenas.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp" srcset="/photos/800/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 640w, /photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Cadenas" data-card-img></div>
     <h3 class="card__name">Bracelet Double Tour Cadenas</h3>
@@ -640,7 +652,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Hay Bracelets ">
   <a class="card__link" href="products/bracelet-hay.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp" srcset="/photos/800/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 640w, /photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay" data-card-img></div>
     <h3 class="card__name">Bracelet Hay</h3>
@@ -661,7 +673,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Hay à chaîne Bracelets ">
   <a class="card__link" href="products/bracelet-hay-a-chaine.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp" srcset="/photos/800/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 640w, /photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay à chaîne" data-card-img></div>
     <h3 class="card__name">Bracelet Hay à chaîne</h3>
@@ -682,7 +694,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Love Breslev Gang X Eber Music Bracelets ">
   <a class="card__link" href="products/bracelet-love-breslev-gang.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp" srcset="/photos/800/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 640w, /photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Love Breslev Gang X Eber Music" data-card-img></div>
     <h3 class="card__name">Bracelet Love Breslev Gang X Eber Music</h3>
@@ -703,7 +715,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Maguen Bracelets ">
   <a class="card__link" href="products/bracelet-maguen.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp" srcset="/photos/800/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 640w, /photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Maguen" data-card-img></div>
     <h3 class="card__name">Bracelet Maguen</h3>
@@ -724,7 +736,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Poisson Bracelets ">
   <a class="card__link" href="products/bracelet-poisson.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp" srcset="/photos/800/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 640w, /photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Poisson" data-card-img></div>
     <h3 class="card__name">Bracelet Poisson</h3>
@@ -745,7 +757,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Ring Fire Bracelets ">
   <a class="card__link" href="products/bracelet-ring-fire.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp" srcset="/photos/800/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 640w, /photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Ring Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Ring Fire</h3>
@@ -766,7 +778,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Smiley Travis Bracelets ">
   <a class="card__link" href="products/bracelet-smiley-travis.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp" srcset="/photos/800/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 640w, /photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Smiley Travis" data-card-img></div>
     <h3 class="card__name">Bracelet Smiley Travis</h3>
@@ -787,7 +799,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Bracelet נ נח + האש שלי Bracelets ">
   <a class="card__link" href="products/bracelet-נ-נח-האש-שלי.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp" srcset="/photos/800/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 640w, /photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet נ נח + האש שלי" data-card-img></div>
     <h3 class="card__name">Bracelet נ נח + האש שלי</h3>
@@ -808,7 +820,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Breslev Flame Beads Bracelets ">
   <a class="card__link" href="products/breslev-flame-beads.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp" srcset="/photos/800/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 640w, /photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Breslev Flame Beads" data-card-img></div>
     <h3 class="card__name">Breslev Flame Beads</h3>
@@ -829,7 +841,39 @@
       
       
     >Ajouter</button></li>
-</ul></section>
+</ul><div class="catalogue__vide" data-vide hidden>
+        <p class="catalogue__vide-titre" data-vide-titre aria-live="polite"></p>
+        <p class="catalogue__vide-aide">Essayez un autre mot ou retirez un filtre.</p>
+        <button type="button" class="btn btn--ghost" data-tout-effacer>Réinitialiser</button>
+      </div>
+      <div class="catalogue__more" data-catalogue-more hidden>
+        <button type="button" class="btn btn--ghost catalogue__more-btn" data-voir-plus-local>Voir plus</button>
+      </div><script type="application/json" data-catalogue-config>
+        {
+          "seuils": "80,100,150",
+          "t": {
+            "un": "[n] pièce", "plus": "[n] pièces",
+            "voir_un": "Voir [n] pièce", "voir_plus": "Voir les [n] pièces",
+            "tri": "Trier", "tri_defaut": "Par défaut",
+            "tri_croissant": "Prix croissant", "tri_decroissant": "Prix décroissant",
+            "prix": "Prix", "prix_moins": "Jusqu'à [a]",
+            "prix_entre": "De [a] à [b]", "prix_plus": "Plus de [a]",
+            "couleur": "Couleur", "dispo": "Disponibilité",
+            "dispo_oui": "Disponible", "taille": "Taille",
+            "matiere": "Matière", "longueur": "Longueur",
+            "retirer": "Retirer : [x]", "recherche": "« [q] »",
+            "vide": "Aucune pièce ne correspond.", "vide_recherche": "Aucune pièce pour « [q] ».",
+            "familles": {
+              "noir": "Noir", "blanc": "Blanc",
+              "gris": "Gris", "dore": "Doré",
+              "argente": "Couleur argent", "rose": "Rose",
+              "violet": "Violet", "bleu": "Bleu",
+              "vert": "Vert", "rouge": "Rouge",
+              "camel": "Camel", "multicolore": "Multicolore"
+            }
+          }
+        }
+      </script></section>
   <script src="assets/catalogue.js" defer></script>
   <script>
     /* Catalogue : panneau de filtres (mobile) et « Voir plus ». Progressive enhancement : tout fonctionne sans ce script. */
@@ -1028,7 +1072,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>

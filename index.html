@@ -135,7 +135,7 @@
     </h1><p class="hero__phrase display" data-anim="hero-phrase">Pas qu'un collier. Une protection.</p><a class="hero__lien link-btn" href="catalogue.html">Voir les pièces</a></div><button type="button" class="hero__toggle" data-hero-toggle aria-pressed="false" hidden>Pause</button></section>
 
 
-</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html?site=http%3A%2F%2Flocalhost%3A8798" title="La boutique : six vitrines et la table des bracelets" loading="eager" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
+</div><div id="shopify-section-template--1__boutique" class="shopify-section section-boutique-immersive"><section class="boutique-immersive" id="boutique" data-boutique-immersive data-url-catalogue="catalogue.html"  style="--attente: url(/assets/boutique-attente.webp); --attente-portrait: url(/assets/boutique-attente-9x16.webp);"><iframe class="boutique-immersive__cadre" src="boutique/index.html" title="La boutique : six vitrines et la table des bracelets" loading="eager" allow="fullscreen"></iframe><noscript><a class="boutique-immersive__secours" href="catalogue.html">Voir toute la collection</a></noscript>
 </section>
 <style>
   .boutique-immersive { position: relative; height: 100vh; height: 100svh; min-height: 520px; background: #1b1510 var(--attente) center / cover no-repeat; }
@@ -190,6 +190,14 @@
     }
     function visible(r) { return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / window.innerHeight; }
     function caler() { vers(window.scrollY + root.getBoundingClientRect().top); }
+    // « Passer l'animation » (8 novembre) : le site va au catalogue, dans la fenêtre principale : la section catalogue de
+    // la page (accueil), sinon la page de toute la collection ; la boutique reste chargée, à l'arrêt où elle était
+    function passer() {
+      var cat = document.getElementById('catalogue');
+      if (cat && cat !== root && !root.contains(cat)) { vers(window.scrollY + cat.getBoundingClientRect().top); return; }
+      var url = root.getAttribute('data-url-catalogue');
+      if (url) window.location.href = url; else quitter(1);
+    }
     function quitter(dir) {
       var r = root.getBoundingClientRect();
       vers(dir > 0 ? window.scrollY + r.bottom : window.scrollY + r.top - window.innerHeight);
@@ -249,7 +257,8 @@
         // vers la boutique (ou elle couvre déjà la moitié de l'écran) : elle vient en entier ; dans l'autre sens, on la quitte
         if (!d.dir || visible(r) >= 0.5 || (d.dir > 0) === (r.top > 0)) caler();
         else quitter(d.dir);
-      } else if (d.boutique === 'bord') quitter(d.dir);
+      } else if (d.boutique === 'bord' && d.passer) passer();
+      else if (d.boutique === 'bord') quitter(d.dir);
     });
   })();
 </script>
@@ -592,7 +601,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>

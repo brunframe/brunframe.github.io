@@ -92,7 +92,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="../index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="../index.html#histoire">Histoire</a><a class="header__link header__cart" href="../panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="../catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="../index.html#histoire">Histoire</a><a class="header__link header__cart" href="../panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -104,7 +104,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../index.html#catalogue">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../createur-petek.html">Créer son Petek</a><a class="menu__link display" href="../trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="../catalogue.html">Rechercher</a><a class="menu__link display" href="../panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../catalogue.html">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../createur-petek.html">Créer son Petek</a><a class="menu__link display" href="../trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="../catalogue.html">Rechercher</a><a class="menu__link display" href="../panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -137,18 +137,19 @@
             <a href="../catalogue.html">Petek</a></nav><h1 class="display product__title" data-anim="product-title">Petek Deluxe</h1>
       <div class="product__price" data-product-price data-anim="product-price"><span class="price"><span class="price__value">120 €</span>
 </span>
-</div><p class="product__signature" data-anim="product-signature"><span>Petek</span></p><div class="product__pickers" data-pickers><fieldset class="picker picker--color" data-picker data-option-index="0">
+</div><p class="visually-hidden" data-live aria-live="polite" aria-atomic="true" data-soldout="Épuisé" data-template="[variante], [prix]"></p>
+      <p class="visually-hidden" data-live-alert role="alert"></p><p class="product__signature" data-anim="product-signature"><span>Petek</span></p><div class="product__pickers" data-pickers><fieldset class="picker picker--color" data-picker data-option-index="0">
                 <legend class="picker__legend">
                   <span class="picker__name">Couleur</span>
-                  <span class="picker__value" data-picker-value data-anim="product-color-name">Blue Delux Pink Gold</span><span class="picker__count">4 couleurs</span></legend>
+                  <span class="picker__value" data-picker-value data-anim="product-color-name">Blue Deluxe Pink Gold</span><span class="picker__count">4 couleurs</span></legend>
                 <div class="swatches" data-anim="product-swatches"><button
                       type="button"
                       class="swatch swatch--lg"
                       data-value="Blue Delux Pink Gold"
-                      data-label="Blue Delux Pink Gold"
+                      data-label="Blue Deluxe Pink Gold"
                       aria-pressed="true"
-                      aria-label="Blue Delux Pink Gold"
-                      title="Blue Delux Pink Gold"
+                      aria-label="Blue Deluxe Pink Gold"
+                      title="Blue Deluxe Pink Gold"
                       data-anim="swatch"
                     ><img src="/photos/pastille/5A4FE52B-D7FE-41D9-A7D6-22ED457980A5.webp" alt="" width="80" height="80" loading="lazy" decoding="async"></button><button
                       type="button"
@@ -177,9 +178,8 @@
                       aria-label="Black white"
                       title="Black white"
                       data-anim="swatch"
-                    ><img src="/photos/pastille/A0563309-837E-4181-8DA0-0644A28AB6D8.webp" alt="" width="80" height="80" loading="lazy" decoding="async"></button></div></fieldset></div><p class="product__availability" data-availability hidden>Épuisé</p><form method="post" action="/cart/add" accept-charset="UTF-8" enctype="multipart/form-data" class="product__form" data-product-form novalidate="novalidate"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓"><label class="visually-hidden" for="VariantSelect-template--1__main">Petek Deluxe</label>
-        <select class="product__select js-hidden" id="VariantSelect-template--1__main" name="id" data-variant-select><option value="45100000291" selected>Blue Delux Pink Gold – 120,00 €</option><option value="45100000292">Green – 110,00 €</option><option value="45100000293">Full black – 110,00 €</option><option value="45100000294">Black white – 110,00 €</option></select>
-        <div class="product__buy" data-anim="product-atc">
+                    ><img src="/photos/pastille/A0563309-837E-4181-8DA0-0644A28AB6D8.webp" alt="" width="80" height="80" loading="lazy" decoding="async"></button></div></fieldset></div><p class="product__availability" data-availability hidden>Épuisé</p><form method="post" action="/cart/add" accept-charset="UTF-8" enctype="multipart/form-data" id="ProductForm-template--1__main" class="product__form" data-product-form novalidate="novalidate"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓"><label class="visually-hidden" for="VariantSelect-template--1__main" data-variant-select-label>Petek Deluxe</label>
+          <select class="product__select js-hidden" id="VariantSelect-template--1__main" name="id" data-variant-select><option value="45100000291" selected>Blue Deluxe Pink Gold – 120 €</option><option value="45100000292">Green – 110 €</option><option value="45100000293">Full black – 110 €</option><option value="45100000294">Black white – 110 €</option></select><div class="product__buy" data-anim="product-atc">
           <button
             type="submit"
             name="add"
@@ -198,7 +198,22 @@
             
           >Ajouter au panier</button>
         </div>
-        <p class="product__error" data-form-error role="alert" hidden></p></form><p class="product__ship" data-anim="product-ship">Livraison offerte et paiement en plusieurs fois avec Klarna dès 120 €</p><dl class="product__facts" data-anim="product-facts"><div class="product__fact"><dt>Fabrication</dt><dd>Fait main</dd></div></dl></div><div class="product__details" data-anim="product-details">
+        <p class="product__error" data-form-error role="alert" hidden></p></form><div class="buybar" data-buybar aria-hidden="true" hidden>
+        <div class="buybar__info">
+          <span class="buybar__variant" data-buybar-variant></span>
+          <span class="buybar__price" data-buybar-price><span class="price"><span class="price__value">120 €</span>
+</span>
+</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn--primary buybar__btn"
+          data-buybar-btn
+          tabindex="-1"
+          data-label-size="Choisir la taille"
+        >Ajouter au panier</button>
+      </div><p class="product__ship" data-anim="product-ship">Livraison offerte et paiement en plusieurs fois avec Klarna dès 120 €</p><h2 class="visually-hidden" id="Faits-template--1__main">Caractéristiques</h2>
+        <dl class="product__facts" data-anim="product-facts" data-facts aria-labelledby="Faits-template--1__main"><div class="product__fact" data-fact="fabrication"><dt>Fabrication</dt><dd>Fait main</dd></div></dl></div><div class="product__details" data-anim="product-details">
       <h2 class="visually-hidden">Informations</h2><details class="acc" data-anim="rule" open>
           <summary class="acc__head">Ce qu'il y a dedans</summary>
           <div class="acc__body"><p class="parchemin" lang="he" dir="rtl">נ נח נחמ נחמן מאומן</p></div>
@@ -218,7 +233,7 @@
           "title": "Blue Delux Pink Gold",
           "options": ["Blue Delux Pink Gold"],
           "available": true,
-          "price": "120,00 €",
+          "price": "120 €",
           "priceCents": 12000,
           "compare": null,
           "imagePos": 1,
@@ -228,7 +243,7 @@
           "title": "Green",
           "options": ["Green"],
           "available": true,
-          "price": "110,00 €",
+          "price": "110 €",
           "priceCents": 11000,
           "compare": null,
           "imagePos": 2,
@@ -238,7 +253,7 @@
           "title": "Full black",
           "options": ["Full black"],
           "available": true,
-          "price": "110,00 €",
+          "price": "110 €",
           "priceCents": 11000,
           "compare": null,
           "imagePos": 3,
@@ -248,7 +263,7 @@
           "title": "Black white",
           "options": ["Black white"],
           "available": true,
-          "price": "110,00 €",
+          "price": "110 €",
           "priceCents": 11000,
           "compare": null,
           "imagePos": 4,
@@ -369,7 +384,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="../assets/cart.js" defer></script>

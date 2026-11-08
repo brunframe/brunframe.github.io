@@ -160,3 +160,58 @@ a.filter:not(.is-active):hover { color: var(--black); }
 @media (prefers-reduced-motion: reduce) {
   .categories__link:hover img { transform: none; }
 }
+
+/* 8 novembre — Découverte (catalogue.js) : recherche, filtres actifs en pastilles, tri et filtres, résultat vide.
+   Aucun fond, aucune ombre, aucun arrondi : filets de 1 px, texte noir, gris #767676. */
+.js .card[data-surplus] { display: none; }
+.no-js [data-voir-plus-local], .no-js .catalogue__effacer-champ, .no-js .catalogue__actifs [data-tout-effacer] { display: none; }
+.catalogue__recherche { display: flex; align-items: center; gap: 16px; margin: 0 0 8px; border-bottom: 1px solid var(--line); transition: border-color var(--dur) var(--ease); }
+.catalogue__recherche:focus-within { border-bottom-color: var(--text); }
+.catalogue__champ {
+  flex: 1; min-width: 0; min-height: 48px; margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: transparent; color: var(--text);
+  font-family: var(--font-text); font-weight: 300; font-size: 16px;
+  -webkit-appearance: none; appearance: none;
+}
+.catalogue__champ::placeholder { color: var(--grey); opacity: 1; }
+.catalogue__champ:focus { outline: none; }
+.catalogue__champ::-webkit-search-cancel-button, .catalogue__champ::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
+.catalogue__effacer-champ, .catalogue__reset { min-height: 44px; }
+.catalogue__actifs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 0 0 24px; }
+.catalogue__pastilles { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pastille-filtre {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer;
+  font-family: var(--font-text); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: border-color var(--dur) var(--ease);
+}
+.pastille-filtre:hover, .pastille-filtre:focus-visible { border-color: var(--text); }
+.pastille-filtre__x { font-size: 16px; line-height: 1; color: var(--grey); }
+.filters__facettes:empty { display: none; }
+.filters__row--facette { flex-wrap: wrap; overflow: visible; margin-top: 4px; }
+.filters__legende {
+  flex: none; display: inline-flex; align-items: center; min-height: 48px; margin: 0;
+  font-family: var(--font-text); font-weight: 400; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey);
+}
+button.filter { -webkit-appearance: none; appearance: none; margin: 0; padding: 0; border: 0; background: none; cursor: pointer; display: inline-flex; align-items: center; }
+button.filter[aria-pressed="true"] { color: var(--text); }
+button.filter[aria-pressed="true"]::after { transform: scaleX(1); }
+button.filter:disabled { opacity: 0.45; cursor: default; }
+.filter__nb { margin-left: 8px; color: var(--grey); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.filters__pied { display: none; }
+.catalogue__vide { display: grid; justify-items: start; gap: 12px; padding: 24px 0 48px; }
+.catalogue__vide-titre { margin: 0; font-size: 20px; font-weight: 300; }
+.catalogue__vide-aide { margin: 0 0 12px; color: var(--grey); }
+@media (min-width: 750px) {
+  .filters__legende { min-width: 140px; }
+}
+@media (max-width: 749px) {
+  .js .catalogue--liste .filters__row--facette { margin-top: 20px; }
+  .js .catalogue--liste .filters__row--facette .filters__legende { min-height: 0; padding: 0 0 8px; }
+  .js .catalogue--liste .filters__row .filter[aria-pressed="true"]::before { content: '—'; order: 2; margin-left: 12px; }
+  .js .catalogue--liste .filters__row .filter .filter__nb { margin-left: auto; padding-left: 12px; }
+  .js .catalogue--liste .filters__pied {
+    display: block; position: sticky; bottom: 0; margin: 0 calc(-1 * var(--gutter)); padding: 16px var(--gutter) 0; background: var(--bg);
+  }
+  .js .catalogue--liste .filters__voir { width: 100%; }
+}

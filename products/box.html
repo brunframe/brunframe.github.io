@@ -92,7 +92,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="../index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="../index.html#histoire">Histoire</a><a class="header__link header__cart" href="../panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="../catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="../index.html#histoire">Histoire</a><a class="header__link header__cart" href="../panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -104,7 +104,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../index.html#catalogue">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../createur-petek.html">Créer son Petek</a><a class="menu__link display" href="../trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="../catalogue.html">Rechercher</a><a class="menu__link display" href="../panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="../catalogue.html">Catalogue</a><a class="menu__link display" href="../index.html#histoire">Histoire</a><a class="menu__link display" href="../createur-petek.html">Créer son Petek</a><a class="menu__link display" href="../trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="../catalogue.html">Rechercher</a><a class="menu__link display" href="../panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -137,7 +137,8 @@
             <a href="../catalogue.html">Maison & autres</a></nav><h1 class="display product__title" data-anim="product-title">Box</h1>
       <div class="product__price" data-product-price data-anim="product-price"><span class="price"><span class="price__value">150 €</span>
 </span>
-</div><p class="product__signature" data-anim="product-signature"><span>Maison & autres</span></p><div class="product__pickers" data-pickers><fieldset class="picker picker--color" data-picker data-option-index="0">
+</div><p class="visually-hidden" data-live aria-live="polite" aria-atomic="true" data-soldout="Épuisé" data-template="[variante], [prix]"></p>
+      <p class="visually-hidden" data-live-alert role="alert"></p><p class="product__signature" data-anim="product-signature"><span>Maison & autres</span></p><div class="product__pickers" data-pickers><fieldset class="picker picker--color" data-picker data-option-index="0">
                 <legend class="picker__legend">
                   <span class="picker__name">Couleur</span>
                   <span class="picker__value" data-picker-value data-anim="product-color-name">Noir</span><span class="picker__count">2 couleurs</span></legend>
@@ -159,9 +160,8 @@
                       aria-label="Beige"
                       title="Beige"
                       data-anim="swatch"
-                    ><img src="/photos/pastille/01E7C4F5-F3B6-4D54-A4ED-26D424C61E83.webp" alt="" width="80" height="80" loading="lazy" decoding="async"></button></div></fieldset></div><p class="product__availability" data-availability hidden>Épuisé</p><form method="post" action="/cart/add" accept-charset="UTF-8" enctype="multipart/form-data" class="product__form" data-product-form novalidate="novalidate"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓"><label class="visually-hidden" for="VariantSelect-template--1__main">Box</label>
-        <select class="product__select js-hidden" id="VariantSelect-template--1__main" name="id" data-variant-select><option value="45100000916" selected>Noir – 150,00 €</option><option value="45100000917">Beige – 150,00 €</option></select>
-        <div class="product__buy" data-anim="product-atc">
+                    ><img src="/photos/pastille/01E7C4F5-F3B6-4D54-A4ED-26D424C61E83.webp" alt="" width="80" height="80" loading="lazy" decoding="async"></button></div></fieldset></div><p class="product__availability" data-availability hidden>Épuisé</p><form method="post" action="/cart/add" accept-charset="UTF-8" enctype="multipart/form-data" id="ProductForm-template--1__main" class="product__form" data-product-form novalidate="novalidate"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓"><label class="visually-hidden" for="VariantSelect-template--1__main" data-variant-select-label>Box</label>
+          <select class="product__select js-hidden" id="VariantSelect-template--1__main" name="id" data-variant-select><option value="45100000916" selected>Noir – 150 €</option><option value="45100000917">Beige – 150 €</option></select><div class="product__buy" data-anim="product-atc">
           <button
             type="submit"
             name="add"
@@ -180,7 +180,21 @@
             
           >Ajouter au panier</button>
         </div>
-        <p class="product__error" data-form-error role="alert" hidden></p></form><p class="product__ship" data-anim="product-ship">Livraison offerte et paiement en plusieurs fois avec Klarna dès 120 €</p><div class="product__desc" data-anim="product-desc"><p>✨ Box Breslev Gang – Édition Limitée Breslev Gang ✨.</p><p>Dès votre commande validée, notre équipe vous contacte afin de créer avec vous une box entièrement personnalisée, selon vos préférences.</p><p>Découvrez la box Breslev Gang ultime : un coffret complet, élégant et rempli de sens, pensé pour faire plaisir.</p></div></div><div class="product__details" data-anim="product-details">
+        <p class="product__error" data-form-error role="alert" hidden></p></form><div class="buybar" data-buybar aria-hidden="true" hidden>
+        <div class="buybar__info">
+          <span class="buybar__variant" data-buybar-variant></span>
+          <span class="buybar__price" data-buybar-price><span class="price"><span class="price__value">150 €</span>
+</span>
+</span>
+        </div>
+        <button
+          type="button"
+          class="btn btn--primary buybar__btn"
+          data-buybar-btn
+          tabindex="-1"
+          data-label-size="Choisir la taille"
+        >Ajouter au panier</button>
+      </div><p class="product__ship" data-anim="product-ship">Livraison offerte et paiement en plusieurs fois avec Klarna dès 120 €</p><div class="product__desc" data-anim="product-desc"><p>✨ Box Breslev Gang – Édition Limitée Breslev Gang ✨.</p><p>Dès votre commande validée, notre équipe vous contacte afin de créer avec vous une box entièrement personnalisée, selon vos préférences.</p><p>Découvrez la box Breslev Gang ultime : un coffret complet, élégant et rempli de sens, pensé pour faire plaisir.</p></div></div><div class="product__details" data-anim="product-details">
       <h2 class="visually-hidden">Informations</h2><details class="acc" data-anim="rule">
             <summary class="acc__head">Livraison et échange</summary>
             <div class="acc__body"><p>Échange sous 14 jours.</p></div>
@@ -197,7 +211,7 @@
           "title": "Noir",
           "options": ["Noir"],
           "available": true,
-          "price": "150,00 €",
+          "price": "150 €",
           "priceCents": 15000,
           "compare": null,
           "imagePos": 1,
@@ -207,7 +221,7 @@
           "title": "Beige",
           "options": ["Beige"],
           "available": true,
-          "price": "150,00 €",
+          "price": "150 €",
           "priceCents": 15000,
           "compare": null,
           "imagePos": 3,
@@ -328,7 +342,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="../assets/cart.js" defer></script>

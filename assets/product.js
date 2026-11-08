@@ -64,6 +64,14 @@
       this.guide = $('[data-guide]', root);
       this.sizePicker = $('[data-size-picker]', root);
       this.sizeHint = $('[data-size-hint]', root);
+      // 8 novembre : annonces aux lecteurs d'écran (variante et prix : poli ; erreurs : alerte) et barre d'achat du téléphone
+      this.live = $('[data-live]', root);
+      this.liveAlert = $('[data-live-alert]', root);
+      this.buybar = $('[data-buybar]', root);
+      this.buybarBtn = this.buybar && $('[data-buybar-btn]', this.buybar);
+      this.buybarPrice = this.buybar && $('[data-buybar-price]', this.buybar);
+      this.buybarVariant = this.buybar && $('[data-buybar-variant]', this.buybar);
+      this.soldoutText = (this.live && this.live.dataset.soldout) || '';
       this.variantPositions = this.data.variants.map((v) => v.imagePos).filter(Boolean).sort((a, b) => a - b);
       this.shownPos = null;
       this.loadToken = 0;
@@ -77,11 +85,20 @@
       this.shownPos = this.current.imagePos || (this.data.images[0] && this.data.images[0].pos) || 0;
       if (mainImg) mainImg.dataset.pos = String(this.shownPos);
 
+      // La liste native ne sert que sans JavaScript : ici les pastilles la remplacent. Retirée de l'écran et des
+      // lecteurs d'écran (aucun doublon), elle reste dans le formulaire et porte toujours la variante choisie.
+      if (this.select && this.select.tagName === 'SELECT') {
+        this.select.hidden = true;
+        const selectLabel = $('[data-variant-select-label]', root);
+        if (selectLabel) selectLabel.hidden = true;
+      }
+
       this.bind();
       this.readUrl();
       this.updateAvailability();
       this.updateButton(this.current);
       this.updateThumbs(0);
+      this.initBar();
     }
 
     /* ---------- Liaisons ---------- */
@@ -91,12 +108,34 @@
         if (button) {
           const picker = button.closest('[data-picker]');
           const index = picker ? Number(picker.dataset.optionIndex) : this.data.colorIndex;
-          this.choose(index, button.dataset.value);
-          if (this.nuancier && this.nuancier.contains(button)) this.closeNuancier();
+          this.choose(index, button.dataset.value, { announce: true });
+          if (this.nuancier && this.nuancier.contains(button)) {
+            // Fermé par un choix : le focus revient sur la pastille de cette couleur (entrée dans la rangée au besoin).
+            const colorPicker = this.pickers.find((p) => Number(p.dataset.optionIndex) === this.data.colorIndex);
+            this.returnFocus = colorPicker && $$('.swatches [data-value]', colorPicker).find((b) => b.dataset.value === button.dataset.value);
+            this.closeNuancier();
+          }
           return;
         }
         const thumb = event.target.closest('[data-thumb]');
         if (thumb) this.goTo(Number(thumb.dataset.thumb));
+      });
+
+      // Clavier : les flèches, Début et Fin passent d'une pastille (ou taille) à l'autre du même groupe ;
+      // Entrée ou Espace choisit (bouton natif). Un seul choix par groupe : aria-pressed.
+      this.root.addEventListener('keydown', (event) => {
+        const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+        if (keys.indexOf(event.key) === -1 || event.altKey || event.ctrlKey || event.metaKey) return;
+        const current = event.target.closest('.swatches [data-value], .options [data-value], [data-nuancier-list] [data-value]');
+        if (!current) return;
+        const group = current.closest('.swatches, .options, [data-nuancier-list]');
+        const items = $$('[data-value]', group).filter((b) => !b.closest('[hidden]'));
+        let i = items.indexOf(current);
+        if (event.key === 'Home') i = 0;
+        else if (event.key === 'End') i = items.length - 1;
+        else i = (i + (event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+        event.preventDefault();
+        if (items[i]) items[i].focus();
       });
 
       // Ordinateur : survoler une pastille montre sa photo, la souris partie on revient à la couleur choisie.
@@ -123,12 +162,14 @@
         $('[data-nuancier-close]', this.nuancier).addEventListener('click', () => this.closeNuancier());
         const search = $('[data-nuancier-search]', this.nuancier);
         search.addEventListener('input', () => this.filterNuancier(search.value));
+        this.watchDialog(this.nuancier, opener);
       }
 
       const guideOpen = $('[data-guide-open]', this.root);
       if (guideOpen && this.guide) {
-        guideOpen.addEventListener('click', () => this.openDialog(this.guide));
-        $('[data-guide-close]', this.guide).addEventListener('click', () => this.closeDialog(this.guide, guideOpen));
+        guideOpen.addEventListener('click', () => this.openDialog(this.guide, $('[data-guide-close]', this.guide)));
+        $('[data-guide-close]', this.guide).addEventListener('click', () => this.closeDialog(this.guide));
+        this.watchDialog(this.guide, guideOpen);
       }
 
       if (this.track) {
@@ -209,7 +250,7 @@
       return matching.find((v) => v.available) || matching[0] || null;
     }
 
-    choose(index, value) {
+    choose(index, value, extra = {}) {
       const wanted = this.state.slice();
       wanted[index] = value;
       let variant = this.variantFor(wanted);
@@ -222,7 +263,7 @@
       const sizeKnown = this.data.sizeIndex < 0 || index === this.data.sizeIndex || this.state[this.data.sizeIndex] !== null;
       // 6 novembre : l'adresse suit la couleur sans ajouter d'étape à l'historique ; « Précédent » ramène à la page
       // d'où l'on vient (la boutique, le catalogue), pas à la couleur d'avant
-      this.apply(variant, { history: 'replace', sizeKnown, keep: wanted });
+      this.apply(variant, { history: 'replace', sizeKnown, keep: wanted, announce: !!extra.announce });
     }
 
     apply(variant, opts = {}) {
@@ -251,7 +292,10 @@
         const value = this.state[this.data.colorIndex];
         $$('[data-value]', this.nuancier).forEach((b) => b.setAttribute('aria-pressed', b.dataset.value === value ? 'true' : 'false'));
       }
-      if (this.sizeHint && this.state[this.data.sizeIndex] !== null) this.sizeHint.hidden = true;
+      if (this.sizeHint && this.state[this.data.sizeIndex] !== null) {
+        this.sizeHint.hidden = true;
+        if (this.liveAlert) this.liveAlert.textContent = '';
+      }
 
       if (this.price) {
         if (variant.compare) {
@@ -271,7 +315,37 @@
       if (pos !== this.shownPos) this.showImages(variant);
       this.updateAvailability();
       this.writeUrl(variant, opts.history || 'replace');
+      // Choix de la personne (pas l'adresse au chargement ni l'aperçu au survol) : « Full Black, 110 € » (+ « Épuisé »).
+      if (opts.announce) this.announce(this.liveText(variant));
       this.root.dispatchEvent(new CustomEvent('variant:change', { bubbles: true, detail: { variant, previous } }));
+    }
+
+    /* ---------- Annonces (lecteurs d'écran) ---------- */
+    // Nom de la variante tel qu'affiché : couleur de la marque, autres options ; la taille seulement si elle est choisie.
+    variantLabel(variant) {
+      return variant.options
+        .map((o, i) => {
+          if (i === this.data.sizeIndex && this.state[i] === null) return '';
+          return i === this.data.colorIndex ? this.colorLabel(o) : o;
+        })
+        .filter((o) => o && o !== 'Default Title').join(' / ');
+    }
+
+    liveText(variant) {
+      const template = (this.live && this.live.dataset.template) || '[variante], [prix]';
+      const name = this.variantLabel(variant) || this.data.title || '';
+      let text = template.replace('[variante]', name).replace('[prix]', variant.price);
+      if (!variant.available && this.soldoutText) text += `, ${this.soldoutText}`;
+      return text;
+    }
+
+    // Texte vidé puis remis au tour suivant : annoncé même s'il est identique au précédent.
+    announce(text, urgent = false) {
+      const region = urgent ? this.liveAlert : this.live;
+      if (!region || !text) return;
+      region.textContent = '';
+      clearTimeout(region.bgTimer);
+      region.bgTimer = setTimeout(() => { region.textContent = text; }, 60);
     }
 
     updateButton(variant) {
@@ -290,10 +364,62 @@
       this.button.dataset.url = variant.id ? `${location.pathname}?variant=${variant.id}` : (variant.url || '');
       if (sizeMissing) this.button.setAttribute('data-requires-size', '');
       else this.button.removeAttribute('data-requires-size');
+      this.updateBar(variant, sizeMissing);
+    }
+
+    /* ---------- Barre d'achat du téléphone ---------- */
+    // Visible quand le bouton principal n'est pas à l'écran (au-dessus ou en dessous), seulement sous 990 px.
+    initBar() {
+      if (!this.buybar || !this.buybarBtn || !this.button) return;
+      this.buybar.hidden = false;
+      const wrap = this.button.closest('.product__buy') || this.button;
+      const narrow = window.matchMedia('(max-width: 989px)');
+      let onScreen = true;
+      const sync = () => this.buybar.classList.toggle('is-visible', narrow.matches && !onScreen);
+      if ('IntersectionObserver' in window) {
+        // le bas de l'écran couvert par la barre ne compte pas : le bouton doit être visible au-dessus d'elle
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => { onScreen = entry.isIntersecting; });
+          sync();
+        }, { rootMargin: '0px 0px -80px 0px' });
+        io.observe(wrap);
+      }
+      if (narrow.addEventListener) narrow.addEventListener('change', sync);
+      else if (narrow.addListener) narrow.addListener(sync);
+      this.buybarBtn.addEventListener('click', () => this.buyFromBar());
+    }
+
+    updateBar(variant, sizeMissing) {
+      if (!this.buybarBtn) return;
+      const labelSize = this.buybarBtn.dataset.labelSize;
+      let state = 'ajout';
+      if (!variant.available) state = 'epuise';
+      else if (sizeMissing && labelSize) state = 'taille';
+      this.buybarBtn.dataset.state = state;
+      this.buybarBtn.disabled = state === 'epuise';
+      this.buybarBtn.textContent = state === 'taille' ? labelSize
+        : state === 'epuise' ? this.button.dataset.labelSoldout : this.button.dataset.labelAdd;
+      if (this.buybarPrice) {
+        this.buybarPrice.innerHTML = variant.compare
+          ? `<span class="price"><s class="price__compare">${variant.compare}</s> <span class="price__value">${variant.price}</span></span>`
+          : `<span class="price"><span class="price__value">${variant.price}</span></span>`;
+      }
+      if (this.buybarVariant) this.buybarVariant.textContent = this.variantLabel(variant);
+    }
+
+    // Sans taille : on ramène au choix de la taille, rien n'est ajouté. Sinon : le chemin du bouton principal
+    // (formulaire → panier), le focus posé sur lui pour y revenir à la fermeture du tiroir.
+    buyFromBar() {
+      const sizeMissing = this.data.sizeIndex >= 0 && this.state[this.data.sizeIndex] === null;
+      if (!this.current.available || !this.button || this.button.disabled) return;
+      if (sizeMissing) { this.showSizeHint(); return; }
+      this.button.focus({ preventScroll: true });
+      this.button.click();
     }
 
     showSizeHint() {
       if (this.sizeHint) this.sizeHint.hidden = false;
+      if (this.sizeHint) this.announce(this.sizeHint.textContent.trim(), true);
       if (this.sizePicker) {
         this.sizePicker.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
         const first = $('[data-value]:not(.is-unavailable)', this.sizePicker) || $('[data-value]', this.sizePicker);
@@ -310,11 +436,14 @@
       const source = $$('[data-value]', this.nuancier).find((b) => b.dataset.value === value);
       if (!source) return;
       const button = document.createElement('button');
+      const label = source.dataset.label || value;
       button.type = 'button';
       button.className = 'swatch swatch--lg';
       button.dataset.value = value;
-      button.setAttribute('aria-label', value);
-      button.title = value;
+      button.dataset.label = label;
+      button.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-label', label);
+      button.title = label;
       const inner = $('.swatch', source);
       if (inner) button.innerHTML = inner.innerHTML;
       const last = $$('.swatch[data-value]', row).pop();
@@ -455,27 +584,54 @@
           const ok = this.data.variants.some((v) => v.available && v.options[index] === value
             && v.options.every((opt, i) => i === index || this.state[i] === null || opt === this.state[i]));
           button.classList.toggle('is-unavailable', !ok);
+          // ce que montre le trait barré, dit aux lecteurs d'écran : « Full Black, Épuisé »
+          const name = button.dataset.label || button.textContent.trim();
+          if (!ok && this.soldoutText) button.setAttribute('aria-label', `${name}, ${this.soldoutText}`);
+          else if (button.dataset.label) button.setAttribute('aria-label', name);
+          else button.removeAttribute('aria-label');
         });
       });
     }
 
     /* ---------- Boîtes de dialogue ---------- */
-    openDialog(dialog) {
+    // 8 novembre : à l'ouverture, le focus entre dans la fenêtre (couleur choisie, sinon « Fermer ») ; Échap, « Fermer »
+    // ou un choix la ferment ; le focus revient alors sur le bouton qui l'a ouverte (ou sur la pastille choisie).
+    openDialog(dialog, focusTarget) {
+      if (dialog.open) return;
       if (typeof dialog.showModal === 'function') dialog.showModal();
       else dialog.setAttribute('open', '');
       document.documentElement.style.overflow = 'hidden';
+      if (focusTarget) focusTarget.focus();
     }
 
-    closeDialog(dialog, opener) {
-      if (typeof dialog.close === 'function') dialog.close();
-      else dialog.removeAttribute('open');
+    closeDialog(dialog) {
+      if (typeof dialog.close === 'function') { if (dialog.open) dialog.close(); }
+      else if (dialog.hasAttribute('open')) { dialog.removeAttribute('open'); this.afterClose(dialog); }
+    }
+
+    // Toute fermeture (Échap compris) passe par l'événement « close » : défilement rendu, focus rendu.
+    watchDialog(dialog, opener) {
+      dialog.bgOpener = opener;
+      dialog.addEventListener('close', () => this.afterClose(dialog));
+      // navigateurs sans <dialog> modal : Échap ferme quand même
+      dialog.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && typeof dialog.showModal !== 'function') { event.preventDefault(); this.closeDialog(dialog); }
+      });
+    }
+
+    afterClose(dialog) {
       document.documentElement.style.overflow = '';
-      if (opener) opener.focus({ preventScroll: true });
+      const back = this.returnFocus && document.contains(this.returnFocus) ? this.returnFocus : dialog.bgOpener;
+      this.returnFocus = null;
+      if (back) back.focus({ preventScroll: true });
     }
 
-    openNuancier() { this.openDialog(this.nuancier); }
+    openNuancier() {
+      const chosen = $('[data-value][aria-pressed="true"]', this.nuancier);
+      this.openDialog(this.nuancier, chosen || $('[data-nuancier-close]', this.nuancier));
+    }
 
-    closeNuancier() { this.closeDialog(this.nuancier, $('[data-nuancier-open]', this.root)); }
+    closeNuancier() { this.closeDialog(this.nuancier); }
 
     filterNuancier(query) {
       const q = normalize(query);

@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#FFFFFF" data-theme-color>
     <meta name="color-scheme" content="only light">
-    <title>Colliers – Page 3 – Breslev Gang</title>
+    <title>Colliers – Breslev Gang</title>
       <meta name="description" content="">
 
     <meta property="og:site_name" content="Breslev Gang">
-<meta property="og:url" content="https://m769csn5ry-del.github.io/collections/all/cat-colliers">
+<meta property="og:url" content="https://m769csn5ry-del.github.io/collections/all/cat-colliers+univers-pieces-a-part">
 <meta property="og:title" content="Tous les produits">
 <meta property="og:type" content="website">
 <meta property="og:description" content="Breslev Gang"><meta property="og:image" content="https://m769csn5ry-del.github.io/assets/partage.jpg">
@@ -90,7 +90,7 @@
 </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="index.html#catalogue">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
+    <nav class="header__nav" aria-label="Navigation principale"><a class="header__link header__link--wide" href="catalogue.html">Catalogue</a><a class="header__link header__link--wide" href="index.html#histoire">Histoire</a><a class="header__link header__cart" href="panier.html" data-cart-open aria-haspopup="dialog">Panier<span class="header__count" data-cart-count data-anim="cart-count" aria-label="Articles dans le panier : 0">0</span>
       </a>
       <button type="button" class="header__link header__menu-btn" data-menu-open aria-expanded="false" aria-controls="MenuPanel">Menu</button>
     </nav>
@@ -102,7 +102,7 @@
         <span class="menu__title">Breslev Gang</span>
         <button type="button" class="menu__close" data-menu-close aria-label="Fermer le menu">Fermer</button>
       </div>
-      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="index.html#catalogue">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
+      <nav class="menu__nav" aria-label="Navigation principale"><a class="menu__link display" href="catalogue.html">Catalogue</a><a class="menu__link display" href="index.html#histoire">Histoire</a><a class="menu__link display" href="createur-petek.html">Créer son Petek</a><a class="menu__link display" href="trouve-ta-flamme.html">Trouve ta flamme</a><a class="menu__link display" href="catalogue.html">Rechercher</a><a class="menu__link display" href="panier.html">Panier</a>
       </nav>
     </div>
   </div>
@@ -112,10 +112,16 @@
 </div>
 
     <main id="main" class="main" tabindex="-1">
-      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue"><div class="section__head">
+      <div id="shopify-section-template--1__main" class="shopify-section section-catalogue"><link href="assets/catalogue.css" rel="stylesheet" type="text/css" media="all" /><section class="catalogue catalogue--liste section" id="catalogue" data-catalogue data-anim="catalogue" data-decouverte data-pas="24"><div class="section__head">
         <h1 class="display section__title section__title--md" data-anim="catalogue-title">Colliers</h1>
-      </div><div class="catalogue__bar">
-      <p class="catalogue__count" data-catalogue-count>146 pièces · Colliers</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true"></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
+      </div><form class="catalogue__recherche" action="catalogue.html" method="get" role="search" data-recherche-form>
+        <label class="visually-hidden" for="catalogue-q">Rechercher dans le catalogue</label>
+        <input class="catalogue__champ" type="search" id="catalogue-q" name="q" placeholder="Rechercher une pièce" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" data-recherche>
+        <input type="hidden" name="type" value="product">
+        <button type="button" class="link-btn catalogue__effacer-champ" data-recherche-effacer hidden>Effacer</button>
+      </form><div class="catalogue__bar">
+      <p class="catalogue__count" data-catalogue-count aria-live="polite">
+        <span data-nb>28 pièces</span> · Colliers · Pièces à part</p><button type="button" class="catalogue__filter-btn" data-sheet-open aria-expanded="false" aria-controls="catalogue-filtres">Filtrer<span class="catalogue__filter-dot" aria-hidden="true" data-filter-dot></span></button></div><div class="filters" id="catalogue-filtres" data-sheet>
         <div class="filters__panel">
           <div class="filters__head">
             <p class="filters__title display">Filtrer</p>
@@ -123,12 +129,18 @@
           </div>
           <nav class="filters__row" aria-label="Filtrer par catégorie">
             <a class="filter" href="catalogue.html">Tout</a><a class="filter" href="categorie-cat-petek.html">Petek</a><a class="filter is-active" href="categorie-cat-colliers.html" aria-current="true">Colliers</a><a class="filter" href="categorie-cat-bracelets.html">Bracelets</a><a class="filter" href="categorie-cat-mezouza-a-perles.html">Mezouza à perles</a><a class="filter" href="categorie-cat-vetements.html">Vêtements</a><a class="filter" href="categorie-cat-maison-autres.html">Maison & autres</a></nav><nav class="filters__row filters__row--sub" aria-label="Filtrer par univers">
-              <a class="filter is-active" href="categorie-cat-colliers.html" aria-current="true">Tout</a><a class="filter" href="catalogue.html">Flamme</a><a class="filter" href="catalogue.html">Maguen</a><a class="filter" href="catalogue.html">Hay & Israël</a><a class="filter" href="catalogue.html">Rabbi & 770</a><a class="filter" href="catalogue.html">Love</a><a class="filter" href="catalogue.html">Mezouza</a><a class="filter" href="catalogue.html">Boucles d'oreilles</a><a class="filter" href="catalogue.html">Pièces à part</a></nav></div>
+              <a class="filter" href="categorie-cat-colliers.html">Tout</a><a class="filter" href="categorie-cat-colliers--univers-flamme.html">Flamme</a><a class="filter" href="categorie-cat-colliers--univers-maguen.html">Maguen</a><a class="filter" href="categorie-cat-colliers--univers-hay-israel.html">Hay & Israël</a><a class="filter" href="categorie-cat-colliers--univers-rabbi-770.html">Rabbi & 770</a><a class="filter" href="categorie-cat-colliers--univers-love.html">Love</a><a class="filter" href="categorie-cat-colliers--univers-mezouza.html">Mezouza</a><a class="filter" href="categorie-cat-colliers--univers-boucles-doreilles.html">Boucles d'oreilles</a><a class="filter is-active" href="categorie-cat-colliers--univers-pieces-a-part.html" aria-current="true">Pièces à part</a></nav><div class="filters__facettes" data-facettes></div>
+            <div class="filters__pied">
+              <button type="button" class="btn filters__voir" data-sheet-close data-voir-resultats>28 pièces</button>
+            </div></div>
       </div>
-      <div class="filters__backdrop" data-sheet-close hidden></div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/collier-breslev-necklace-israel-2.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp" srcset="/photos/800/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 640w, /photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 2" data-card-img></div>
-    <h3 class="card__name">Collier Israel 2</h3>
+      <div class="filters__backdrop" data-sheet-close hidden></div><div class="catalogue__actifs" data-actifs>
+        <ul class="catalogue__pastilles" role="list" aria-label="Filtres actifs" data-pastilles><li><a class="pastille-filtre" href="catalogue.html" data-garde-etat aria-label="Retirer : Colliers">Colliers<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li><li><a class="pastille-filtre" href="categorie-cat-colliers.html" data-garde-etat aria-label="Retirer : Pièces à part">Pièces à part<span class="pastille-filtre__x" aria-hidden="true">×</span></a></li></ul>
+        <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
+      </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Bad Bear Colliers Pièces à part">
+  <a class="card__link" href="products/collier-bad-bear.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/542DC36F-8580-4982-9D06-07F7A2648D57.webp" srcset="/photos/800/542DC36F-8580-4982-9D06-07F7A2648D57.webp 640w, /photos/1600/542DC36F-8580-4982-9D06-07F7A2648D57.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Bad Bear" data-card-img></div>
+    <h3 class="card__name">Collier Bad Bear</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -137,19 +149,180 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000380"
-      data-name="Collier Israel 2"
+      data-variant-id="45100000363"
+      data-name="Collier Bad Bear"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp"
-      data-url="products/collier-breslev-necklace-israel-2.html?variant=45100000380"
+      data-image="/photos/800/542DC36F-8580-4982-9D06-07F7A2648D57.webp"
+      data-url="products/collier-bad-bear.html?variant=45100000363"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/collier-breslev-necklace-israel-3.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp" srcset="/photos/800/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 640w, /photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 3" data-card-img></div>
-    <h3 class="card__name">Collier Israel 3</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Collier Aech Cheli Colliers Pièces à part Black Grey Winter 26’ Black Summer 26’ Grey Summer 26’" data-couleurs="Black Grey Winter 26’|Black Summer 26’|Grey Summer 26’">
+  <a class="card__link" href="products/collier-aech-cheli.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C2338748-1573-48AF-8A40-B496CE8D934D.webp" srcset="/photos/800/C2338748-1573-48AF-8A40-B496CE8D934D.webp 640w, /photos/1600/C2338748-1573-48AF-8A40-B496CE8D934D.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Aech Cheli" data-card-img></div>
+    <h3 class="card__name">Collier Aech Cheli</h3>
+    <p class="card__price"><span class="price"><span class="price__value">110 €</span>
+</span>
+</p>
+  </a><ul class="card__swatches" role="list" data-anim="card-swatches"><li>
+            <button
+              type="button"
+              class="swatch swatch--sm is-active"
+              data-card-swatch
+              data-image="/photos/1600/C2338748-1573-48AF-8A40-B496CE8D934D.webp"
+              data-url="products/collier-aech-cheli.html?variant=45100000317"
+              data-variant-id="45100000317"
+              data-variant="Black Grey Winter 26’"
+              data-price="11000"
+              data-available="true"
+              aria-label="Voir en Black Grey Winter 26’"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/C2338748-1573-48AF-8A40-B496CE8D934D.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li><li>
+            <button
+              type="button"
+              class="swatch swatch--sm"
+              data-card-swatch
+              data-image="/photos/1600/A37CBEA6-4965-4AF0-816B-49BB7F4D93EB.webp"
+              data-url="products/collier-aech-cheli.html?variant=45100000318"
+              data-variant-id="45100000318"
+              data-variant="Black Summer 26’"
+              data-price="11000"
+              data-available="true"
+              aria-label="Voir en Black Summer 26’"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/A37CBEA6-4965-4AF0-816B-49BB7F4D93EB.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li><li>
+            <button
+              type="button"
+              class="swatch swatch--sm"
+              data-card-swatch
+              data-image="/photos/1600/F4DEE015-2738-4021-976D-B0FC2A0A9D3A.webp"
+              data-url="products/collier-aech-cheli.html?variant=45100000319"
+              data-variant-id="45100000319"
+              data-variant="Grey Summer 26’"
+              data-price="11000"
+              data-available="true"
+              aria-label="Voir en Grey Summer 26’"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/F4DEE015-2738-4021-976D-B0FC2A0A9D3A.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li></ul><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000317"
+      data-name="Collier Aech Cheli"
+      data-variant="Black Grey Winter 26’"
+      data-price="11000"
+      data-image="/photos/800/C2338748-1573-48AF-8A40-B496CE8D934D.webp"
+      data-url="products/collier-aech-cheli.html?variant=45100000317"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Padlock Colliers Pièces à part Necklace Padlock Gold" data-couleurs="Necklace Padlock|Gold">
+  <a class="card__link" href="products/collier-padlock.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp" srcset="/photos/800/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp 640w, /photos/1600/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Padlock" data-card-img></div>
+    <h3 class="card__name">Collier Padlock</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><ul class="card__swatches" role="list" data-anim="card-swatches"><li>
+            <button
+              type="button"
+              class="swatch swatch--sm is-active"
+              data-card-swatch
+              data-image="/photos/1600/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp"
+              data-url="products/collier-padlock.html?variant=45100000344"
+              data-variant-id="45100000344"
+              data-variant="Necklace Padlock"
+              data-price="9000"
+              data-available="true"
+              aria-label="Voir en Necklace Padlock"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li><li>
+            <button
+              type="button"
+              class="swatch swatch--sm"
+              data-card-swatch
+              data-image="/photos/1600/0DF2B910-9169-46B5-B059-627EBC3EE508.webp"
+              data-url="products/collier-padlock.html?variant=45100000345"
+              data-variant-id="45100000345"
+              data-variant="Gold"
+              data-price="9000"
+              data-available="true"
+              aria-label="Voir en Gold"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/0DF2B910-9169-46B5-B059-627EBC3EE508.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li></ul><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000344"
+      data-name="Collier Padlock"
+      data-variant="Necklace Padlock"
+      data-price="9000"
+      data-image="/photos/800/D28750E1-F77A-4C96-BF78-A431C4401FF4.webp"
+      data-url="products/collier-padlock.html?variant=45100000344"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Win Smile Colliers Pièces à part Necklace Win by Smile Or" data-couleurs="Necklace Win by Smile|Or">
+  <a class="card__link" href="products/collier-win-smile.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp" srcset="/photos/800/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp 640w, /photos/1600/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Win Smile" data-card-img></div>
+    <h3 class="card__name">Collier Win Smile</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><ul class="card__swatches" role="list" data-anim="card-swatches"><li>
+            <button
+              type="button"
+              class="swatch swatch--sm is-active"
+              data-card-swatch
+              data-image="/photos/1600/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp"
+              data-url="products/collier-win-smile.html?variant=45100000346"
+              data-variant-id="45100000346"
+              data-variant="Necklace Win by Smile"
+              data-price="9000"
+              data-available="true"
+              aria-label="Voir en Necklace Win by Smile"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li><li>
+            <button
+              type="button"
+              class="swatch swatch--sm"
+              data-card-swatch
+              data-image="/photos/1600/0199C76B-7638-43B2-B6EA-CEFD219D9B1F.webp"
+              data-url="products/collier-win-smile.html?variant=45100000347"
+              data-variant-id="45100000347"
+              data-variant="Or"
+              data-price="9000"
+              data-available="true"
+              aria-label="Voir en Or"
+              data-anim="card-swatch"
+            ><img src="/photos/pastille/0199C76B-7638-43B2-B6EA-CEFD219D9B1F.webp" alt="" width="48" height="48" loading="lazy" decoding="async"></button>
+          </li></ul><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000346"
+      data-name="Collier Win Smile"
+      data-variant="Necklace Win by Smile"
+      data-price="9000"
+      data-image="/photos/800/B54256A1-A1D2-4EAE-A29D-21CBD16AF95A.webp"
+      data-url="products/collier-win-smile.html?variant=45100000346"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier &#34;Comme Des Breslev&#34; Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-necklace-quot-comme-des-breslev-quot.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5407187585_g011.webp" srcset="/photos/800/il_fullxfull.5407187585_g011.webp 640w, /photos/1600/il_fullxfull.5407187585_g011.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier &quot;Comme Des Breslev&quot;" data-card-img></div>
+    <h3 class="card__name">Collier "Comme Des Breslev"</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -158,19 +331,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000381"
-      data-name="Collier Israel 3"
+      data-variant-id="45100000353"
+      data-name="Collier &#34;Comme Des Breslev&#34;"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/1A6CB294-046D-40F6-B64F-34691DB81F32.webp"
-      data-url="products/collier-breslev-necklace-israel-3.html?variant=45100000381"
+      data-image="/photos/800/il_fullxfull.5407187585_g011.webp"
+      data-url="products/jewel-necklace-quot-comme-des-breslev-quot.html?variant=45100000353"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/collier-breslev-necklace-israel-4.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp" srcset="/photos/800/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 640w, /photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 4" data-card-img></div>
-    <h3 class="card__name">Collier Israel 4</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier 26 Colliers Pièces à part">
+  <a class="card__link" href="products/collier-26-representant-le-nom-de-d.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/08487F69-8942-4D16-A59F-15A738896F63.webp" srcset="/photos/800/08487F69-8942-4D16-A59F-15A738896F63.webp 640w, /photos/1600/08487F69-8942-4D16-A59F-15A738896F63.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier 26" data-card-img></div>
+    <h3 class="card__name">Collier 26</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -179,19 +352,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000382"
-      data-name="Collier Israel 4"
+      data-variant-id="45100000355"
+      data-name="Collier 26"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp"
-      data-url="products/collier-breslev-necklace-israel-4.html?variant=45100000382"
+      data-image="/photos/800/08487F69-8942-4D16-A59F-15A738896F63.webp"
+      data-url="products/collier-26-representant-le-nom-de-d.html?variant=45100000355"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-israel-alphabet.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp" srcset="/photos/800/0F9A0A3A-941C-47D1-973A-70901819269C.webp 640w, /photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Alphabet" data-card-img></div>
-    <h3 class="card__name">Collier Israel Alphabet</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Bear Cute Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-necklace-breslev-bear-cute.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5358996386_9aka.webp" srcset="/photos/800/il_fullxfull.5358996386_9aka.webp 640w, /photos/1600/il_fullxfull.5358996386_9aka.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Bear Cute" data-card-img></div>
+    <h3 class="card__name">Collier Bear Cute</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -200,19 +373,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000383"
-      data-name="Collier Israel Alphabet"
+      data-variant-id="45100000364"
+      data-name="Collier Bear Cute"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/0F9A0A3A-941C-47D1-973A-70901819269C.webp"
-      data-url="products/necklace-israel-alphabet.html?variant=45100000383"
+      data-image="/photos/800/il_fullxfull.5358996386_9aka.webp"
+      data-url="products/jewel-necklace-breslev-bear-cute.html?variant=45100000364"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-israel-drawing.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp" srcset="/photos/800/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 640w, /photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Drawing" data-card-img></div>
-    <h3 class="card__name">Collier Israel Drawing</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Cadenas Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-breslev-necklace-padlock-jewish.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4607332534_ndaf.webp" srcset="/photos/800/il_fullxfull.4607332534_ndaf.webp 640w, /photos/1600/il_fullxfull.4607332534_ndaf.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Cadenas" data-card-img></div>
+    <h3 class="card__name">Collier Cadenas</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -221,19 +394,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000384"
-      data-name="Collier Israel Drawing"
+      data-variant-id="45100000366"
+      data-name="Collier Cadenas"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp"
-      data-url="products/necklace-israel-drawing.html?variant=45100000384"
+      data-image="/photos/800/il_fullxfull.4607332534_ndaf.webp"
+      data-url="products/jewel-breslev-necklace-padlock-jewish.html?variant=45100000366"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/jewel-breslev-necklace-army-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4658090263_ib8r.webp" srcset="/photos/800/il_fullxfull.4658090263_ib8r.webp 640w, /photos/1600/il_fullxfull.4658090263_ib8r.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Jewish Army" data-card-img></div>
-    <h3 class="card__name">Collier Jewish Army</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier EYE Colliers Pièces à part">
+  <a class="card__link" href="products/collier-eye-contre-le-mauvais-oeil.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/444A83C2-06F1-4EDD-BB18-83EB902F0306.webp" srcset="/photos/800/444A83C2-06F1-4EDD-BB18-83EB902F0306.webp 640w, /photos/1600/444A83C2-06F1-4EDD-BB18-83EB902F0306.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier EYE" data-card-img></div>
+    <h3 class="card__name">Collier EYE</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -242,16 +415,58 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000385"
-      data-name="Collier Jewish Army"
+      data-variant-id="45100000369"
+      data-name="Collier EYE"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/il_fullxfull.4658090263_ib8r.webp"
-      data-url="products/jewel-breslev-necklace-army-jewish.html?variant=45100000385"
+      data-image="/photos/800/444A83C2-06F1-4EDD-BB18-83EB902F0306.webp"
+      data-url="products/collier-eye-contre-le-mauvais-oeil.html?variant=45100000369"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Eight Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-necklace-breslev-eight.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5358986084_j79r.webp" srcset="/photos/800/il_fullxfull.5358986084_j79r.webp 640w, /photos/1600/il_fullxfull.5358986084_j79r.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Eight" data-card-img></div>
+    <h3 class="card__name">Collier Eight</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000370"
+      data-name="Collier Eight"
+      data-variant="Default Title"
+      data-price="9000"
+      data-image="/photos/800/il_fullxfull.5358986084_j79r.webp"
+      data-url="products/jewel-necklace-breslev-eight.html?variant=45100000370"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier HASHEM IS MY DESIGNER by THEKIPPOTS Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-hashem-is-my-designer-by-thekippots.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/69A4C7B6-0B8A-41DC-9EC0-19BC85FA7371.webp" srcset="/photos/800/69A4C7B6-0B8A-41DC-9EC0-19BC85FA7371.webp 640w, /photos/1600/69A4C7B6-0B8A-41DC-9EC0-19BC85FA7371.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier HASHEM IS MY DESIGNER by THEKIPPOTS" data-card-img></div>
+    <h3 class="card__name">Collier HASHEM IS MY DESIGNER by THEKIPPOTS</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000376"
+      data-name="Collier HASHEM IS MY DESIGNER by THEKIPPOTS"
+      data-variant="Default Title"
+      data-price="9000"
+      data-image="/photos/800/69A4C7B6-0B8A-41DC-9EC0-19BC85FA7371.webp"
+      data-url="products/necklace-hashem-is-my-designer-by-thekippots.html?variant=45100000376"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Kabale Colliers Pièces à part">
   <a class="card__link" href="products/necklace-kabale.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D2AB305B-E60D-4F2D-923F-26FBAAEFE9D3.webp" srcset="/photos/800/D2AB305B-E60D-4F2D-923F-26FBAAEFE9D3.webp 640w, /photos/1600/D2AB305B-E60D-4F2D-923F-26FBAAEFE9D3.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Kabale" data-card-img></div>
     <h3 class="card__name">Collier Kabale</h3>
@@ -272,49 +487,7 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-love-israel-forever.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp" srcset="/photos/800/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 640w, /photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE Israel Forever" data-card-img></div>
-    <h3 class="card__name">Collier LOVE Israel Forever</h3>
-    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
-</span>
-</p>
-  </a><button
-      type="button"
-      class="link-btn card__add"
-      data-card-add
-      data-add-to-cart
-      data-variant-id="45100000387"
-      data-name="Collier LOVE Israel Forever"
-      data-variant="Default Title"
-      data-price="9000"
-      data-image="/photos/800/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp"
-      data-url="products/necklace-love-israel-forever.html?variant=45100000387"
-      
-      
-    >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/collier-love-am-israel-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp" srcset="/photos/800/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 640w, /photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE am israel hay" data-card-img></div>
-    <h3 class="card__name">Collier LOVE am israel hay</h3>
-    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
-</span>
-</p>
-  </a><button
-      type="button"
-      class="link-btn card__add"
-      data-card-add
-      data-add-to-cart
-      data-variant-id="45100000388"
-      data-name="Collier LOVE am israel hay"
-      data-variant="Default Title"
-      data-price="9000"
-      data-image="/photos/800/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp"
-      data-url="products/collier-love-am-israel-hay.html?variant=45100000388"
-      
-      
-    >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="19000" data-dispo="1" data-texte="Collier Lily Flower Colliers Pièces à part">
   <a class="card__link" href="products/jewel-breslev-necklace-lily-flower-jewish.html" data-card-link>
     <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/IMG-2283.webp" srcset="/photos/800/IMG-2283.webp 640w, /photos/1600/IMG-2283.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Lily Flower" data-card-img></div>
     <h3 class="card__name">Collier Lily Flower</h3>
@@ -335,10 +508,10 @@
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-love-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp" srcset="/photos/800/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 640w, /photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love + Fire" data-card-img></div>
-    <h3 class="card__name">Collier Love + Fire</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mediator Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-breslev-necklace-mediator-jewish.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4607326946_mfep.webp" srcset="/photos/800/il_fullxfull.4607326946_mfep.webp 640w, /photos/1600/il_fullxfull.4607326946_mfep.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mediator" data-card-img></div>
+    <h3 class="card__name">Collier Mediator</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -347,19 +520,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000390"
-      data-name="Collier Love + Fire"
+      data-variant-id="45100000404"
+      data-name="Collier Mediator"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp"
-      data-url="products/necklace-love-fire.html?variant=45100000390"
+      data-image="/photos/800/il_fullxfull.4607326946_mfep.webp"
+      data-url="products/jewel-breslev-necklace-mediator-jewish.html?variant=45100000404"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-love-26s.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp" srcset="/photos/800/11F72118-1A2B-449A-840E-310E4C940B3E.webp 640w, /photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love 26s’" data-card-img></div>
-    <h3 class="card__name">Collier Love 26s’</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mini Smiley Colliers Pièces à part">
+  <a class="card__link" href="products/collier-smyley-court.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5B9AED40-4294-4565-ABE2-0AFB6926EFEF.webp" srcset="/photos/800/5B9AED40-4294-4565-ABE2-0AFB6926EFEF.webp 640w, /photos/1600/5B9AED40-4294-4565-ABE2-0AFB6926EFEF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mini Smiley" data-card-img></div>
+    <h3 class="card__name">Collier Mini Smiley</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -368,19 +541,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000391"
-      data-name="Collier Love 26s’"
+      data-variant-id="45100000408"
+      data-name="Collier Mini Smiley"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/11F72118-1A2B-449A-840E-310E4C940B3E.webp"
-      data-url="products/necklace-love-26s.html?variant=45100000391"
+      data-image="/photos/800/5B9AED40-4294-4565-ABE2-0AFB6926EFEF.webp"
+      data-url="products/collier-smyley-court.html?variant=45100000408"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-love-h-ay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp" srcset="/photos/800/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 640w, /photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love H’ay" data-card-img></div>
-    <h3 class="card__name">Collier Love H’ay</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mister Breslev Gang Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-necklace-mister-breslev-gang.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5407155787_msyv.webp" srcset="/photos/800/il_fullxfull.5407155787_msyv.webp 640w, /photos/1600/il_fullxfull.5407155787_msyv.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mister Breslev Gang" data-card-img></div>
+    <h3 class="card__name">Collier Mister Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -389,19 +562,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000392"
-      data-name="Collier Love H’ay"
+      data-variant-id="45100000409"
+      data-name="Collier Mister Breslev Gang"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp"
-      data-url="products/necklace-love-h-ay.html?variant=45100000392"
+      data-image="/photos/800/il_fullxfull.5407155787_msyv.webp"
+      data-url="products/jewel-necklace-mister-breslev-gang.html?variant=45100000409"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-anarchy.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp" srcset="/photos/800/2943460A-4881-4423-8658-BF1E318D8578.webp 640w, /photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Anarchy" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Anarchy</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Rolling Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-breslev-rolling.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5407140661_tv3h.webp" srcset="/photos/800/il_fullxfull.5407140661_tv3h.webp 640w, /photos/1600/il_fullxfull.5407140661_tv3h.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Rolling" data-card-img></div>
+    <h3 class="card__name">Collier Rolling</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -410,19 +583,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000393"
-      data-name="Collier Maguen Anarchy"
+      data-variant-id="45100000417"
+      data-name="Collier Rolling"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/2943460A-4881-4423-8658-BF1E318D8578.webp"
-      data-url="products/necklace-maguen-anarchy.html?variant=45100000393"
+      data-image="/photos/800/il_fullxfull.5407140661_tv3h.webp"
+      data-url="products/jewel-breslev-rolling.html?variant=45100000417"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-arrow.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp" srcset="/photos/800/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 640w, /photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Arrow" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Arrow</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Safety pin Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-safety-pin.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D3EA3B78-A1BE-402F-BF13-C267438F5E0A.webp" srcset="/photos/800/D3EA3B78-A1BE-402F-BF13-C267438F5E0A.webp 640w, /photos/1600/D3EA3B78-A1BE-402F-BF13-C267438F5E0A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Safety pin" data-card-img></div>
+    <h3 class="card__name">Collier Safety pin</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -431,19 +604,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000394"
-      data-name="Collier Maguen Arrow"
+      data-variant-id="45100000419"
+      data-name="Collier Safety pin"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp"
-      data-url="products/necklace-maguen-arrow.html?variant=45100000394"
+      data-image="/photos/800/D3EA3B78-A1BE-402F-BF13-C267438F5E0A.webp"
+      data-url="products/necklace-safety-pin.html?variant=45100000419"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-chrome.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp" srcset="/photos/800/DB59218B-8673-4295-8AC6-640844F363FB.webp 640w, /photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Chrome" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Chrome</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Travis Smiley Colliers Pièces à part">
+  <a class="card__link" href="products/jewel-breslev-necklace-travis-smyley-jewish.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4655524725_hu1v.webp" srcset="/photos/800/il_fullxfull.4655524725_hu1v.webp 640w, /photos/1600/il_fullxfull.4655524725_hu1v.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Travis Smiley" data-card-img></div>
+    <h3 class="card__name">Collier Travis Smiley</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -452,19 +625,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000395"
-      data-name="Collier Maguen Chrome"
+      data-variant-id="45100000424"
+      data-name="Collier Travis Smiley"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/DB59218B-8673-4295-8AC6-640844F363FB.webp"
-      data-url="products/necklace-maguen-chrome.html?variant=45100000395"
+      data-image="/photos/800/il_fullxfull.4655524725_hu1v.webp"
+      data-url="products/jewel-breslev-necklace-travis-smyley-jewish.html?variant=45100000424"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-david-flame.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp" srcset="/photos/800/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 640w, /photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flame" data-card-img></div>
-    <h3 class="card__name">Collier Maguen David Flame</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier ancre Breslev Gang Colliers Pièces à part">
+  <a class="card__link" href="products/collier-ancre-breslev-ganf.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/06935574-9219-4FEA-8941-6589A30A6CDA.webp" srcset="/photos/800/06935574-9219-4FEA-8941-6589A30A6CDA.webp 640w, /photos/1600/06935574-9219-4FEA-8941-6589A30A6CDA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier ancre Breslev Gang" data-card-img></div>
+    <h3 class="card__name">Collier ancre Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -473,19 +646,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000396"
-      data-name="Collier Maguen David Flame"
+      data-variant-id="45100000425"
+      data-name="Collier ancre Breslev Gang"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp"
-      data-url="products/necklace-maguen-david-flame.html?variant=45100000396"
+      data-image="/photos/800/06935574-9219-4FEA-8941-6589A30A6CDA.webp"
+      data-url="products/collier-ancre-breslev-ganf.html?variant=45100000425"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-david-flash.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp" srcset="/photos/800/3E373E5A-822C-4646-B147-3684237BAD3D.webp 640w, /photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flash" data-card-img></div>
-    <h3 class="card__name">Collier Maguen David Flash</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier electric Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-electric.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/EA9EAE09-9600-456E-89F1-C8CD25749906.webp" srcset="/photos/800/EA9EAE09-9600-456E-89F1-C8CD25749906.webp 640w, /photos/1600/EA9EAE09-9600-456E-89F1-C8CD25749906.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier electric" data-card-img></div>
+    <h3 class="card__name">Collier electric</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -494,19 +667,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000397"
-      data-name="Collier Maguen David Flash"
+      data-variant-id="45100000428"
+      data-name="Collier electric"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/3E373E5A-822C-4646-B147-3684237BAD3D.webp"
-      data-url="products/necklace-maguen-david-flash.html?variant=45100000397"
+      data-image="/photos/800/EA9EAE09-9600-456E-89F1-C8CD25749906.webp"
+      data-url="products/necklace-electric.html?variant=45100000428"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/collier-etoile-maguen-david-esprit-rick.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp" srcset="/photos/800/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 640w, /photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Rick" data-card-img></div>
-    <h3 class="card__name">Collier Maguen David Rick</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier lettre י Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-lettre-י.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C3776163-8352-4BAD-8CCF-C38833F9EC21.webp" srcset="/photos/800/C3776163-8352-4BAD-8CCF-C38833F9EC21.webp 640w, /photos/1600/C3776163-8352-4BAD-8CCF-C38833F9EC21.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier lettre י" data-card-img></div>
+    <h3 class="card__name">Collier lettre י</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -515,40 +688,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000398"
-      data-name="Collier Maguen David Rick"
+      data-variant-id="45100000439"
+      data-name="Collier lettre י"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp"
-      data-url="products/collier-etoile-maguen-david-esprit-rick.html?variant=45100000398"
+      data-image="/photos/800/C3776163-8352-4BAD-8CCF-C38833F9EC21.webp"
+      data-url="products/necklace-lettre-י.html?variant=45100000439"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-deluxe.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp" srcset="/photos/800/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 640w, /photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Deluxe" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Deluxe</h3>
-    <p class="card__price"><span class="price"><span class="price__value">140 €</span>
-</span>
-</p>
-  </a><button
-      type="button"
-      class="link-btn card__add"
-      data-card-add
-      data-add-to-cart
-      data-variant-id="45100000399"
-      data-name="Collier Maguen Deluxe"
-      data-variant="Default Title"
-      data-price="14000"
-      data-image="/photos/800/73192B23-F66B-434D-B959-2EE708C5EFBE.webp"
-      data-url="products/necklace-maguen-deluxe.html?variant=45100000399"
-      
-      
-    >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-h-ay-2026.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp" srcset="/photos/800/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 640w, /photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen H’ay 2026" data-card-img></div>
-    <h3 class="card__name">Collier Maguen H’ay 2026</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier property by Breslev Gang Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-property-by-breslev-gang.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8454E8E0-DD26-4B73-A44E-275F368845AE.webp" srcset="/photos/800/8454E8E0-DD26-4B73-A44E-275F368845AE.webp 640w, /photos/1600/8454E8E0-DD26-4B73-A44E-275F368845AE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier property by Breslev Gang" data-card-img></div>
+    <h3 class="card__name">Collier property by Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -557,19 +709,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000400"
-      data-name="Collier Maguen H’ay 2026"
+      data-variant-id="45100000450"
+      data-name="Collier property by Breslev Gang"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp"
-      data-url="products/necklace-maguen-h-ay-2026.html?variant=45100000400"
+      data-image="/photos/800/8454E8E0-DD26-4B73-A44E-275F368845AE.webp"
+      data-url="products/necklace-property-by-breslev-gang.html?variant=45100000450"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-infinity.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp" srcset="/photos/800/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 640w, /photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Infinity" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Infinity</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier skull Colliers Pièces à part">
+  <a class="card__link" href="products/necklace-skull.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/83280C43-AACF-4CC0-A81D-EE14825528CC.webp" srcset="/photos/800/83280C43-AACF-4CC0-A81D-EE14825528CC.webp 640w, /photos/1600/83280C43-AACF-4CC0-A81D-EE14825528CC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier skull" data-card-img></div>
+    <h3 class="card__name">Collier skull</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -578,19 +730,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000401"
-      data-name="Collier Maguen Infinity"
+      data-variant-id="45100000452"
+      data-name="Collier skull"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp"
-      data-url="products/necklace-maguen-infinity.html?variant=45100000401"
+      data-image="/photos/800/83280C43-AACF-4CC0-A81D-EE14825528CC.webp"
+      data-url="products/necklace-skull.html?variant=45100000452"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-kotel.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp" srcset="/photos/800/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 640w, /photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Kotel" data-card-img></div>
-    <h3 class="card__name">Collier Maguen Kotel</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier stone breslev Colliers Pièces à part" data-surplus>
+  <a class="card__link" href="products/necklace-stone-breslev.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/65B7B3AB-44A3-449C-8093-966879B60460.webp" srcset="/photos/800/65B7B3AB-44A3-449C-8093-966879B60460.webp 640w, /photos/1600/65B7B3AB-44A3-449C-8093-966879B60460.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier stone breslev" data-card-img></div>
+    <h3 class="card__name">Collier stone breslev</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -599,19 +751,19 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000402"
-      data-name="Collier Maguen Kotel"
+      data-variant-id="45100000455"
+      data-name="Collier stone breslev"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp"
-      data-url="products/necklace-maguen-kotel.html?variant=45100000402"
+      data-image="/photos/800/65B7B3AB-44A3-449C-8093-966879B60460.webp"
+      data-url="products/necklace-stone-breslev.html?variant=45100000455"
       
       
     >Ajouter</button></li>
-<li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal>
-  <a class="card__link" href="products/necklace-maguen-love-punk.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp" srcset="/photos/800/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 640w, /photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen love punk" data-card-img></div>
-    <h3 class="card__name">Collier Maguen love punk</h3>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier trèfle Colliers Pièces à part" data-surplus>
+  <a class="card__link" href="products/collier-trefle.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A95FCA3F-6248-452D-9CF4-C21769CFEC3E.webp" srcset="/photos/800/A95FCA3F-6248-452D-9CF4-C21769CFEC3E.webp 640w, /photos/1600/A95FCA3F-6248-452D-9CF4-C21769CFEC3E.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier trèfle" data-card-img></div>
+    <h3 class="card__name">Collier trèfle</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
 </p>
@@ -620,17 +772,90 @@
       class="link-btn card__add"
       data-card-add
       data-add-to-cart
-      data-variant-id="45100000403"
-      data-name="Collier Maguen love punk"
+      data-variant-id="45100000457"
+      data-name="Collier trèfle"
       data-variant="Default Title"
       data-price="9000"
-      data-image="/photos/800/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp"
-      data-url="products/necklace-maguen-love-punk.html?variant=45100000403"
+      data-image="/photos/800/A95FCA3F-6248-452D-9CF4-C21769CFEC3E.webp"
+      data-url="products/collier-trefle.html?variant=45100000457"
       
       
     >Ajouter</button></li>
-</ul><div class="catalogue__more" data-catalogue-more><a class="btn btn--ghost catalogue__more-btn" href="categorie-cat-colliers-4.html" rel="next" data-voir-plus data-label="Voir plus" data-loading="Chargement">Voir plus</a><nav class="pagination catalogue__pagination" aria-label="Pages du catalogue" data-pagination><a href="categorie-cat-colliers-2.html" rel="prev">Page précédente</a><span class="pagination__state" data-pagination-state>Page 3 sur 7</span><a href="categorie-cat-colliers-4.html" rel="next">Page suivante</a></nav>
-      </div></section>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier « we will dance again » Colliers Pièces à part" data-surplus>
+  <a class="card__link" href="products/necklace-we-will-dance-again.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D8F68BCC-DB8B-4904-9503-B980ECA96160.webp" srcset="/photos/800/D8F68BCC-DB8B-4904-9503-B980ECA96160.webp 640w, /photos/1600/D8F68BCC-DB8B-4904-9503-B980ECA96160.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier « we will dance again »" data-card-img></div>
+    <h3 class="card__name">Collier « we will dance again »</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000459"
+      data-name="Collier « we will dance again »"
+      data-variant="Default Title"
+      data-price="9000"
+      data-image="/photos/800/D8F68BCC-DB8B-4904-9503-B980ECA96160.webp"
+      data-url="products/necklace-we-will-dance-again.html?variant=45100000459"
+      
+      
+    >Ajouter</button></li>
+<li class="card" data-card data-cat="colliers" data-univers="pieces-a-part" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier ש 26 Colliers Pièces à part" data-surplus>
+  <a class="card__link" href="products/collier-ש-26.html" data-card-link>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/FD772CC5-D3E7-42D5-9FE6-603192F412F7.webp" srcset="/photos/800/FD772CC5-D3E7-42D5-9FE6-603192F412F7.webp 640w, /photos/1600/FD772CC5-D3E7-42D5-9FE6-603192F412F7.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier ש 26" data-card-img></div>
+    <h3 class="card__name">Collier ש 26</h3>
+    <p class="card__price"><span class="price"><span class="price__value">90 €</span>
+</span>
+</p>
+  </a><button
+      type="button"
+      class="link-btn card__add"
+      data-card-add
+      data-add-to-cart
+      data-variant-id="45100000460"
+      data-name="Collier ש 26"
+      data-variant="Default Title"
+      data-price="9000"
+      data-image="/photos/800/FD772CC5-D3E7-42D5-9FE6-603192F412F7.webp"
+      data-url="products/collier-ש-26.html?variant=45100000460"
+      
+      
+    >Ajouter</button></li>
+</ul><div class="catalogue__vide" data-vide hidden>
+        <p class="catalogue__vide-titre" data-vide-titre aria-live="polite"></p>
+        <p class="catalogue__vide-aide">Essayez un autre mot ou retirez un filtre.</p>
+        <button type="button" class="btn btn--ghost" data-tout-effacer>Réinitialiser</button>
+      </div>
+      <div class="catalogue__more" data-catalogue-more>
+        <button type="button" class="btn btn--ghost catalogue__more-btn" data-voir-plus-local>Voir plus</button>
+      </div><script type="application/json" data-catalogue-config>
+        {
+          "seuils": "80,100,150",
+          "t": {
+            "un": "[n] pièce", "plus": "[n] pièces",
+            "voir_un": "Voir [n] pièce", "voir_plus": "Voir les [n] pièces",
+            "tri": "Trier", "tri_defaut": "Par défaut",
+            "tri_croissant": "Prix croissant", "tri_decroissant": "Prix décroissant",
+            "prix": "Prix", "prix_moins": "Jusqu'à [a]",
+            "prix_entre": "De [a] à [b]", "prix_plus": "Plus de [a]",
+            "couleur": "Couleur", "dispo": "Disponibilité",
+            "dispo_oui": "Disponible", "taille": "Taille",
+            "matiere": "Matière", "longueur": "Longueur",
+            "retirer": "Retirer : [x]", "recherche": "« [q] »",
+            "vide": "Aucune pièce ne correspond.", "vide_recherche": "Aucune pièce pour « [q] ».",
+            "familles": {
+              "noir": "Noir", "blanc": "Blanc",
+              "gris": "Gris", "dore": "Doré",
+              "argente": "Couleur argent", "rose": "Rose",
+              "violet": "Violet", "bleu": "Bleu",
+              "vert": "Vert", "rouge": "Rouge",
+              "camel": "Camel", "multicolore": "Multicolore"
+            }
+          }
+        }
+      </script></section>
   <script src="assets/catalogue.js" defer></script>
   <script>
     /* Catalogue : panneau de filtres (mobile) et « Voir plus ». Progressive enhancement : tout fonctionne sans ce script. */
@@ -829,7 +1054,9 @@
     "added": "Ajouté au panier",
     "discount": "Réduction",
     "checkoutDemo": "Paiement désactivé (démo)",
-    "optionRequired": "Choisissez votre [option] avant d'ajouter."
+    "optionRequired": "Choisissez votre [option] avant d'ajouter.",
+    "retry": "La mise à jour a échoué. Réessayez.",
+    "max": "Quantité maximale atteinte."
   }
 </script>
 <script src="assets/cart.js" defer></script>
