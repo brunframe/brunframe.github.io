@@ -202,7 +202,7 @@
 }
 
 /* ---------- 6 novembre : fiche plus riche — signature (catégorie · univers), nombre de couleurs, faits visibles
-   (fabrication, matière, dimensions, longueur), lien vers la vitrine de la boutique immersive ---------- */
+   (fabrication, matière, dimensions, longueur) ---------- */
 .product__signature { margin-top: 10px; display: flex; flex-wrap: wrap; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
 .product__signature span + span::before { content: '·'; margin: 0 8px; }
 .picker__count { margin-left: 12px; font-size: 12px; color: var(--grey); }
@@ -210,7 +210,6 @@
 .product__fact { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 16px; }
 .product__fact dt { color: var(--grey); }
 .product__fact dd { margin: 0; }
-.product__vitrine { display: inline-block; margin-top: 20px; min-height: 44px; }
 
 /* ---------- 8 novembre : barre d'achat du téléphone (prix + action) ----------
    Visible quand le bouton principal n'est pas à l'écran (assets/product.js) ; zones sûres de l'iPhone ;

@@ -428,131 +428,22 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 @media (hover: hover) { .hero__toggle:hover { opacity: 1; } }
 
 /* ---------- Vitrine 3D : salon privé épinglé au défilement ---------- */
-.vitrine.is-3d { height: calc(100svh + var(--vitrine-steps, 5) * var(--vitrine-step, 55svh)); padding: 0; }
-.vitrine__stage { position: relative; }
-.vitrine.is-3d .vitrine__stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-  touch-action: pan-y;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.vitrine.is-3d .vitrine__head {
-  position: absolute;
-  z-index: 3;
-  left: var(--gutter);
-  right: var(--gutter);
-  top: calc(var(--header-h) + 16px);
-  margin: 0;
-  pointer-events: none;
-  transition: opacity 0.3s var(--ease);
-}
-.vitrine.is-3d .vitrine__head .section__title { font-size: clamp(22px, 3.6vw, 40px); }
-.vitrine.is-3d .vitrine__grid {
-  position: absolute;
-  inset: calc(var(--header-h) + 72px) var(--gutter) 0;
-  z-index: 2;
-  overflow: hidden;
-  transition: opacity 0.45s var(--ease);
-}
-.vitrine.is-3d .vitrine__grid.is-leaving { opacity: 0; pointer-events: none; }
-.vitrine__names { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 0.6s var(--ease); }
-.vitrine.is-active .vitrine__names { opacity: 1; }
-.vitrine__name {
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  font-family: var(--font-display); font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  font-size: clamp(40px, 13vw, 96px);
-  white-space: nowrap;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-.vitrine__scene { position: absolute; inset: 0; z-index: 1; }
-.vitrine__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: pointer; }
-.vitrine__front {
-  position: absolute;
-  z-index: 3;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: calc(5svh + env(safe-area-inset-bottom));
-  display: grid;
-  gap: 8px;
-  justify-items: center;
-  text-align: center;
-  pointer-events: none;
-}
-.vitrine__front a { pointer-events: auto; }
-.vitrine__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; font-size: 14px; }
-.vitrine__front-name { color: var(--grey); }
-.vitrine__front-name:empty { display: none; }
-.vitrine__front-price { font-weight: 400; }
+
 .roll { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; }
 .roll__out { position: absolute; left: 0; top: 0; white-space: nowrap; }
-.vitrine__front-title {
-  width: 100%;
-  font-family: var(--font-display); font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1.1;
-  font-size: 22px;
-}
-@media (min-width: 990px) {
-  .vitrine__name { font-size: clamp(80px, 8vw, 150px); }
-  .vitrine__front { bottom: 7svh; }
-  .vitrine__front-title { font-size: 26px; }
-}
 
-.vitrine__canvas--seq { cursor: default; background: transparent; }
-.vitrine.is-seq .vitrine__front { bottom: calc(6svh + env(safe-area-inset-bottom)); }
+@media (min-width: 990px) {
+
+}
 
 /* Carrousel CSS 3D : même mise en scène sans WebGL */
-.vitrine__ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 0;
-  perspective: 1400px;
-  transform-style: preserve-3d;
-}
-.vitrine__piece {
-  --r: min(44vw, 330px);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: min(56vw, 300px);
-  transform:
-    translate(-50%, -62%)
-    rotateY(calc(-1 * var(--theta, 0deg)))
-    rotateY(var(--a))
-    translateZ(var(--r))
-    rotateY(calc(var(--theta, 0deg) - var(--a)))
-    scale(calc(0.78 + 0.46 * var(--front, 0)));
-  opacity: calc(0.35 + 0.65 * var(--front, 0));
-  will-change: transform, opacity;
-}
-.vitrine__piece img { width: 100%; height: auto; display: block; }
-.vitrine__stand {
-  display: block;
-  width: 56%;
-  height: 22px;
-  margin: 8px auto 0;
-  background: var(--surface);
-  border-radius: 50%;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(0, 0, 0, 0.06) inset;
-}
+
 @media (min-width: 990px) {
-  .vitrine__piece { --r: min(30vw, 520px); width: min(26vw, 380px); }
+
 }
 
 /* ---------- Grilles de produits ---------- */
-.vitrine__grid,
+
 .catalogue__grid,
 .reco__grid,
 .collections {
@@ -562,18 +453,18 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
   row-gap: 56px;
 }
 @media (min-width: 750px) {
-  .vitrine__grid, .reco__grid, .collections { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; row-gap: 96px; }
+  .reco__grid, .collections { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; row-gap: 96px; }
   .catalogue__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; row-gap: 112px; }
 }
 @media (min-width: 1200px) {
   .catalogue__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 48px; row-gap: 136px; }
 }
 
-.vitrine__link, .card__link, .collections__link { display: block; }
-.vitrine__media, .card__media { margin-bottom: 18px; }
-.vitrine__media img, .card__media img { transition: transform 0.6s var(--ease), opacity 0.4s var(--ease); }
+.card__link, .collections__link { display: block; }
+.card__media { margin-bottom: 18px; }
+.card__media img { transition: transform 0.6s var(--ease), opacity 0.4s var(--ease); }
 @media (hover: hover) {
-  .vitrine__link:hover img, .card__link:hover img { transform: scale(1.025); }
+  .card__link:hover img { transform: scale(1.025); }
 }
 .card__name {
   font-family: var(--font-display); font-weight: 400;
@@ -1033,7 +924,7 @@ option { background: var(--surface); color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; }
   .drawer__panel, .drawer__backdrop, .ship__fill, .menu, .menu__link { transition-duration: 0.01ms !important; }
-  .vitrine__link:hover img, .card__link:hover img { transform: none; }
+  .card__link:hover img { transform: none; }
 }
 
 .histoire__vide { display: grid; justify-items: center; gap: 20px; text-align: center; padding: clamp(24px, 6vw, 64px) 0; }
