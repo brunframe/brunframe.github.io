@@ -129,32 +129,36 @@ a.filter:not(.is-active):hover { color: var(--black); }
 .catalogue__subtitle {
   margin-top: clamp(96px, 16vw, 200px);
   margin-bottom: clamp(24px, 5vw, 48px);
-  font-size: clamp(28px, 7vw, 64px);
+  font-size: clamp(34px, 7vw, 72px);
 }
+/* catégories : mêmes grandes photos bord à bord que les pièces (direction du 11 novembre) */
 .categories {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 16px;
-  row-gap: 40px;
+  column-gap: 2px;
+  row-gap: 36px;
+  margin-inline: calc(-1 * var(--gutter));
 }
-@media (min-width: 750px) { .categories { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; row-gap: 64px; } }
+@media (min-width: 750px) { .categories { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2px; row-gap: 72px; } }
 .categories__link { display: block; }
-.categories__media { margin-bottom: 12px; aspect-ratio: 1 / 1; }
-.categories__media img { transition: transform 0.8s var(--ease); }
-@media (hover: hover) { .categories__link:hover img { transform: scale(1.03); } }
+.categories__media { margin-bottom: 16px; aspect-ratio: 4 / 5; }
+.categories__media img { object-fit: cover; }
+.categories__media img { transition: transform 1.2s var(--ease); }
+@media (hover: hover) { .categories__link:hover img { transform: scale(1.04); } }
 .categories__name {
   display: block;
-  font-weight: 400;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding-inline: 16px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(20px, 5vw, 26px);
+  line-height: 1.15;
 }
 .collections.categories .categories__name {
   font-family: var(--font-display);
-  font-size: clamp(18px, 4.6vw, 26px);
-  letter-spacing: -0.01em;
-  line-height: 1;
-  text-transform: uppercase;
+  font-size: clamp(24px, 5.6vw, 34px);
+  letter-spacing: -0.005em;
+  line-height: 1.05;
+  text-transform: none;
 }
 .catalogue__all { margin-top: clamp(48px, 8vw, 80px); padding-bottom: var(--space-section); }
 @media (prefers-reduced-motion: reduce) {

@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -141,7 +155,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Bring Them Home Colliers Hay &amp; Israël Israel Fire NOW&#34;" data-couleurs="Israel|Fire|NOW&#34;">
   <a class="card__link" href="products/collier-bring-them-home.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp" srcset="/photos/800/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp 640w, /photos/1600/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Bring Them Home" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/D2F683F5-7D87-4EE0-B64C-95AD48423957.webp"><img src="/photos/1600/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp" srcset="/photos/800/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp 640w, /photos/1600/19ECC5B3-7E49-441A-9993-CC0B93E93396.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Bring Them Home" data-card-img></div>
     <h3 class="card__name">Collier Bring Them Home</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -204,7 +218,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Hay Colliers Hay &amp; Israël 2026 Collier Breslev Hay" data-couleurs="2026|Collier Breslev Hay">
   <a class="card__link" href="products/collier-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp" srcset="/photos/800/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp 640w, /photos/1600/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp" srcset="/photos/800/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp 640w, /photos/1600/299DEC83-BB5E-42D9-B20C-2614EFD5352F.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay" data-card-img></div>
     <h3 class="card__name">Collier Hay</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -253,7 +267,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Hay Israel Colliers Hay &amp; Israël Necklace Hay Israel Necklace Hay Israel 2" data-couleurs="Necklace Hay Israel|Necklace Hay Israel 2">
   <a class="card__link" href="products/collier-hay-israel.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp" srcset="/photos/800/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp 640w, /photos/1600/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay Israel" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/CC084928-B91A-4236-B770-4F4D8B276A9E.webp"><img src="/photos/1600/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp" srcset="/photos/800/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp 640w, /photos/1600/ECA05B62-2272-4484-A1F6-9CDA6CE57141.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay Israel" data-card-img></div>
     <h3 class="card__name">Collier Hay Israel</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -302,7 +316,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier AM ISRAEL HAY Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-am-israel-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp" srcset="/photos/800/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp 640w, /photos/1600/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier AM ISRAEL HAY" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp" srcset="/photos/800/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp 640w, /photos/1600/D02EA72B-3FC9-42C7-AC80-8429B377A8CF.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier AM ISRAEL HAY" data-card-img></div>
     <h3 class="card__name">Collier AM ISRAEL HAY</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -323,7 +337,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier H’ay Writings Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-h-ay-writings.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp" srcset="/photos/800/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp 640w, /photos/1600/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier H’ay Writings" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/681358BF-4A31-4E08-B6CA-8FA3132B7E5B.webp"><img src="/photos/1600/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp" srcset="/photos/800/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp 640w, /photos/1600/499DE62E-8FD2-4F2A-B4A0-13DBA4BBA5DE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier H’ay Writings" data-card-img></div>
     <h3 class="card__name">Collier H’ay Writings</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -344,7 +358,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel 1 Colliers Hay &amp; Israël">
   <a class="card__link" href="products/jewel-breslev-necklace-israel-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4655492733_d96k.webp" srcset="/photos/800/il_fullxfull.4655492733_d96k.webp 640w, /photos/1600/il_fullxfull.4655492733_d96k.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 1" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4655492733_d96k.webp" srcset="/photos/800/il_fullxfull.4655492733_d96k.webp 640w, /photos/1600/il_fullxfull.4655492733_d96k.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 1" data-card-img></div>
     <h3 class="card__name">Collier Israel 1</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -365,7 +379,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel 2 Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-breslev-necklace-israel-2.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp" srcset="/photos/800/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 640w, /photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 2" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp" srcset="/photos/800/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 640w, /photos/1600/6FE5A047-DC48-48D6-B3D6-7228B563D2AA.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 2" data-card-img></div>
     <h3 class="card__name">Collier Israel 2</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -386,7 +400,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel 3 Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-breslev-necklace-israel-3.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp" srcset="/photos/800/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 640w, /photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 3" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp" srcset="/photos/800/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 640w, /photos/1600/1A6CB294-046D-40F6-B64F-34691DB81F32.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 3" data-card-img></div>
     <h3 class="card__name">Collier Israel 3</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -407,7 +421,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel 4 Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-breslev-necklace-israel-4.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp" srcset="/photos/800/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 640w, /photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 4" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp" srcset="/photos/800/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 640w, /photos/1600/BE6BF5F9-3ADB-46EF-A78D-1057C5CF4CFA.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel 4" data-card-img></div>
     <h3 class="card__name">Collier Israel 4</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -428,7 +442,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel Alphabet Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-israel-alphabet.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp" srcset="/photos/800/0F9A0A3A-941C-47D1-973A-70901819269C.webp 640w, /photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Alphabet" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/F9F0CB1A-BB44-4C5C-A0E0-B0C91B019627.webp"><img src="/photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp" srcset="/photos/800/0F9A0A3A-941C-47D1-973A-70901819269C.webp 640w, /photos/1600/0F9A0A3A-941C-47D1-973A-70901819269C.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Alphabet" data-card-img></div>
     <h3 class="card__name">Collier Israel Alphabet</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -449,7 +463,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Israel Drawing Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-israel-drawing.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp" srcset="/photos/800/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 640w, /photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Drawing" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/85CB6454-CC28-4CDC-A2B8-0E11555A4D8E.webp"><img src="/photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp" srcset="/photos/800/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 640w, /photos/1600/31B5CD72-9E08-485A-AE1A-9B7DF31DBF97.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Israel Drawing" data-card-img></div>
     <h3 class="card__name">Collier Israel Drawing</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -470,7 +484,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Jewish Army Colliers Hay &amp; Israël">
   <a class="card__link" href="products/jewel-breslev-necklace-army-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4658090263_ib8r.webp" srcset="/photos/800/il_fullxfull.4658090263_ib8r.webp 640w, /photos/1600/il_fullxfull.4658090263_ib8r.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Jewish Army" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4658090263_ib8r.webp" srcset="/photos/800/il_fullxfull.4658090263_ib8r.webp 640w, /photos/1600/il_fullxfull.4658090263_ib8r.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Jewish Army" data-card-img></div>
     <h3 class="card__name">Collier Jewish Army</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -491,7 +505,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mini Hay Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-hay-court.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp" srcset="/photos/800/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp 640w, /photos/1600/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mini Hay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp" srcset="/photos/800/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp 640w, /photos/1600/BF4791AF-81AB-4495-8EF8-DB35E610A0BB.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mini Hay" data-card-img></div>
     <h3 class="card__name">Collier Mini Hay</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -512,7 +526,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier golani Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-golani.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp" srcset="/photos/800/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp 640w, /photos/1600/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier golani" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp" srcset="/photos/800/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp 640w, /photos/1600/F43444BD-B5D5-4688-B4E8-5EE9B5C72F40.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier golani" data-card-img></div>
     <h3 class="card__name">Collier golani</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -533,7 +547,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier hamsa israel Colliers Hay &amp; Israël">
   <a class="card__link" href="products/hamsa-israel.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp" srcset="/photos/800/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp 640w, /photos/1600/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hamsa israel" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp" srcset="/photos/800/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp 640w, /photos/1600/24D693DC-42F5-4822-BAA1-63B2D5E00911.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hamsa israel" data-card-img></div>
     <h3 class="card__name">Collier hamsa israel</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -554,7 +568,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier hay bible Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-hay-bible.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/751B1D49-849D-43EE-B332-A11C05969BA9.webp" srcset="/photos/800/751B1D49-849D-43EE-B332-A11C05969BA9.webp 640w, /photos/1600/751B1D49-849D-43EE-B332-A11C05969BA9.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hay bible" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/751B1D49-849D-43EE-B332-A11C05969BA9.webp" srcset="/photos/800/751B1D49-849D-43EE-B332-A11C05969BA9.webp 640w, /photos/1600/751B1D49-849D-43EE-B332-A11C05969BA9.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hay bible" data-card-img></div>
     <h3 class="card__name">Collier hay bible</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -575,7 +589,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier hay x fire Colliers Hay &amp; Israël">
   <a class="card__link" href="products/necklace-hay-x-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp" srcset="/photos/800/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp 640w, /photos/1600/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hay x fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp" srcset="/photos/800/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp 640w, /photos/1600/374D41CE-63B8-4BBD-A3DF-7306C1FEAEFE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier hay x fire" data-card-img></div>
     <h3 class="card__name">Collier hay x fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -596,7 +610,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier israel AM ISRAEL HAY Colliers Hay &amp; Israël">
   <a class="card__link" href="products/collier-israel-am-israel-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp" srcset="/photos/800/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp 640w, /photos/1600/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier israel AM ISRAEL HAY" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp" srcset="/photos/800/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp 640w, /photos/1600/70EA8B66-5F2C-4387-A84A-0B21A3146195.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier israel AM ISRAEL HAY" data-card-img></div>
     <h3 class="card__name">Collier israel AM ISRAEL HAY</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -617,7 +631,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Hamsa fire Colliers Hay &amp; Israël">
   <a class="card__link" href="products/hamsa-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp" srcset="/photos/800/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp 640w, /photos/1600/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Hamsa fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp" srcset="/photos/800/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp 640w, /photos/1600/4AAFB98D-E5C4-4E41-8CF6-6AFBF85828F5.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Hamsa fire" data-card-img></div>
     <h3 class="card__name">Hamsa fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -638,7 +652,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Haï 2.0 Colliers Hay &amp; Israël">
   <a class="card__link" href="products/hai-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp" srcset="/photos/800/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp 640w, /photos/1600/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Haï 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp" srcset="/photos/800/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp 640w, /photos/1600/9C416897-DBCA-4831-A9DA-592AE784F9DC.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Haï 2.0" data-card-img></div>
     <h3 class="card__name">Haï 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -659,7 +673,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="hay-israel" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Mini Plaque H’ayal Fire Colliers Hay &amp; Israël">
   <a class="card__link" href="products/mini-plaque-h-ayal-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp" srcset="/photos/800/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp 640w, /photos/1600/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Mini Plaque H’ayal Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/83642925-6384-42FB-A5F3-8811A2138629.webp"><img src="/photos/1600/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp" srcset="/photos/800/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp 640w, /photos/1600/AFAAD1A4-43BC-462D-9AB3-19B631406602.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Mini Plaque H’ayal Fire" data-card-img></div>
     <h3 class="card__name">Mini Plaque H’ayal Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>

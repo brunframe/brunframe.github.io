@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -141,7 +155,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Big Love Colliers Love">
   <a class="card__link" href="products/necklace-breslev-gang-big-love.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp" srcset="/photos/800/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp 640w, /photos/1600/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Big Love" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/FF7B4020-7D0E-47EF-8FE6-106EDB99F96B.webp"><img src="/photos/1600/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp" srcset="/photos/800/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp 640w, /photos/1600/B86688D8-D09D-4DBB-894E-510355E4B3F3.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Big Love" data-card-img></div>
     <h3 class="card__name">Collier Big Love</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -162,7 +176,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier LOVE Israel Forever Colliers Love">
   <a class="card__link" href="products/necklace-love-israel-forever.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp" srcset="/photos/800/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 640w, /photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE Israel Forever" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/DE5D9AB0-2D9A-4DF3-B9BB-83AAAE255703.webp"><img src="/photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp" srcset="/photos/800/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 640w, /photos/1600/19CD55DB-1526-4AFB-85AE-B1B57587F893.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE Israel Forever" data-card-img></div>
     <h3 class="card__name">Collier LOVE Israel Forever</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -183,7 +197,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier LOVE am israel hay Colliers Love">
   <a class="card__link" href="products/collier-love-am-israel-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp" srcset="/photos/800/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 640w, /photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE am israel hay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp" srcset="/photos/800/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 640w, /photos/1600/BAC46B70-2D01-482C-92BC-B15A2CC73C1A.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier LOVE am israel hay" data-card-img></div>
     <h3 class="card__name">Collier LOVE am israel hay</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -204,7 +218,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Love + Fire Colliers Love">
   <a class="card__link" href="products/necklace-love-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp" srcset="/photos/800/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 640w, /photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love + Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp" srcset="/photos/800/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 640w, /photos/1600/6343AD5C-2E1D-4B60-9291-2C371240A1A4.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love + Fire" data-card-img></div>
     <h3 class="card__name">Collier Love + Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -225,7 +239,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Love 26s’ Colliers Love">
   <a class="card__link" href="products/necklace-love-26s.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp" srcset="/photos/800/11F72118-1A2B-449A-840E-310E4C940B3E.webp 640w, /photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love 26s’" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/13B2D25B-1803-4889-B462-CEF0D06210C7.webp"><img src="/photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp" srcset="/photos/800/11F72118-1A2B-449A-840E-310E4C940B3E.webp 640w, /photos/1600/11F72118-1A2B-449A-840E-310E4C940B3E.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love 26s’" data-card-img></div>
     <h3 class="card__name">Collier Love 26s’</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -246,7 +260,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Love H’ay Colliers Love">
   <a class="card__link" href="products/necklace-love-h-ay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp" srcset="/photos/800/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 640w, /photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love H’ay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/55ABE361-B76B-41F0-A990-0683BB7A28BB.webp"><img src="/photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp" srcset="/photos/800/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 640w, /photos/1600/5EEE12C1-3E80-4BE8-AB17-D1BCB6B6D2F1.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Love H’ay" data-card-img></div>
     <h3 class="card__name">Collier Love H’ay</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -267,7 +281,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier love Colliers Love">
   <a class="card__link" href="products/necklace-love.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/715E623C-E23E-47F3-8E67-19FC95E07453.webp" srcset="/photos/800/715E623C-E23E-47F3-8E67-19FC95E07453.webp 640w, /photos/1600/715E623C-E23E-47F3-8E67-19FC95E07453.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/715E623C-E23E-47F3-8E67-19FC95E07453.webp" srcset="/photos/800/715E623C-E23E-47F3-8E67-19FC95E07453.webp 640w, /photos/1600/715E623C-E23E-47F3-8E67-19FC95E07453.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love" data-card-img></div>
     <h3 class="card__name">Collier love</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -288,7 +302,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier love 2.0 Colliers Love">
   <a class="card__link" href="products/necklace-love-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp" srcset="/photos/800/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp 640w, /photos/1600/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp" srcset="/photos/800/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp 640w, /photos/1600/54F44C8A-B7AD-4B5F-88A1-78BC8FDBF2F2.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love 2.0" data-card-img></div>
     <h3 class="card__name">Collier love 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -309,7 +323,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier love comme des breslev Colliers Love">
   <a class="card__link" href="products/necklace-love-comme-des-breslev.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp" srcset="/photos/800/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp 640w, /photos/1600/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love comme des breslev" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp" srcset="/photos/800/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp 640w, /photos/1600/A3B11B0E-2C41-4238-9D7D-F954BC23508A.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier love comme des breslev" data-card-img></div>
     <h3 class="card__name">Collier love comme des breslev</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -330,7 +344,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="love" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier real love Colliers Love">
   <a class="card__link" href="products/necklace-real-love.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp" srcset="/photos/800/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp 640w, /photos/1600/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier real love" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp" srcset="/photos/800/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp 640w, /photos/1600/DBD5BDA4-2C10-4F6F-882D-67DBCDD1A80F.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier real love" data-card-img></div>
     <h3 class="card__name">Collier real love</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>

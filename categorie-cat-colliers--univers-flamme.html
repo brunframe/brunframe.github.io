@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -141,7 +155,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="11500" data-dispo="1" data-texte="Flamme Diamant Colliers Flamme Or rose Argent Or" data-couleurs="Or rose|Argent|Or">
   <a class="card__link" href="products/flamme-diamant.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/7B301C76-F39E-4733-8B49-A6B70D80562C.webp" srcset="/photos/800/7B301C76-F39E-4733-8B49-A6B70D80562C.webp 640w, /photos/1600/7B301C76-F39E-4733-8B49-A6B70D80562C.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme Diamant" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/33D6EC73-65AF-48AE-9862-5444CB7505D5.webp"><img src="/photos/1600/7B301C76-F39E-4733-8B49-A6B70D80562C.webp" srcset="/photos/800/7B301C76-F39E-4733-8B49-A6B70D80562C.webp 640w, /photos/1600/7B301C76-F39E-4733-8B49-A6B70D80562C.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme Diamant" data-card-img></div>
     <h3 class="card__name">Flamme Diamant</h3>
     <p class="card__price"><span class="price"><span class="price__value">115 €</span>
 </span>
@@ -204,7 +218,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Fire Colliers Flamme Summer 26 Or Or rose Collier Breslev Necklace Fire" data-couleurs="Summer 26|Or|Or rose|Collier Breslev Necklace Fire">
   <a class="card__link" href="products/collier-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/68FBBB16-1020-466C-A192-DC84E1DB804A.webp" srcset="/photos/800/68FBBB16-1020-466C-A192-DC84E1DB804A.webp 640w, /photos/1600/68FBBB16-1020-466C-A192-DC84E1DB804A.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/78F6338C-EA7F-4B95-B11E-98F17C97E540.webp"><img src="/photos/1600/68FBBB16-1020-466C-A192-DC84E1DB804A.webp" srcset="/photos/800/68FBBB16-1020-466C-A192-DC84E1DB804A.webp 640w, /photos/1600/68FBBB16-1020-466C-A192-DC84E1DB804A.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire" data-card-img></div>
     <h3 class="card__name">Collier Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -281,7 +295,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="19000" data-dispo="1" data-texte="Fire Splatch Colliers Flamme Pink gold Mirror Full white Full black" data-couleurs="Pink gold|Mirror|Full white|Full black">
   <a class="card__link" href="products/fire-splatch.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9886F0A6-9B72-4D29-A010-F697B91BD299.webp" srcset="/photos/800/9886F0A6-9B72-4D29-A010-F697B91BD299.webp 640w, /photos/1600/9886F0A6-9B72-4D29-A010-F697B91BD299.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire Splatch" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/89EC13D5-6B76-4E2B-8DCA-76F2889CAF63.webp"><img src="/photos/1600/9886F0A6-9B72-4D29-A010-F697B91BD299.webp" srcset="/photos/800/9886F0A6-9B72-4D29-A010-F697B91BD299.webp 640w, /photos/1600/9886F0A6-9B72-4D29-A010-F697B91BD299.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire Splatch" data-card-img></div>
     <h3 class="card__name">Fire Splatch</h3>
     <p class="card__price"><span class="price"><span class="price__value">190 €</span>
 </span>
@@ -358,7 +372,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Flame Duo Colliers Flamme Black silver Black silver 2 Black pink gold COLLAR Black pink gold" data-couleurs="Black silver|Black silver 2|Black pink gold|COLLAR Black pink gold">
   <a class="card__link" href="products/flame-duo.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp" srcset="/photos/800/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp 640w, /photos/1600/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Duo" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp" srcset="/photos/800/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp 640w, /photos/1600/4545FF32-5299-4C72-8529-2E4F43ADBFB5.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Duo" data-card-img></div>
     <h3 class="card__name">Flame Duo</h3>
     <p class="card__price"><span class="price"><span class="price__value">100 €</span>
 </span>
@@ -435,7 +449,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="11500" data-dispo="1" data-texte="Fire Diamant Colliers Flamme Or rose Argent Or" data-couleurs="Or rose|Argent|Or">
   <a class="card__link" href="products/fire-diamant.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp" srcset="/photos/800/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp 640w, /photos/1600/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire Diamant" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/81688104-620E-403A-9BDA-3EAE1E887EBF.webp"><img src="/photos/1600/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp" srcset="/photos/800/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp 640w, /photos/1600/029FE949-6E28-4F03-9ADB-04A2C45437C5.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire Diamant" data-card-img></div>
     <h3 class="card__name">Fire Diamant</h3>
     <p class="card__price"><span class="price"><span class="price__value">115 €</span>
 </span>
@@ -498,7 +512,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Double Fire Colliers Flamme Necklace Double Fire Collier Breslev Double Fire" data-couleurs="Necklace Double Fire|Collier Breslev Double Fire">
   <a class="card__link" href="products/collier-double-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp" srcset="/photos/800/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp 640w, /photos/1600/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Double Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/9DBDEE13-9174-440B-BC18-9F4A34753B9D.webp"><img src="/photos/1600/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp" srcset="/photos/800/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp 640w, /photos/1600/C4E688E4-BB1C-4561-8CB5-C2ADF075250B.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Double Fire" data-card-img></div>
     <h3 class="card__name">Collier Double Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -547,7 +561,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="11000" data-dispo="1" data-texte="Collier Fire Pearl Colliers Flamme Blue Black" data-couleurs="Blue|Black">
   <a class="card__link" href="products/collier-fire-pearl.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp" srcset="/photos/800/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp 640w, /photos/1600/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Pearl" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/16B72A6C-253B-44C5-A933-D7FC5CC1101E.webp"><img src="/photos/1600/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp" srcset="/photos/800/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp 640w, /photos/1600/2BAFB181-7FE8-41A4-B3F5-C72DB84CC756.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Pearl" data-card-img></div>
     <h3 class="card__name">Collier Fire Pearl</h3>
     <p class="card__price"><span class="price"><span class="price__value">110 €</span>
 </span>
@@ -596,7 +610,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Batman Fire Colliers Flamme">
   <a class="card__link" href="products/batman-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp" srcset="/photos/800/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp 640w, /photos/1600/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Batman Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp" srcset="/photos/800/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp 640w, /photos/1600/8BD69FD7-71F9-4FAD-B61B-7174731779EE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Batman Fire" data-card-img></div>
     <h3 class="card__name">Batman Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -617,7 +631,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Big flamme 2026 Colliers Flamme">
   <a class="card__link" href="products/plaque-flamme-2.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp" srcset="/photos/800/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp 640w, /photos/1600/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Big flamme 2026" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp" srcset="/photos/800/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp 640w, /photos/1600/CCB925C0-85B7-4D20-8F1F-703F4AD735A9.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Big flamme 2026" data-card-img></div>
     <h3 class="card__name">Big flamme 2026</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -638,7 +652,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Butterfly fire Colliers Flamme">
   <a class="card__link" href="products/butterfly-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/12C10F79-3171-4C66-AFC6-0391F86DD113.webp" srcset="/photos/800/12C10F79-3171-4C66-AFC6-0391F86DD113.webp 640w, /photos/1600/12C10F79-3171-4C66-AFC6-0391F86DD113.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Butterfly fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/12C10F79-3171-4C66-AFC6-0391F86DD113.webp" srcset="/photos/800/12C10F79-3171-4C66-AFC6-0391F86DD113.webp 640w, /photos/1600/12C10F79-3171-4C66-AFC6-0391F86DD113.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Butterfly fire" data-card-img></div>
     <h3 class="card__name">Butterfly fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -659,7 +673,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier 3D Fire Colliers Flamme">
   <a class="card__link" href="products/jewel-breslev-necklace-3d-fire-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4658097727_7nlm.webp" srcset="/photos/800/il_fullxfull.4658097727_7nlm.webp 640w, /photos/1600/il_fullxfull.4658097727_7nlm.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier 3D Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4658097727_7nlm.webp" srcset="/photos/800/il_fullxfull.4658097727_7nlm.webp 640w, /photos/1600/il_fullxfull.4658097727_7nlm.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier 3D Fire" data-card-img></div>
     <h3 class="card__name">Collier 3D Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -680,7 +694,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Aleph à Flamme Colliers Flamme">
   <a class="card__link" href="products/collier-aleph-a-logo-flamme-pour-les-prenoms-commencant-par-א-ilan-aharon-ethan-aurelie-ect.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/17784E54-2587-4258-B5A2-5FC284B1420A.webp" srcset="/photos/800/17784E54-2587-4258-B5A2-5FC284B1420A.webp 640w, /photos/1600/17784E54-2587-4258-B5A2-5FC284B1420A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Aleph à Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/17784E54-2587-4258-B5A2-5FC284B1420A.webp" srcset="/photos/800/17784E54-2587-4258-B5A2-5FC284B1420A.webp 640w, /photos/1600/17784E54-2587-4258-B5A2-5FC284B1420A.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Aleph à Flamme" data-card-img></div>
     <h3 class="card__name">Collier Aleph à Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -701,7 +715,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Chrome Fire 26 Colliers Flamme">
   <a class="card__link" href="products/necklace-chrome-fire-26.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp" srcset="/photos/800/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp 640w, /photos/1600/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Chrome Fire 26" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/00C116CC-3BE7-4271-9AEE-22785A41AC97.webp"><img src="/photos/1600/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp" srcset="/photos/800/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp 640w, /photos/1600/9669A63C-44B5-48F4-8D00-E6D458E6B41E.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Chrome Fire 26" data-card-img></div>
     <h3 class="card__name">Collier Chrome Fire 26</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -722,7 +736,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Fire Paint Colliers Flamme">
   <a class="card__link" href="products/necklace-fire-paint.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp" srcset="/photos/800/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp 640w, /photos/1600/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Paint" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/C5D83A4E-38FC-4503-8F0A-32BF7D56EB85.webp"><img src="/photos/1600/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp" srcset="/photos/800/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp 640w, /photos/1600/2E99124E-9F8F-4EF1-AF46-42E412D7EDE1.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Paint" data-card-img></div>
     <h3 class="card__name">Collier Fire Paint</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -743,7 +757,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Fire Street Art Colliers Flamme">
   <a class="card__link" href="products/necklace-fire-street-art.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/336ACDC1-D677-4C84-B247-D20266AF0005.webp" srcset="/photos/800/336ACDC1-D677-4C84-B247-D20266AF0005.webp 640w, /photos/1600/336ACDC1-D677-4C84-B247-D20266AF0005.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Street Art" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/03DABFEC-6B79-494A-913A-D98923B85716.webp"><img src="/photos/1600/336ACDC1-D677-4C84-B247-D20266AF0005.webp" srcset="/photos/800/336ACDC1-D677-4C84-B247-D20266AF0005.webp 640w, /photos/1600/336ACDC1-D677-4C84-B247-D20266AF0005.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire Street Art" data-card-img></div>
     <h3 class="card__name">Collier Fire Street Art</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -764,7 +778,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Fire splatch Colliers Flamme">
   <a class="card__link" href="products/necklace-kabbale.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/61AF3279-2710-4C1A-84CE-ECA945126E31.webp" srcset="/photos/800/61AF3279-2710-4C1A-84CE-ECA945126E31.webp 640w, /photos/1600/61AF3279-2710-4C1A-84CE-ECA945126E31.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire splatch" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/61AF3279-2710-4C1A-84CE-ECA945126E31.webp" srcset="/photos/800/61AF3279-2710-4C1A-84CE-ECA945126E31.webp 640w, /photos/1600/61AF3279-2710-4C1A-84CE-ECA945126E31.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Fire splatch" data-card-img></div>
     <h3 class="card__name">Collier Fire splatch</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -785,7 +799,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Flamme &#34;IMA&#34; Colliers Flamme">
   <a class="card__link" href="products/jewel-breslev-fire-mum-quot-ima-quot.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5358969442_pz2z.webp" srcset="/photos/800/il_fullxfull.5358969442_pz2z.webp 640w, /photos/1600/il_fullxfull.5358969442_pz2z.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Flamme &quot;IMA&quot;" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5358969442_pz2z.webp" srcset="/photos/800/il_fullxfull.5358969442_pz2z.webp 640w, /photos/1600/il_fullxfull.5358969442_pz2z.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Flamme &quot;IMA&quot;" data-card-img></div>
     <h3 class="card__name">Collier Flamme "IMA"</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -806,7 +820,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Flamme Éclair Colliers Flamme">
   <a class="card__link" href="products/collier-plaque-avec-la-flamme-eclair-esprit-metallica.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp" srcset="/photos/800/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp 640w, /photos/1600/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Flamme Éclair" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp" srcset="/photos/800/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp 640w, /photos/1600/B2487B4F-CF8B-4369-9878-2E08C5D7580C.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Flamme Éclair" data-card-img></div>
     <h3 class="card__name">Collier Flamme Éclair</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -827,7 +841,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mini Fire Colliers Flamme">
   <a class="card__link" href="products/collier-flamme-court.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp" srcset="/photos/800/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp 640w, /photos/1600/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mini Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp" srcset="/photos/800/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp 640w, /photos/1600/0F92F9A4-5FFE-4DD8-83A0-C7895A517AE4.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mini Fire" data-card-img></div>
     <h3 class="card__name">Collier Mini Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -848,7 +862,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Médaillon Flamme Colliers Flamme">
   <a class="card__link" href="products/collier-medaillon-na-nah-nahma-nahman-meouman-avec-logo-flamme-au-centre.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/96B44567-0556-4C03-A463-61FC4F5FFF35.webp" srcset="/photos/800/96B44567-0556-4C03-A463-61FC4F5FFF35.webp 640w, /photos/1600/96B44567-0556-4C03-A463-61FC4F5FFF35.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Médaillon Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/96B44567-0556-4C03-A463-61FC4F5FFF35.webp" srcset="/photos/800/96B44567-0556-4C03-A463-61FC4F5FFF35.webp 640w, /photos/1600/96B44567-0556-4C03-A463-61FC4F5FFF35.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Médaillon Flamme" data-card-img></div>
     <h3 class="card__name">Collier Médaillon Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -869,7 +883,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier SHIN Flame Colliers Flamme">
   <a class="card__link" href="products/necklace-shin-flame.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp" srcset="/photos/800/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp 640w, /photos/1600/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier SHIN Flame" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/4EE08EC3-BC7C-45B7-8D21-85C5B4685A2E.webp"><img src="/photos/1600/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp" srcset="/photos/800/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp 640w, /photos/1600/B123CEA2-FC63-41BF-917C-1534B8D2F2FE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier SHIN Flame" data-card-img></div>
     <h3 class="card__name">Collier SHIN Flame</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -890,7 +904,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Shin Flamme Colliers Flamme">
   <a class="card__link" href="products/collier-ש-a-logo-flamme-pour-les-prenoms-commencant-par-ש-samuel-sarah-sharon-shana-shira-ect.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4CA8355D-C760-4706-9035-0EA7A313C40F.webp" srcset="/photos/800/4CA8355D-C760-4706-9035-0EA7A313C40F.webp 640w, /photos/1600/4CA8355D-C760-4706-9035-0EA7A313C40F.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Shin Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/4CA8355D-C760-4706-9035-0EA7A313C40F.webp" srcset="/photos/800/4CA8355D-C760-4706-9035-0EA7A313C40F.webp 640w, /photos/1600/4CA8355D-C760-4706-9035-0EA7A313C40F.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Shin Flamme" data-card-img></div>
     <h3 class="card__name">Collier Shin Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -911,7 +925,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier fire 2.0 Colliers Flamme">
   <a class="card__link" href="products/necklace-fire-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp" srcset="/photos/800/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp 640w, /photos/1600/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp" srcset="/photos/800/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp 640w, /photos/1600/388C320A-973D-45C0-8DDE-ED4B37942AA6.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire 2.0" data-card-img></div>
     <h3 class="card__name">Collier fire 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -932,7 +946,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier fire flash Colliers Flamme">
   <a class="card__link" href="products/necklace-fire-flash.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp" srcset="/photos/800/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp 640w, /photos/1600/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire flash" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp" srcset="/photos/800/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp 640w, /photos/1600/D5EFE672-99FC-4AD7-8643-44BA45F3E311.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire flash" data-card-img></div>
     <h3 class="card__name">Collier fire flash</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -953,7 +967,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier fire metal Colliers Flamme" data-surplus>
   <a class="card__link" href="products/necklace-fire-metal.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp" srcset="/photos/800/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp 640w, /photos/1600/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire metal" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp" srcset="/photos/800/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp 640w, /photos/1600/D08F7FC6-4E37-4BD4-B3E3-15C62D77C074.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier fire metal" data-card-img></div>
     <h3 class="card__name">Collier fire metal</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -974,7 +988,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier flamme 2.0 Colliers Flamme" data-surplus>
   <a class="card__link" href="products/collier-flamme-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp" srcset="/photos/800/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp 640w, /photos/1600/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier flamme 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp" srcset="/photos/800/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp 640w, /photos/1600/3FC37E9B-EF19-47E1-A322-8603EBB7E909.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier flamme 2.0" data-card-img></div>
     <h3 class="card__name">Collier flamme 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -995,7 +1009,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="11500" data-dispo="1" data-texte="Collier flamme diam’ 2.0 Colliers Flamme" data-surplus>
   <a class="card__link" href="products/collier-flamme-diam-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp" srcset="/photos/800/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp 640w, /photos/1600/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier flamme diam’ 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/E127DB21-8E5E-4DED-99A9-2C8218F68C43.webp"><img src="/photos/1600/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp" srcset="/photos/800/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp 640w, /photos/1600/AE16E1A4-6647-4379-ABE1-8CDCBAC15CAD.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier flamme diam’ 2.0" data-card-img></div>
     <h3 class="card__name">Collier flamme diam’ 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">115 €</span>
 </span>
@@ -1016,7 +1030,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier ovni flamme Colliers Flamme" data-surplus>
   <a class="card__link" href="products/collier-ovni-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/03825C39-DBBE-467F-BFE1-6703F87B5419.webp" srcset="/photos/800/03825C39-DBBE-467F-BFE1-6703F87B5419.webp 640w, /photos/1600/03825C39-DBBE-467F-BFE1-6703F87B5419.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier ovni flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/03825C39-DBBE-467F-BFE1-6703F87B5419.webp" srcset="/photos/800/03825C39-DBBE-467F-BFE1-6703F87B5419.webp 640w, /photos/1600/03825C39-DBBE-467F-BFE1-6703F87B5419.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier ovni flamme" data-card-img></div>
     <h3 class="card__name">Collier ovni flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1037,7 +1051,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier pendentif trefle flamme Colliers Flamme" data-surplus>
   <a class="card__link" href="products/collier-pendentif-trefle-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/25CFE4C1-4384-431A-945B-2FCC6E745407.webp" srcset="/photos/800/25CFE4C1-4384-431A-945B-2FCC6E745407.webp 640w, /photos/1600/25CFE4C1-4384-431A-945B-2FCC6E745407.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier pendentif trefle flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/25CFE4C1-4384-431A-945B-2FCC6E745407.webp" srcset="/photos/800/25CFE4C1-4384-431A-945B-2FCC6E745407.webp 640w, /photos/1600/25CFE4C1-4384-431A-945B-2FCC6E745407.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier pendentif trefle flamme" data-card-img></div>
     <h3 class="card__name">Collier pendentif trefle flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1058,7 +1072,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Fire le fleur * Colliers Flamme" data-surplus>
   <a class="card__link" href="products/fire-le-fleur.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp" srcset="/photos/800/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp 640w, /photos/1600/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire le fleur *" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp" srcset="/photos/800/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp 640w, /photos/1600/A69FD752-E296-4853-9BA3-F9F4E9B28ECB.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fire le fleur *" data-card-img></div>
     <h3 class="card__name">Fire le fleur *</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1079,7 +1093,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Fish fire Colliers Flamme" data-surplus>
   <a class="card__link" href="products/fish-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AF8E8222-D08C-4347-AA82-7050B97916A1.webp" srcset="/photos/800/AF8E8222-D08C-4347-AA82-7050B97916A1.webp 640w, /photos/1600/AF8E8222-D08C-4347-AA82-7050B97916A1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fish fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AF8E8222-D08C-4347-AA82-7050B97916A1.webp" srcset="/photos/800/AF8E8222-D08C-4347-AA82-7050B97916A1.webp 640w, /photos/1600/AF8E8222-D08C-4347-AA82-7050B97916A1.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Fish fire" data-card-img></div>
     <h3 class="card__name">Fish fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1100,7 +1114,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flame Diamond Big Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flame-diamond-big.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp" srcset="/photos/800/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp 640w, /photos/1600/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Big" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/05F83F9D-27D8-492D-B109-C07B494C77DC.webp"><img src="/photos/1600/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp" srcset="/photos/800/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp 640w, /photos/1600/9B98D9F4-AEBD-4C34-BFD2-9BA147EDBBA7.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Big" data-card-img></div>
     <h3 class="card__name">Flame Diamond Big</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1121,7 +1135,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flame Diamond Iconique Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flame-diamond-iconique.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp" srcset="/photos/800/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp 640w, /photos/1600/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Iconique" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/B4C25192-BF7B-4688-A7F2-51A2636A9BCA.webp"><img src="/photos/1600/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp" srcset="/photos/800/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp 640w, /photos/1600/B540199B-89A2-4F7A-B9C2-E594B50B4A1B.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Iconique" data-card-img></div>
     <h3 class="card__name">Flame Diamond Iconique</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1142,7 +1156,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flame Diamond Point Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flame-diamond-point.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp" srcset="/photos/800/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp 640w, /photos/1600/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Point" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/9D16A6A5-71CF-49FC-8403-4A5FF98C37FD.webp"><img src="/photos/1600/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp" srcset="/photos/800/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp 640w, /photos/1600/75F957F1-DEAD-4F07-BA69-81A9EEE8C475.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Diamond Point" data-card-img></div>
     <h3 class="card__name">Flame Diamond Point</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1163,7 +1177,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flame Double Diamond Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flame-double-diamond.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp" srcset="/photos/800/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp 640w, /photos/1600/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Double Diamond" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/A0EC9AE9-FBB6-43C4-BC2C-988C702F897C.webp"><img src="/photos/1600/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp" srcset="/photos/800/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp 640w, /photos/1600/2D7F6005-48DB-4DA8-98F9-527FF1B7BD1A.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flame Double Diamond" data-card-img></div>
     <h3 class="card__name">Flame Double Diamond</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1184,7 +1198,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flamme 2026 Colliers Flamme" data-surplus>
   <a class="card__link" href="products/plaque-flamme-1.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/74303C03-438F-40DA-8CE0-C8A4721603E1.webp" srcset="/photos/800/74303C03-438F-40DA-8CE0-C8A4721603E1.webp 640w, /photos/1600/74303C03-438F-40DA-8CE0-C8A4721603E1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme 2026" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/74303C03-438F-40DA-8CE0-C8A4721603E1.webp" srcset="/photos/800/74303C03-438F-40DA-8CE0-C8A4721603E1.webp 640w, /photos/1600/74303C03-438F-40DA-8CE0-C8A4721603E1.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme 2026" data-card-img></div>
     <h3 class="card__name">Flamme 2026</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1205,7 +1219,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flamme IA Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flamme-ia.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp" srcset="/photos/800/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp 640w, /photos/1600/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme IA" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp" srcset="/photos/800/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp 640w, /photos/1600/8503D9A5-EDC9-4DA7-B483-B8ABD833BE55.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme IA" data-card-img></div>
     <h3 class="card__name">Flamme IA</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1226,7 +1240,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flamme Na Nah’ 2026 Colliers Flamme" data-surplus>
   <a class="card__link" href="products/plaque-flamme-3.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp" srcset="/photos/800/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp 640w, /photos/1600/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme Na Nah’ 2026" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp" srcset="/photos/800/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp 640w, /photos/1600/E7426B28-C4FD-43BC-8DED-6ED67A251FDB.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme Na Nah’ 2026" data-card-img></div>
     <h3 class="card__name">Flamme Na Nah’ 2026</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -1247,7 +1261,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="14000" data-dispo="1" data-texte="Flamme décorative Breslev Gang Colliers Flamme" data-surplus>
   <a class="card__link" href="products/flamme-decorative-breslev-gang.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp" srcset="/photos/800/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp 640w, /photos/1600/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme décorative Breslev Gang" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp" srcset="/photos/800/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp 640w, /photos/1600/2ADA4D38-3CB9-43F7-BA57-220BC8E881C3.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme décorative Breslev Gang" data-card-img></div>
     <h3 class="card__name">Flamme décorative Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">140 €</span>
 </span>
@@ -1268,7 +1282,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="flamme" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Flamme multi 2026 Colliers Flamme" data-surplus>
   <a class="card__link" href="products/plaque-flamme-4.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp" srcset="/photos/800/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp 640w, /photos/1600/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme multi 2026" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp" srcset="/photos/800/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp 640w, /photos/1600/3BCEEF59-9F1B-4304-9C50-84D03154BB65.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Flamme multi 2026" data-card-img></div>
     <h3 class="card__name">Flamme multi 2026</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>

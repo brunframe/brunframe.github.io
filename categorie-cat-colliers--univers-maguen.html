@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -141,7 +155,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="11500" data-dispo="1" data-texte="Maguen David Diamant Colliers Maguen Or Argent Or rose" data-couleurs="Or|Argent|Or rose">
   <a class="card__link" href="products/maguen-david-diamant.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp" srcset="/photos/800/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp 640w, /photos/1600/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen David Diamant" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/49FCC5ED-3129-4DA6-A076-51107D5571C0.webp"><img src="/photos/1600/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp" srcset="/photos/800/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp 640w, /photos/1600/0F21EC07-2878-4C0A-A778-DDB13639B19B.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen David Diamant" data-card-img></div>
     <h3 class="card__name">Maguen David Diamant</h3>
     <p class="card__price"><span class="price"><span class="price__value">115 €</span>
 </span>
@@ -204,7 +218,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Colliers Maguen Gold silver Silver gold" data-couleurs="Gold silver|Silver gold">
   <a class="card__link" href="products/collier-maguen.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp" srcset="/photos/800/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp 640w, /photos/1600/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/7D98F03E-7C67-4E91-B7F3-215F06DD8AE9.webp"><img src="/photos/1600/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp" srcset="/photos/800/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp 640w, /photos/1600/2BBB7342-A485-4C89-A5EC-5CF2E0C5EFD4.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen" data-card-img></div>
     <h3 class="card__name">Collier Maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -253,7 +267,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Double triangle Maguen Colliers Maguen Or Argent" data-couleurs="Or|Argent">
   <a class="card__link" href="products/double-triangle-maguen.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp" srcset="/photos/800/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp 640w, /photos/1600/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Double triangle Maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/96E404B9-CBEC-49C2-939A-5398A4701E14.webp"><img src="/photos/1600/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp" srcset="/photos/800/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp 640w, /photos/1600/5A8359CB-F8FE-42F4-8CD1-65189E817BF7.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Double triangle Maguen" data-card-img></div>
     <h3 class="card__name">Double triangle Maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -302,7 +316,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Hay Maguen Berbère Colliers Maguen">
   <a class="card__link" href="products/necklace-hay-maguen-berbere.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp" srcset="/photos/800/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp 640w, /photos/1600/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay Maguen Berbère" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/9D8D50CF-A01B-4634-B294-9AA46E350E93.webp"><img src="/photos/1600/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp" srcset="/photos/800/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp 640w, /photos/1600/3953A584-6ADD-49E3-BA25-4753F5BE4AD9.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Hay Maguen Berbère" data-card-img></div>
     <h3 class="card__name">Collier Hay Maguen Berbère</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -323,7 +337,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Anarchy Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-anarchy.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp" srcset="/photos/800/2943460A-4881-4423-8658-BF1E318D8578.webp 640w, /photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Anarchy" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp" srcset="/photos/800/2943460A-4881-4423-8658-BF1E318D8578.webp 640w, /photos/1600/2943460A-4881-4423-8658-BF1E318D8578.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Anarchy" data-card-img></div>
     <h3 class="card__name">Collier Maguen Anarchy</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -344,7 +358,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Arrow Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-arrow.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp" srcset="/photos/800/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 640w, /photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Arrow" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/60906730-50E2-48F0-ADB3-FDE1A3451618.webp"><img src="/photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp" srcset="/photos/800/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 640w, /photos/1600/1ACCFDFB-CD7D-4BB4-9C8C-1F4259694658.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Arrow" data-card-img></div>
     <h3 class="card__name">Collier Maguen Arrow</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -365,7 +379,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Chrome Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-chrome.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp" srcset="/photos/800/DB59218B-8673-4295-8AC6-640844F363FB.webp 640w, /photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Chrome" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/4590719B-128E-4A60-A3EB-5F3C26D07B4F.webp"><img src="/photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp" srcset="/photos/800/DB59218B-8673-4295-8AC6-640844F363FB.webp 640w, /photos/1600/DB59218B-8673-4295-8AC6-640844F363FB.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Chrome" data-card-img></div>
     <h3 class="card__name">Collier Maguen Chrome</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -386,7 +400,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen David Flame Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-david-flame.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp" srcset="/photos/800/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 640w, /photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flame" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp" srcset="/photos/800/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 640w, /photos/1600/3882A2DB-3D97-4F1E-BA7C-E2CB56151B7C.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flame" data-card-img></div>
     <h3 class="card__name">Collier Maguen David Flame</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -407,7 +421,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen David Flash Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-david-flash.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp" srcset="/photos/800/3E373E5A-822C-4646-B147-3684237BAD3D.webp 640w, /photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flash" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp" srcset="/photos/800/3E373E5A-822C-4646-B147-3684237BAD3D.webp 640w, /photos/1600/3E373E5A-822C-4646-B147-3684237BAD3D.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Flash" data-card-img></div>
     <h3 class="card__name">Collier Maguen David Flash</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -428,7 +442,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen David Rick Colliers Maguen">
   <a class="card__link" href="products/collier-etoile-maguen-david-esprit-rick.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp" srcset="/photos/800/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 640w, /photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Rick" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp" srcset="/photos/800/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 640w, /photos/1600/3EB0C708-DA39-45C0-8AA5-11E592207A1A.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen David Rick" data-card-img></div>
     <h3 class="card__name">Collier Maguen David Rick</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -449,7 +463,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="14000" data-dispo="1" data-texte="Collier Maguen Deluxe Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-deluxe.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp" srcset="/photos/800/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 640w, /photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Deluxe" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/58543B18-7B25-46AB-A29F-1089CA07EC2D.webp"><img src="/photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp" srcset="/photos/800/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 640w, /photos/1600/73192B23-F66B-434D-B959-2EE708C5EFBE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Deluxe" data-card-img></div>
     <h3 class="card__name">Collier Maguen Deluxe</h3>
     <p class="card__price"><span class="price"><span class="price__value">140 €</span>
 </span>
@@ -470,7 +484,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen H’ay 2026 Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-h-ay-2026.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp" srcset="/photos/800/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 640w, /photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen H’ay 2026" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/44EBD21A-13A0-4BC9-848A-86E82F1B1F3E.webp"><img src="/photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp" srcset="/photos/800/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 640w, /photos/1600/60D17140-E531-4CDB-9E21-04125EF4CEB4.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen H’ay 2026" data-card-img></div>
     <h3 class="card__name">Collier Maguen H’ay 2026</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -491,7 +505,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Infinity Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-infinity.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp" srcset="/photos/800/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 640w, /photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Infinity" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/F623E714-A400-4F85-98E8-12D3943762D2.webp"><img src="/photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp" srcset="/photos/800/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 640w, /photos/1600/F6C61178-E0DF-45A8-A5BE-A43A9678D151.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Infinity" data-card-img></div>
     <h3 class="card__name">Collier Maguen Infinity</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -512,7 +526,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen Kotel Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-kotel.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp" srcset="/photos/800/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 640w, /photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Kotel" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/446501BC-0A5B-45FD-869C-98B739388F9A.webp"><img src="/photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp" srcset="/photos/800/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 640w, /photos/1600/8B256EC9-05D9-413B-B5B5-7B7B5F05D817.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen Kotel" data-card-img></div>
     <h3 class="card__name">Collier Maguen Kotel</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -533,7 +547,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Maguen love punk Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-love-punk.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp" srcset="/photos/800/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 640w, /photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen love punk" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp" srcset="/photos/800/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 640w, /photos/1600/AFBDC8C9-F29F-4F52-A6F0-3C74A477064D.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Maguen love punk" data-card-img></div>
     <h3 class="card__name">Collier Maguen love punk</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -554,7 +568,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Mezouza Maguen Colliers Maguen">
   <a class="card__link" href="products/jewel-breslev-necklace-mezouza-maguen-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4607264400_dpjg.webp" srcset="/photos/800/il_fullxfull.4607264400_dpjg.webp 640w, /photos/1600/il_fullxfull.4607264400_dpjg.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mezouza Maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4607264400_dpjg.webp" srcset="/photos/800/il_fullxfull.4607264400_dpjg.webp 640w, /photos/1600/il_fullxfull.4607264400_dpjg.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Mezouza Maguen" data-card-img></div>
     <h3 class="card__name">Collier Mezouza Maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -575,7 +589,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Star Maguen Colliers Maguen">
   <a class="card__link" href="products/jewel-breslev-necklace-star-bg-jewish.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4609852896_camx.webp" srcset="/photos/800/il_fullxfull.4609852896_camx.webp 640w, /photos/1600/il_fullxfull.4609852896_camx.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Star Maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.4609852896_camx.webp" srcset="/photos/800/il_fullxfull.4609852896_camx.webp 640w, /photos/1600/il_fullxfull.4609852896_camx.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Star Maguen" data-card-img></div>
     <h3 class="card__name">Collier Star Maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -596,7 +610,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier Star Subliminal Colliers Maguen">
   <a class="card__link" href="products/jewel-breslev-star-brok.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5407169871_7rks.webp" srcset="/photos/800/il_fullxfull.5407169871_7rks.webp 640w, /photos/1600/il_fullxfull.5407169871_7rks.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Star Subliminal" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/il_fullxfull.5407169871_7rks.webp" srcset="/photos/800/il_fullxfull.5407169871_7rks.webp 640w, /photos/1600/il_fullxfull.5407169871_7rks.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier Star Subliminal" data-card-img></div>
     <h3 class="card__name">Collier Star Subliminal</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -617,7 +631,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier double love maguen Colliers Maguen">
   <a class="card__link" href="products/necklace-double-love-maguen.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp" srcset="/photos/800/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp 640w, /photos/1600/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier double love maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp" srcset="/photos/800/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp 640w, /photos/1600/CBE671A0-8674-46C5-8B6D-20423BE1F605.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier double love maguen" data-card-img></div>
     <h3 class="card__name">Collier double love maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -638,7 +652,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier double maguen 2.0 Colliers Maguen">
   <a class="card__link" href="products/necklace-double-maguen-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp" srcset="/photos/800/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp 640w, /photos/1600/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier double maguen 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/D70B0FB0-1DFE-42C9-A39C-72A2AF947769.webp"><img src="/photos/1600/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp" srcset="/photos/800/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp 640w, /photos/1600/DBC8E4D9-E6B0-4FF2-8BC9-9AC99856BBBC.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier double maguen 2.0" data-card-img></div>
     <h3 class="card__name">Collier double maguen 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -659,7 +673,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier maguen David Rick mini Colliers Maguen">
   <a class="card__link" href="products/collier-maguen-david-rick-mini.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/40736303-D3B7-472E-9486-93B6C9E5B95F.webp" srcset="/photos/800/40736303-D3B7-472E-9486-93B6C9E5B95F.webp 640w, /photos/1600/40736303-D3B7-472E-9486-93B6C9E5B95F.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen David Rick mini" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/40736303-D3B7-472E-9486-93B6C9E5B95F.webp" srcset="/photos/800/40736303-D3B7-472E-9486-93B6C9E5B95F.webp 640w, /photos/1600/40736303-D3B7-472E-9486-93B6C9E5B95F.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen David Rick mini" data-card-img></div>
     <h3 class="card__name">Collier maguen David Rick mini</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -680,7 +694,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier maguen drawing Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-drawing.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp" srcset="/photos/800/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp 640w, /photos/1600/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen drawing" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp" srcset="/photos/800/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp 640w, /photos/1600/5F6390F3-DF37-4E24-B065-0B8503CAB728.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen drawing" data-card-img></div>
     <h3 class="card__name">Collier maguen drawing</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -701,7 +715,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier maguen love Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-love.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp" srcset="/photos/800/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp 640w, /photos/1600/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen love" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp" srcset="/photos/800/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp 640w, /photos/1600/133AE119-62D2-4BFC-99C4-8EC896E7C57F.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen love" data-card-img></div>
     <h3 class="card__name">Collier maguen love</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -722,7 +736,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier maguen rounded Colliers Maguen">
   <a class="card__link" href="products/necklace-maguen-rounded.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/72333762-CD3E-470C-B2BF-F631046BB3A7.webp" srcset="/photos/800/72333762-CD3E-470C-B2BF-F631046BB3A7.webp 640w, /photos/1600/72333762-CD3E-470C-B2BF-F631046BB3A7.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen rounded" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/72333762-CD3E-470C-B2BF-F631046BB3A7.webp" srcset="/photos/800/72333762-CD3E-470C-B2BF-F631046BB3A7.webp 640w, /photos/1600/72333762-CD3E-470C-B2BF-F631046BB3A7.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier maguen rounded" data-card-img></div>
     <h3 class="card__name">Collier maguen rounded</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -743,7 +757,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="18000" data-dispo="1" data-texte="Collier triple maguen Colliers Maguen" data-surplus>
   <a class="card__link" href="products/collier-triple-maguen.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/IMG-4661.webp" srcset="/photos/800/IMG-4661.webp 640w, /photos/1600/IMG-4661.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier triple maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/IMG-4660.webp"><img src="/photos/1600/IMG-4661.webp" srcset="/photos/800/IMG-4661.webp 640w, /photos/1600/IMG-4661.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier triple maguen" data-card-img></div>
     <h3 class="card__name">Collier triple maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">180 €</span>
 </span>
@@ -764,7 +778,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Collier vintage maguen SL Colliers Maguen" data-surplus>
   <a class="card__link" href="products/necklace-vintage-maguen-sl.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp" srcset="/photos/800/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp 640w, /photos/1600/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier vintage maguen SL" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp" srcset="/photos/800/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp 640w, /photos/1600/110091E3-6AFD-45C0-AACD-383C8A1B9575.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Collier vintage maguen SL" data-card-img></div>
     <h3 class="card__name">Collier vintage maguen SL</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -785,7 +799,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Maguen 2.0 Colliers Maguen" data-surplus>
   <a class="card__link" href="products/maguen-2-0.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp" srcset="/photos/800/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp 640w, /photos/1600/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen 2.0" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp" srcset="/photos/800/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp 640w, /photos/1600/9DB44DEC-BD43-41EF-B376-3AFC9F131A39.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen 2.0" data-card-img></div>
     <h3 class="card__name">Maguen 2.0</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -806,7 +820,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Maguen fire Colliers Maguen" data-surplus>
   <a class="card__link" href="products/maguen-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp" srcset="/photos/800/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp 640w, /photos/1600/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp" srcset="/photos/800/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp 640w, /photos/1600/DF3203A7-835D-42C3-9FF5-AB088A44CEF4.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Maguen fire" data-card-img></div>
     <h3 class="card__name">Maguen fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -827,7 +841,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="colliers" data-univers="maguen" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Shield Hay Colliers Maguen" data-surplus>
   <a class="card__link" href="products/shield-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/65984638-1A41-4CB8-8885-FB9499BC5133.webp" srcset="/photos/800/65984638-1A41-4CB8-8885-FB9499BC5133.webp 640w, /photos/1600/65984638-1A41-4CB8-8885-FB9499BC5133.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Shield Hay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/65984638-1A41-4CB8-8885-FB9499BC5133.webp" srcset="/photos/800/65984638-1A41-4CB8-8885-FB9499BC5133.webp 640w, /photos/1600/65984638-1A41-4CB8-8885-FB9499BC5133.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Shield Hay" data-card-img></div>
     <h3 class="card__name">Shield Hay</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>

@@ -19,6 +19,7 @@
     const on = locks.size > 0;
     document.documentElement.style.overflow = on ? 'hidden' : '';
     if (!on) document.body.style.overflow = '';
+    if (window.BG && window.BG.lenis) { if (on) window.BG.lenis.stop(); else window.BG.lenis.start(); }
   };
   const scrollLock = {
     acquire(name) { locks.add(name || 'anon'); applyLock(); },
@@ -37,7 +38,10 @@
   /* ---------- Défilement lissé : seulement si une bibliothèque est chargée, jamais au doigt ---------- */
   function initSmoothScroll() {
     if (!smoothScroll || typeof window.Lenis !== 'function' || window.BG.lenis) return;
-    try { window.BG.lenis = new window.Lenis({ autoRaf: true }); } catch (e) { window.BG.lenis = null; }
+    // les volets (panier, menu, nuancier) gardent leur propre défilement
+    const prevent = (n) => !!(n && n.closest && n.closest('.drawer, .menu, dialog, [data-lenis-prevent]'));
+    try { window.BG.lenis = new window.Lenis({ autoRaf: true, lerp: 0.085, prevent }); } catch (e) { window.BG.lenis = null; }
+    if (window.BG.lenis) document.dispatchEvent(new CustomEvent('bg:lenis'));
   }
 
   /* ---------- Apparitions (fondu) ---------- */
@@ -244,7 +248,7 @@
   }
 
   window.BG = Object.assign(window.BG || {}, {
-    reveal, roll, formatMoney, scrollLock, touch, reducedMotion, smoothScroll, sansEmoji,
+    reveal, roll, formatMoney, scrollLock, touch, reducedMotion, smoothScroll, sansEmoji, lisser: initSmoothScroll,
     get cart() { return window.BGCart || null; }
   });
 

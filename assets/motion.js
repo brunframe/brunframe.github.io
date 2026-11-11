@@ -1,22 +1,37 @@
-/* Breslev Gang — le mouvement du site (11 novembre 2026), sans bibliothèque. Styles : assets/motion.css.
-   La classe html.anim est posée dans <head> (layout/theme.liquid) sauf si l'appareil demande moins d'animations.
-   Ici : titres découpés mot à mot, photos dévoilées au défilement, effets liés au défilement (héros, pièces
-   maîtresses, filet de progression) et photo partagée entre la carte et la fiche. */
+/* Breslev Gang — le mouvement du site. Direction : qa/refonte-luxe/DIRECTION.md. Styles : assets/motion.css.
+   Bibliothèques locales : gsap.min.js, ScrollTrigger.min.js, CustomEase.min.js, lenis.min.js (Lenis est créé par theme.js,
+   à la souris seulement). html.anim est posé dans <head> sauf si l'appareil demande moins d'animations.
+   Héros (zoom très lent, titre ligne par ligne), titres mot à mot, sections et photos qui apparaissent au défilement
+   (ScrollTrigger), histoire épinglée une étape à la fois, pièces maîtresses, deuxième photo au survol des cartes,
+   photo partagée entre la carte et la fiche. Si une bibliothèque manque, la page reste entière et fixe. */
 (() => {
   'use strict';
 
   const html = document.documentElement;
-  if (!html.classList.contains('anim') || !('IntersectionObserver' in window)) return;
+  const gsap = window.gsap;
+  const ST = window.ScrollTrigger;
+  if (!html.classList.contains('anim') || !gsap || !ST) return;
+  gsap.registerPlugin(ST);
+  let courbe = 'power4.out';
+  if (window.CustomEase) {
+    gsap.registerPlugin(window.CustomEase);
+    courbe = window.CustomEase.create('maison', '0.22, 1, 0.36, 1');
+  }
+  gsap.defaults({ ease: courbe, duration: 1 });
+  ST.config({ ignoreMobileResize: true });
   html.classList.add('anim-js');
-  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  /* ---------- Titres : chaque mot monte derrière son cache ---------- */
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const souris = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const entete = () => parseFloat(getComputedStyle(html).getPropertyValue('--header-h')) || 60;
+
+  /* ---------- Découpe d'un titre en mots (la phrase du héros est découpée en lignes par Liquid) ---------- */
   function mots(el) {
-    if (el.classList.contains('mots')) return;
     const marche = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     const textes = [];
+    const sortie = [];
     while (marche.nextNode()) textes.push(marche.currentNode);
-    let i = 0;
     textes.forEach((n) => {
       if (!n.nodeValue.trim()) return;
       const f = document.createDocumentFragment();
@@ -27,63 +42,140 @@
         const mot = document.createElement('span');
         cache.className = 'mot';
         mot.textContent = m;
-        mot.style.setProperty('--i', i);
-        i += 1;
         cache.appendChild(mot);
         f.appendChild(cache);
+        sortie.push(mot);
       });
       n.parentNode.replaceChild(f, n);
     });
     el.classList.add('mots');
+    return sortie;
   }
 
-  const vu = new IntersectionObserver((entrees) => {
-    entrees.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('vu');
-      vu.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -8% 0px' });
+  /* ---------- Héros : l'entrée et le zoom lent sont en CSS (motion.css) ; ici, l'effacement au défilement ---------- */
+  function heros() {
+    const hero = $('[data-hero]');
+    const dessus = hero && $('.hero__overlay', hero);
+    if (dessus) gsap.to(dessus, { yPercent: -8, autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+  }
 
-  function preparer(racine = document) {
-    $$('h1.display, h2.display, .catalogue__subtitle, .maitresse__nom', racine).forEach((el) => {
-      if (el.classList.contains('mots') || el.closest('.hero, [data-header], .card, dialog, [data-no-anim]')) return;
-      mots(el);
-      vu.observe(el);
+  /* ---------- Histoire : la scène reste épinglée, une étape à la fois ---------- */
+  function histoire() {
+    const section = $('.histoire');
+    const piste = section && $('[data-histoire-piste]', section);
+    const scene = piste && $('.histoire__steps', piste);
+    const etapes = scene ? $$('.histoire__step', scene) : [];
+    if (etapes.length < 2 || window.innerHeight < 600) return;
+    section.classList.add('histoire--epingle');
+    piste.style.setProperty('--etapes', etapes.length);
+    // chaque étape doit tenir dans la scène ; sinon la lecture reste en continu
+    if (etapes.some((li) => li.scrollHeight > scene.clientHeight + 4)) { section.classList.remove('histoire--epingle'); return; }
+    let actif = -1;
+    const activer = (k) => {
+      if (k === actif) return;
+      actif = k;
+      etapes.forEach((li, i) => li.classList.toggle('est-actif', i === k));
+    };
+    activer(0);
+    ST.create({
+      trigger: piste,
+      start: () => 'top top+=' + entete(),
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        activer(Math.min(etapes.length - 1, Math.floor(self.progress * etapes.length)));
+        scene.style.setProperty('--avance', self.progress.toFixed(3));
+      },
     });
-    $$('[data-maitresse]', racine).forEach((el) => vu.observe(el));
+  }
+
+  /* ---------- Titres mot à mot, sections et photos qui apparaissent au défilement ---------- */
+  function apparitions(racine = document) {
     const bas = window.innerHeight;
+    $$('h1.display, h2.display, .catalogue__subtitle, .maitresse__nom, .histoire__title', racine).forEach((el) => {
+      if (el.dataset.vu || el.closest('.hero, [data-header], .card, dialog, [data-no-anim], .histoire--epingle')) return;
+      el.dataset.vu = '1';
+      const m = mots(el);
+      gsap.set(m, { yPercent: 118 });
+      ST.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => gsap.to(m, { yPercent: 0, duration: 1.1, stagger: 0.06 }) });
+    });
+    $$('[data-reveal]:not(.card)', racine).forEach((el) => {
+      if (el.dataset.vu || el.closest('.histoire--epingle, dialog')) return;
+      el.dataset.vu = '1';
+      if (el.getBoundingClientRect().top < bas) return;          // ce qui est visible à l'ouverture n'est jamais caché
+      // opacity et non visibility : un lien pas encore apparu reste atteignable au clavier et par un lecteur d'écran
+      gsap.set(el, { opacity: 0, y: 40 });
+      ST.create({ trigger: el, start: 'top 90%', once: true, onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 1.1 }) });
+    });
     $$('main figure, main .media', racine).forEach((el) => {
-      if (el.classList.contains('voile') || el.closest('.card, .hero, .maitresse, [data-product-media], dialog, [data-no-anim]')) return;
-      if (el.getBoundingClientRect().top < bas) return;       // ce qui est visible à l'ouverture n'est jamais caché
-      el.classList.add('voile');
-      vu.observe(el);
+      if (el.dataset.vu || el.closest('.card, .hero, .maitresse, [data-product-media], dialog, [data-no-anim], .histoire--epingle')) return;
+      el.dataset.vu = '1';
+      if (el.getBoundingClientRect().top < bas) return;
+      const img = $('img, video', el);
+      gsap.set(el, { clipPath: 'inset(100% 0% 0% 0%)' });
+      if (img) gsap.set(img, { scale: 1.16 });
+      ST.create({
+        trigger: el, start: 'top 92%', once: true,
+        onEnter: () => {
+          gsap.to(el, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2 });
+          if (img) gsap.to(img, { scale: 1, duration: 1.5 });
+        },
+      });
     });
   }
 
-  /* ---------- Effets liés au défilement (une mesure par image, transform et opacity seulement) ---------- */
-  const hero = document.querySelector('[data-hero]');
+  /* ---------- Pièces maîtresses : la photo recule pendant que la suivante la recouvre.
+     Les écrans sont en position: sticky : on mesure à chaque image, sans position mise en cache. ---------- */
   const panneaux = $$('[data-maitresse]');
-  const filet = document.createElement('div');
-  filet.className = 'progression';
-  filet.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(filet);
-  let attente = false;
-  function mesurer() {
-    attente = false;
-    const y = window.scrollY;
-    const h = window.innerHeight;
-    const max = html.scrollHeight - h;
-    filet.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max).toFixed(4) : 0) + ')';
-    if (hero) hero.style.setProperty('--hero-p', Math.min(1, Math.max(0, y / (hero.offsetHeight || h))).toFixed(3));
-    panneaux.forEach((el, k) => {
-      const suivant = panneaux[k + 1];
-      const c = suivant ? Math.min(1, Math.max(0, 1 - (suivant.getBoundingClientRect().top - el.getBoundingClientRect().top) / el.offsetHeight)) : 0;
-      el.style.setProperty('--couvert', c.toFixed(3));
+  function maitresses() {
+    if (!panneaux.length) return;
+    const voir = new IntersectionObserver((entrees) => entrees.forEach((e) => {
+      if (!e.isIntersecting) return;
+      voir.unobserve(e.target);
+      gsap.to($$('.maitresse__num, .maitresse__prix, .maitresse__cta', e.target), { opacity: 1, y: 0, duration: 1, stagger: 0.08, delay: 0.3 });
+    }), { threshold: 0.35 });
+    panneaux.forEach((el) => {
+      gsap.set($$('.maitresse__num, .maitresse__prix, .maitresse__cta', el), { opacity: 0, y: 14 });
+      voir.observe(el);
+    });
+    let attente = false;
+    const mesurer = () => {
+      attente = false;
+      panneaux.forEach((el, k) => {
+        const img = $('.maitresse__img', el);
+        const suivant = panneaux[k + 1];
+        if (!img) return;
+        const c = suivant ? Math.min(1, Math.max(0, 1 - (suivant.getBoundingClientRect().top - el.getBoundingClientRect().top) / el.offsetHeight)) : 0;
+        img.style.transform = 'scale(' + (1.08 - c * 0.08).toFixed(4) + ')';
+        img.style.opacity = (1 - c * 0.5).toFixed(3);
+      });
+    };
+    window.addEventListener('scroll', () => { if (!attente) { attente = true; requestAnimationFrame(mesurer); } }, { passive: true });
+    window.addEventListener('resize', mesurer);
+    mesurer();
+  }
+
+  /* ---------- Cartes : au survol (souris seulement), fondu vers la deuxième photo, chargée à ce moment-là ---------- */
+  function survol() {
+    if (!souris) return;
+    document.addEventListener('pointerover', (e) => {
+      const carte = e.target.closest ? e.target.closest('.card') : null;
+      const media = carte && $('.card__media[data-survol]', carte);
+      if (!media || media.dataset.charge) return;
+      media.dataset.charge = '1';
+      const base = $('img', media);
+      const img = new Image();
+      img.className = 'card__img2';
+      img.alt = '';
+      img.decoding = 'async';
+      img.addEventListener('load', () => {
+        media.appendChild(img);
+        requestAnimationFrame(() => img.classList.add('est-pret'));
+      });
+      img.src = media.dataset.survol;
+      // une pastille change la photo principale : la deuxième photo ne lui correspond plus
+      if (base) new MutationObserver(() => img.remove()).observe(base, { attributes: true, attributeFilter: ['src', 'srcset'] });
     });
   }
-  window.addEventListener('scroll', () => { if (!attente) { attente = true; requestAnimationFrame(mesurer); } }, { passive: true });
-  window.addEventListener('resize', mesurer);
 
   /* ---------- De la carte à la fiche : la photo cliquée devient la photo de la fiche ---------- */
   const effacer = () => $$('[data-vt]').forEach((x) => { x.style.viewTransitionName = ''; x.removeAttribute('data-vt'); });
@@ -98,15 +190,23 @@
   window.addEventListener('pageshow', (e) => { if (e.persisted) effacer(); });
 
   function pret() {
-    preparer();
-    mesurer();
-    // filet de sécurité : rien ne reste caché si l'observateur n'a pas répondu
-    setTimeout(() => $$('.mots:not(.vu), .voile:not(.vu)').forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('vu');
-    }), 3500);
+    heros();
+    histoire();
+    apparitions();
+    maitresses();
+    survol();
+    const filet = document.createElement('div');
+    filet.className = 'progression';
+    filet.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(filet);
+    gsap.to(filet, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
+    const lier = () => { if (window.BG && window.BG.lenis) window.BG.lenis.on('scroll', ST.update); };
+    lier();
+    document.addEventListener('bg:lenis', lier);          // Lenis arrive après coup, à la souris seulement
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ST.refresh());
+    window.addEventListener('load', () => ST.refresh());
   }
-  window.BG = Object.assign(window.BG || {}, { mouvement: preparer });
+  window.BG = Object.assign(window.BG || {}, { mouvement: (racine) => { apparitions(racine); ST.refresh(); } });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', pret);
   else pret();
 })();

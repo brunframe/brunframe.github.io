@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -140,7 +154,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="1" data-texte="Bracelet Eye Fire Bracelets  Bracelet Eye Fire Red Black Blue" data-couleurs="Bracelet Eye Fire|Red|Black|Blue">
   <a class="card__link" href="products/bracelet-eye-fire-collection.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp" srcset="/photos/800/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 640w, /photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Eye Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp" srcset="/photos/800/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 640w, /photos/1600/1D4EAB5F-E013-4C7B-93F2-B61FCE2FE2A2.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Eye Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Eye Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">Dès 50 €</span>
 </span>
@@ -217,7 +231,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="8500" data-dispo="1" data-texte="Bracelet Flamme Bracelets  Silver Gold Bleu nuit Coloré or rose Violet Blanc nacré Bleu ocean Multicolore Gris Poignet complet (gros modèle) Oeil tigre rose Noir pierre lave" data-couleurs="Silver|Gold|Bleu nuit|Coloré or rose|Violet|Blanc nacré|Bleu ocean|Multicolore|Gris|Poignet complet (gros modèle)|Oeil tigre rose|Noir pierre lave">
   <a class="card__link" href="products/bracelet-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp" srcset="/photos/800/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 640w, /photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/46B10CC4-61E9-4D40-81EB-8824A54B2589.webp"><img src="/photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp" srcset="/photos/800/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 640w, /photos/1600/D6BC3D2A-A442-43BE-9475-46C9302FA181.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">Dès 85 €</span>
 </span>
@@ -295,7 +309,7 @@
           </li><li class="card__more">+7</li></ul><a class="link-btn card__add" href="products/bracelet-flamme.html" data-anim="card-choose">Choisir</a></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7000" data-dispo="1" data-texte="Bracelet double chaîne + perles Bracelets  Culture 2 Gris rose Full black Blacelet rose barbie Améthyste Noir gris Blanc culture Bleu oeil tigre" data-couleurs="Culture 2|Gris rose|Full black|Blacelet rose barbie|Améthyste|Noir gris|Blanc culture|Bleu oeil tigre">
   <a class="card__link" href="products/bracelet-double-chaine-perles.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp" srcset="/photos/800/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 640w, /photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double chaîne + perles" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp" srcset="/photos/800/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 640w, /photos/1600/28DD52B8-EBE1-4C9A-A23D-BE8DFD42AF09.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double chaîne + perles" data-card-img></div>
     <h3 class="card__name">Bracelet double chaîne + perles</h3>
     <p class="card__price"><span class="price"><span class="price__value">70 €</span>
 </span>
@@ -373,7 +387,7 @@
           </li><li class="card__more">+3</li></ul><a class="link-btn card__add" href="products/bracelet-double-chaine-perles.html" data-anim="card-choose">Choisir</a></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Iconique Fire Bracelets ">
   <a class="card__link" href="products/bracelet-iconique-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp" srcset="/photos/800/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 640w, /photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Iconique Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp" srcset="/photos/800/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 640w, /photos/1600/2D9EEBAA-331D-4139-8D49-6EF65746A478.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Iconique Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Iconique Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -394,7 +408,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Double Tour Flamme Bracelets ">
   <a class="card__link" href="products/bracelet-double-tour-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp" srcset="/photos/800/3FB617F8-7776-426C-91F0-5769600461B1.webp 640w, /photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/880BA23C-A32D-484C-A3AE-56EF09CF700A.webp"><img src="/photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp" srcset="/photos/800/3FB617F8-7776-426C-91F0-5769600461B1.webp 640w, /photos/1600/3FB617F8-7776-426C-91F0-5769600461B1.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet Double Tour Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -415,7 +429,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="1" data-texte="Bracelet Cordon Fire Bracelets  Bordeaux Camel Blue Night Red Blue Sea Black" data-couleurs="Bordeaux|Camel|Blue Night|Red|Blue Sea|Black">
   <a class="card__link" href="products/bracelet-cordon-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp" srcset="/photos/800/DF536836-9154-4920-97DF-69FFB4C18248.webp 640w, /photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Cordon Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp" srcset="/photos/800/DF536836-9154-4920-97DF-69FFB4C18248.webp 640w, /photos/1600/DF536836-9154-4920-97DF-69FFB4C18248.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Cordon Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Cordon Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">50 €</span>
 </span>
@@ -493,7 +507,7 @@
           </li><li class="card__more">+1</li></ul><a class="link-btn card__add" href="products/bracelet-cordon-fire.html" data-anim="card-choose">Choisir</a></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Bracelet de main Flamme Bracelets  Silver Or rose" data-couleurs="Silver|Or rose">
   <a class="card__link" href="products/bracelet-de-main-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp" srcset="/photos/800/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 640w, /photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet de main Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/3D32F5F0-AB1E-4835-BD8B-977D9C95A1BF.webp"><img src="/photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp" srcset="/photos/800/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 640w, /photos/1600/1E294E58-1130-4D6F-A5D6-F5B7E60D9409.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet de main Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet de main Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">120 €</span>
 </span>
@@ -542,7 +556,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="0" data-texte="Bracelet double diam&#39;s Flamme Bracelets  Silver Or rose" data-couleurs="Silver|Or rose">
   <a class="card__link" href="products/bracelet-double-diam-s-flamme.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp" srcset="/photos/800/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 640w, /photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double diam's Flamme" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/442227BF-EBFC-4A19-BB0A-AEEC9973F731.webp"><img src="/photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp" srcset="/photos/800/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 640w, /photos/1600/C0485C50-A646-4DF3-B254-B7F3F05AEB7A.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet double diam's Flamme" data-card-img></div>
     <h3 class="card__name">Bracelet double diam's Flamme</h3>
     <p class="card__price"><span class="price"><span class="price__value">120 €</span>
 </span>
@@ -578,7 +592,7 @@
           </li></ul></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="5000" data-dispo="0" data-texte="Lot de bracelets Bracelets  X2 X3" data-couleurs="X2|X3">
   <a class="card__link" href="products/lot-de-bracelets.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp" srcset="/photos/800/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 640w, /photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Lot de bracelets" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp" srcset="/photos/800/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 640w, /photos/1600/7D66BB75-A49D-4680-A945-E5C7EFF279CB.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Lot de bracelets" data-card-img></div>
     <h3 class="card__name">Lot de bracelets</h3>
     <p class="card__price"><span class="price"><span class="price__value">Dès 50 €</span>
 </span>
@@ -614,7 +628,7 @@
           </li></ul></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet 3-1 Chain Fire Bracelets ">
   <a class="card__link" href="products/sans-titre-17juin_18-28.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp" srcset="/photos/800/B62196E1-69A9-41F5-913A-0F475C803105.webp 640w, /photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet 3-1 Chain Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp" srcset="/photos/800/B62196E1-69A9-41F5-913A-0F475C803105.webp 640w, /photos/1600/B62196E1-69A9-41F5-913A-0F475C803105.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet 3-1 Chain Fire" data-card-img></div>
     <h3 class="card__name">Bracelet 3-1 Chain Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -635,7 +649,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Double Tour Cadenas Bracelets ">
   <a class="card__link" href="products/bracelet-double-tour-cadenas.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp" srcset="/photos/800/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 640w, /photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Cadenas" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/0C2E899E-DD40-483E-A0D2-44EDDA60C23C.webp"><img src="/photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp" srcset="/photos/800/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 640w, /photos/1600/1642B472-85D2-4CCC-89B5-3EABDBA2096B.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Double Tour Cadenas" data-card-img></div>
     <h3 class="card__name">Bracelet Double Tour Cadenas</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -656,7 +670,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Hay Bracelets ">
   <a class="card__link" href="products/bracelet-hay.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp" srcset="/photos/800/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 640w, /photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp" srcset="/photos/800/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 640w, /photos/1600/09A94770-2692-4B0D-BF6C-7B2E92BF45C7.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay" data-card-img></div>
     <h3 class="card__name">Bracelet Hay</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -677,7 +691,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Bracelet Hay à chaîne Bracelets ">
   <a class="card__link" href="products/bracelet-hay-a-chaine.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp" srcset="/photos/800/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 640w, /photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay à chaîne" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/A4AA5F58-0124-4BB9-9F8B-02E332C2C38B.webp"><img src="/photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp" srcset="/photos/800/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 640w, /photos/1600/21FF7528-5270-4230-9310-CEC6B1BC5CCC.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Hay à chaîne" data-card-img></div>
     <h3 class="card__name">Bracelet Hay à chaîne</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -698,7 +712,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Love Breslev Gang X Eber Music Bracelets ">
   <a class="card__link" href="products/bracelet-love-breslev-gang.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp" srcset="/photos/800/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 640w, /photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Love Breslev Gang X Eber Music" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp" srcset="/photos/800/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 640w, /photos/1600/40C397F1-ED85-41E6-B0F9-AB2CB0DC11ED.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Love Breslev Gang X Eber Music" data-card-img></div>
     <h3 class="card__name">Bracelet Love Breslev Gang X Eber Music</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -719,7 +733,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Maguen Bracelets ">
   <a class="card__link" href="products/bracelet-maguen.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp" srcset="/photos/800/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 640w, /photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Maguen" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp" srcset="/photos/800/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 640w, /photos/1600/129D2477-0177-40A6-8E2D-E5512FFEC1DA.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Maguen" data-card-img></div>
     <h3 class="card__name">Bracelet Maguen</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -740,7 +754,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Poisson Bracelets ">
   <a class="card__link" href="products/bracelet-poisson.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp" srcset="/photos/800/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 640w, /photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Poisson" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp" srcset="/photos/800/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 640w, /photos/1600/096166D0-FBA4-4F00-9AA0-174399A4156D.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Poisson" data-card-img></div>
     <h3 class="card__name">Bracelet Poisson</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -761,7 +775,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Ring Fire Bracelets ">
   <a class="card__link" href="products/bracelet-ring-fire.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp" srcset="/photos/800/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 640w, /photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Ring Fire" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp" srcset="/photos/800/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 640w, /photos/1600/A221FAD5-22D2-4255-9031-B381E6A0D014.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Ring Fire" data-card-img></div>
     <h3 class="card__name">Bracelet Ring Fire</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -782,7 +796,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="7500" data-dispo="1" data-texte="Bracelet Smiley Travis Bracelets ">
   <a class="card__link" href="products/bracelet-smiley-travis.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp" srcset="/photos/800/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 640w, /photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Smiley Travis" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp" srcset="/photos/800/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 640w, /photos/1600/0A8B6DB2-572F-4A6C-920B-897C7EC6BFFE.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet Smiley Travis" data-card-img></div>
     <h3 class="card__name">Bracelet Smiley Travis</h3>
     <p class="card__price"><span class="price"><span class="price__value">75 €</span>
 </span>
@@ -803,7 +817,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Bracelet נ נח + האש שלי Bracelets ">
   <a class="card__link" href="products/bracelet-נ-נח-האש-שלי.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp" srcset="/photos/800/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 640w, /photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet נ נח + האש שלי" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/465721B7-23E4-42DC-B1C5-1EE37CD12AFB.webp"><img src="/photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp" srcset="/photos/800/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 640w, /photos/1600/0889E87A-600E-4BFB-BE8C-B7156AB067FF.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bracelet נ נח + האש שלי" data-card-img></div>
     <h3 class="card__name">Bracelet נ נח + האש שלי</h3>
     <p class="card__price"><span class="price"><span class="price__value">100 €</span>
 </span>
@@ -824,7 +838,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="bracelets" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Breslev Flame Beads Bracelets ">
   <a class="card__link" href="products/breslev-flame-beads.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp" srcset="/photos/800/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 640w, /photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Breslev Flame Beads" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/9D30F4AB-C6FA-4598-9F0F-A1EEC7DBB6CE.webp"><img src="/photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp" srcset="/photos/800/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 640w, /photos/1600/29FC4A39-E522-42F4-AA92-EA5AC4368553.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Breslev Flame Beads" data-card-img></div>
     <h3 class="card__name">Breslev Flame Beads</h3>
     <p class="card__price"><span class="price"><span class="price__value">150 €</span>
 </span>

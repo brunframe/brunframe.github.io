@@ -23,11 +23,13 @@
 <script>document.documentElement.classList.replace('no-js', 'js');if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');</script>
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link href="assets/anton-latin-400-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
+    <link href="assets/cormorant-garamond-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <link href="assets/inter-tight-latin-300-normal.woff2" rel="preload" as="font" type="font/woff2" crossorigin="anonymous">
     <style>
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-400-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url(/assets/anton-latin-ext-400-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-300-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+  @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-300-italic.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-normal.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
   @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(/assets/cormorant-garamond-latin-500-italic.woff2) format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
@@ -76,6 +78,18 @@
     <script src="assets/chabbat.js" defer></script>
     <script src="assets/mode.js" defer></script>
     <script src="assets/theme.js" defer></script>
+    <script src="assets/gsap.min.js" defer></script>
+    <script src="assets/ScrollTrigger.min.js" defer></script>
+    <script src="assets/CustomEase.min.js" defer></script>
+    <script>
+      /* Lenis (défilement lissé) : seulement à la souris ; au doigt, le défilement reste natif et le fichier n'est pas chargé */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var lenisJs = document.createElement('script');
+        lenisJs.src = "/assets/lenis.min.js";
+        lenisJs.onload = function () { if (window.BG && window.BG.lisser) window.BG.lisser(); };
+        document.head.appendChild(lenisJs);
+      }
+    </script>
     <script src="assets/motion.js" defer></script>
 
     
@@ -140,7 +154,7 @@
         <button type="button" class="link-btn catalogue__reset" data-tout-effacer hidden>Réinitialiser</button>
       </div><ul class="catalogue__grid" role="list" data-catalogue-grid data-anim="catalogue-grid"><li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="2000" data-dispo="1" data-texte="Kippa Maison &amp; autres  Velour Grise Aech Cheli נ נח Velour Grise Aech Cheli +נ נח or rose Zebré Noir Aech Cheli נ נח or rose Zebré Noir Rabi Israël נ נח or rose Velour Noir Rabi Israël נ נח Velour Noir Aech Cheli נ נח Velour Beige Aech Cheli נ נח" data-couleurs="Velour Grise Aech Cheli נ נח|Velour Grise Aech Cheli +נ נח or rose|Zebré Noir Aech Cheli נ נח or rose|Zebré Noir Rabi Israël נ נח or rose|Velour Noir Rabi Israël נ נח|Velour Noir Aech Cheli נ נח|Velour Beige Aech Cheli נ נח">
   <a class="card__link" href="products/kippa.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp" srcset="/photos/800/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 640w, /photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Kippa" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/515D3685-132A-43E8-A051-016DBCCCEBD5.webp"><img src="/photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp" srcset="/photos/800/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 640w, /photos/1600/466E3089-069A-455A-93ED-3C3D0D1A428D.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Kippa" data-card-img></div>
     <h3 class="card__name">Kippa</h3>
     <p class="card__price"><span class="price"><span class="price__value">20 €</span>
 </span>
@@ -218,7 +232,7 @@
           </li><li class="card__more">+2</li></ul><a class="link-btn card__add" href="products/kippa.html" data-anim="card-choose">Choisir</a></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Figurine Maison &amp; autres  Black Harley Black silver Gold limited edition Décorative" data-couleurs="Black Harley|Black silver|Gold limited edition|Décorative">
   <a class="card__link" href="products/figurine.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp" srcset="/photos/800/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 640w, /photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Figurine" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp" srcset="/photos/800/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 640w, /photos/1600/128BA5EE-D76F-4992-8CAD-B5B28A6289B3.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Figurine" data-card-img></div>
     <h3 class="card__name">Figurine</h3>
     <p class="card__price"><span class="price"><span class="price__value">150 €</span>
 </span>
@@ -295,7 +309,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="10000" data-dispo="1" data-texte="Bougeoir Maison &amp; autres  White Black 2.0 Bougeoir Breslev Gang" data-couleurs="White|Black 2.0|Bougeoir Breslev Gang">
   <a class="card__link" href="products/bougeoir.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp" srcset="/photos/800/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 640w, /photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bougeoir" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/81E05CD0-BFDA-4582-9884-4DE7A9E76BFF.webp"><img src="/photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp" srcset="/photos/800/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 640w, /photos/1600/93B9B737-0948-4D99-AC99-D59B510E3C11.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Bougeoir" data-card-img></div>
     <h3 class="card__name">Bougeoir</h3>
     <p class="card__price"><span class="price"><span class="price__value">Dès 100 €</span>
 </span>
@@ -358,7 +372,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="6000" data-dispo="1" data-texte="Plateaux de Chabbat Maison &amp; autres  Combo Yom Tov ( hallot boutargue) Plateau boutargue deluxe Plateau" data-couleurs="Combo Yom Tov ( hallot boutargue)|Plateau boutargue deluxe|Plateau">
   <a class="card__link" href="products/plateaux-de-chabbat.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp" srcset="/photos/800/60DFE61D-3F47-4452-84CF-14346E78429B.webp 640w, /photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp 1280w" width="1280" height="1600" loading="eager" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Plateaux de Chabbat" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp" srcset="/photos/800/60DFE61D-3F47-4452-84CF-14346E78429B.webp 640w, /photos/1600/60DFE61D-3F47-4452-84CF-14346E78429B.webp 1280w" width="1280" height="1600" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Plateaux de Chabbat" data-card-img></div>
     <h3 class="card__name">Plateaux de Chabbat</h3>
     <p class="card__price"><span class="price"><span class="price__value">Dès 60 €</span>
 </span>
@@ -421,7 +435,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="15000" data-dispo="1" data-texte="Box Maison &amp; autres  Noir Beige" data-couleurs="Noir|Beige">
   <a class="card__link" href="products/box.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp" srcset="/photos/800/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 640w, /photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Box" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/69DAE7E7-1EB1-43A8-B917-5800E568DE3E.webp"><img src="/photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp" srcset="/photos/800/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 640w, /photos/1600/8C728494-4F6C-4EA0-8D34-23B09860F428.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Box" data-card-img></div>
     <h3 class="card__name">Box</h3>
     <p class="card__price"><span class="price"><span class="price__value">150 €</span>
 </span>
@@ -470,7 +484,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="4900" data-dispo="1" data-texte="Mapa de Chabbat Maison &amp; autres  Chabat Aech Cheli Beige Chabat Aech Cheli Noir" data-couleurs="Chabat Aech Cheli Beige|Chabat Aech Cheli Noir">
   <a class="card__link" href="products/mapa-de-chabbat.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp" srcset="/photos/800/2096A3FF-3F80-4268-A968-1306533B27DF.webp 640w, /photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Mapa de Chabbat" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp" srcset="/photos/800/2096A3FF-3F80-4268-A968-1306533B27DF.webp 640w, /photos/1600/2096A3FF-3F80-4268-A968-1306533B27DF.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Mapa de Chabbat" data-card-img></div>
     <h3 class="card__name">Mapa de Chabbat</h3>
     <p class="card__price"><span class="price"><span class="price__value">49 €</span>
 </span>
@@ -540,7 +554,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="1490" data-dispo="1" data-texte="Paquet de cartes Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/paquet-de-cartes-breslev-gang.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp" srcset="/photos/800/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 640w, /photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Paquet de cartes Breslev Gang" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/2A690673-27F0-4D82-B5B5-C9B487DDF26A.webp"><img src="/photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp" srcset="/photos/800/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 640w, /photos/1600/DA4C4E3B-78E6-4850-BD49-7A1548EB19CF.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Paquet de cartes Breslev Gang" data-card-img></div>
     <h3 class="card__name">Paquet de cartes Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">14,90 €</span>
 </span>
@@ -561,7 +575,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="9000" data-dispo="1" data-texte="Please return to Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/please-return-to-breslev-gang.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp" srcset="/photos/800/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 640w, /photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Please return to Breslev Gang" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp" srcset="/photos/800/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 640w, /photos/1600/C7079B75-800C-4D06-B69C-6C2498138AB5.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Please return to Breslev Gang" data-card-img></div>
     <h3 class="card__name">Please return to Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">90 €</span>
 </span>
@@ -582,7 +596,7 @@
     >Ajouter</button></li>
 <li class="card" data-card data-cat="maison-autres" data-univers="" data-anim="catalogue-card" data-reveal data-prix="12000" data-dispo="1" data-texte="Pochette en cuir noir Breslev Gang Maison &amp; autres ">
   <a class="card__link" href="products/pochette-d-ete-2k26.html" data-card-link>
-    <div class="card__media media media--square" data-anim="card-media"><img src="/photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp" srcset="/photos/800/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 640w, /photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 1280w" width="1280" height="1600" loading="lazy" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Pochette en cuir noir Breslev Gang" data-card-img></div>
+    <div class="card__media media media--square" data-anim="card-media" data-survol="/photos/1600/79AFEA05-61ED-45CF-93D1-CEBB2FE94EAF.webp"><img src="/photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp" srcset="/photos/800/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 640w, /photos/1600/8C0E5B2F-9062-47CE-A061-22AEBC560D83.webp 1280w" width="1280" height="1600" loading="lazy" fetchpriority="auto" decoding="async" sizes="(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw" alt="Pochette en cuir noir Breslev Gang" data-card-img></div>
     <h3 class="card__name">Pochette en cuir noir Breslev Gang</h3>
     <p class="card__price"><span class="price"><span class="price__value">120 €</span>
 </span>
