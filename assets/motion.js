@@ -123,7 +123,7 @@
     });
   }
 
-  /* ---------- Pièces maîtresses : la photo recule pendant que la suivante la recouvre.
+  /* ---------- Pièces maîtresses : la photo recule pendant que la suivante la recouvre ; le film de la pièce se joue.
      Les écrans sont en position: sticky : on mesure à chaque image, sans position mise en cache. ---------- */
   const panneaux = $$('[data-maitresse]');
   function maitresses() {
@@ -137,20 +137,53 @@
       gsap.set($$('.maitresse__num, .maitresse__prix, .maitresse__cta', el), { opacity: 0, y: 14 });
       voir.observe(el);
     });
+    /* Films des pièces (vidéo verticale, sans son) : l'adresse n'est posée que lorsque l'écran approche, le film se joue
+       une fois quand sa pièce est à l'écran, se pose sur sa dernière image, et rejoue si l'on y revient.
+       Économie de données : aucun film, l'image d'attente reste. Lecture refusée (économie d'énergie) : pareil. */
+    const econome = !!(navigator.connection && navigator.connection.saveData);
+    const films = panneaux.map((el) => (econome ? null : $('video[data-film]', el)));
+    films.forEach((v) => {
+      if (!v) return;
+      v.muted = true;
+      // une fois le film apparu (fondu d'une seconde), il couvre son image d'attente : elle s'efface, sinon elle
+      // se verrait en double quand le film s'assombrit sous la pièce suivante
+      v.addEventListener('playing', () => { v.classList.add('est-pret'); setTimeout(() => { v.dataset.couvre = '1'; }, 1100); }, { once: true });
+    });
+    const film = (v, actif, proche) => {
+      if (proche && !v.getAttribute('src')) { v.preload = 'auto'; v.src = v.dataset.film; }
+      if (actif) {
+        if (!v.dataset.actif) { v.dataset.actif = '1'; if (v.ended) v.currentTime = 0; }
+        if (v.paused && !v.ended && v.getAttribute('src')) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+      } else {
+        delete v.dataset.actif;
+        if (!v.paused) v.pause();
+      }
+    };
     let attente = false;
     const mesurer = () => {
       attente = false;
+      const vh = window.innerHeight;
+      const parti = window.scrollY > 8;                  // rien n'est chargé tant que le visiteur n'a pas commencé à descendre
       panneaux.forEach((el, k) => {
         const img = $('.maitresse__img', el);
         const suivant = panneaux[k + 1];
         if (!img) return;
-        const c = suivant ? Math.min(1, Math.max(0, 1 - (suivant.getBoundingClientRect().top - el.getBoundingClientRect().top) / el.offsetHeight)) : 0;
+        const r = el.getBoundingClientRect();
+        const c = suivant ? Math.min(1, Math.max(0, 1 - (suivant.getBoundingClientRect().top - r.top) / el.offsetHeight)) : 0;
+        const v = films[k];
         img.style.transform = 'scale(' + (1.08 - c * 0.08).toFixed(4) + ')';
-        img.style.opacity = (1 - c * 0.5).toFixed(3);
+        img.style.opacity = v && v.dataset.couvre ? '0' : (1 - c * 0.5).toFixed(3);
+        if (!v) return;
+        v.style.transform = img.style.transform;
+        v.style.setProperty('--recul', c.toFixed(3));
+        // à l'écran : la pièce est montée d'au moins 40 % et la suivante ne la recouvre pas encore à 45 % (un seul film à la fois)
+        const visible = r.top < vh * 0.6 && r.bottom > vh * 0.3 && c < 0.45;
+        film(v, visible && !document.hidden, (parti || r.top < vh * 0.98) && r.top < vh * 1.6 && r.bottom > -vh * 0.5);
       });
     };
     window.addEventListener('scroll', () => { if (!attente) { attente = true; requestAnimationFrame(mesurer); } }, { passive: true });
     window.addEventListener('resize', mesurer);
+    document.addEventListener('visibilitychange', mesurer);
     mesurer();
   }
 
@@ -181,7 +214,7 @@
   const effacer = () => $$('[data-vt]').forEach((x) => { x.style.viewTransitionName = ''; x.removeAttribute('data-vt'); });
   document.addEventListener('click', (e) => {
     const lien = e.target.closest ? e.target.closest('a.card__link, a.maitresse__lien') : null;
-    const img = lien && lien.querySelector('img');
+    const img = lien && (lien.querySelector('video[data-couvre]') || lien.querySelector('img'));   // le film, s'il est à l'écran
     if (!img) return;
     effacer();
     img.style.viewTransitionName = 'piece';
