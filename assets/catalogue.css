@@ -113,7 +113,7 @@ a.filter:not(.is-active):hover { color: var(--black); }
 }
 
 /* Cartes : ratio fixé, aucun décalage de mise en page */
-.catalogue__grid .card__media { aspect-ratio: 1 / 1; }
+.catalogue__grid .card__media { aspect-ratio: 4 / 5; }   /* 11 nov. : format des photos (écrin noir) */
 
 /* Voir plus et pagination */
 .catalogue__more { display: grid; justify-items: center; gap: 24px; margin-top: clamp(56px, 10vw, 96px); }

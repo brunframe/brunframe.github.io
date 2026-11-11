@@ -461,7 +461,8 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 }
 
 .card__link, .collections__link { display: block; }
-.card__media { margin-bottom: 18px; }
+/* 11 nov. : case au format des photos (4:5, écrin noir) ; les vêtements, carrés, restent entiers sur le blanc */
+.card__media { margin-bottom: 18px; aspect-ratio: 4 / 5; }
 .card__media img { transition: transform 0.6s var(--ease), opacity 0.4s var(--ease); }
 @media (hover: hover) {
   .card__link:hover img { transform: scale(1.025); }
