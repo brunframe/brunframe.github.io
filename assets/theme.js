@@ -69,8 +69,8 @@
   }
 
   /* ---------- En-tête au-dessus de la vidéo ----------
-     La vidéo reste fixée derrière : le reste de la page glisse par-dessus comme un rideau blanc.
-     L'en-tête repasse en blanc dès que ce rideau atteint son bord. */
+     La vidéo reste fixée derrière : le reste de la page glisse par-dessus comme un rideau (noir, comme la page).
+     L'en-tête reprend son fond dès que ce rideau atteint son bord. */
   function initHeader() {
     const header = $('[data-header]');
     const hero = $('[data-hero]');
@@ -165,7 +165,7 @@
       });
     }
 
-    // Pause dès que le rideau blanc la recouvre, pour économiser la batterie.
+    // Pause dès que le rideau de la page la recouvre, pour économiser la batterie.
     const hero = video.closest('[data-hero]');
     let covered = false;
     const check = () => {

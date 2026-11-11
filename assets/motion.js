@@ -91,7 +91,7 @@
   /* ---------- Titres mot à mot, sections et photos qui apparaissent au défilement ---------- */
   function apparitions(racine = document) {
     const bas = window.innerHeight;
-    $$('h1.display, h2.display, .catalogue__subtitle, .maitresse__nom, .histoire__title', racine).forEach((el) => {
+    $$('h1.display, h2.display, .catalogue__subtitle, .histoire__title', racine).forEach((el) => {
       if (el.dataset.vu || el.closest('.hero, [data-header], .card, dialog, [data-no-anim], .histoire--epingle')) return;
       el.dataset.vu = '1';
       const m = mots(el);
@@ -123,68 +123,141 @@
     });
   }
 
-  /* ---------- Pièces maîtresses : la photo recule pendant que la suivante la recouvre ; le film de la pièce se joue.
-     Les écrans sont en position: sticky : on mesure à chaque image, sans position mise en cache. ---------- */
-  const panneaux = $$('[data-maitresse]');
+  /* ---------- Pièces maîtresses : la scène reste en place, l'écrin s'ouvre sur chaque pièce.
+     La piste (haute) fait défiler une avance P : 0 = première pièce, 1 = deuxième… Deux volets s'écartent (--ouvert),
+     le film de la pièce avance avec le doigt (suite d'images dessinée sur un canvas : aucune lecture vidéo), puis
+     l'écrin se referme et s'ouvre sur la suivante. Une petite inertie lisse le geste. ---------- */
   function maitresses() {
-    if (!panneaux.length) return;
-    const voir = new IntersectionObserver((entrees) => entrees.forEach((e) => {
-      if (!e.isIntersecting) return;
-      voir.unobserve(e.target);
-      gsap.to($$('.maitresse__num, .maitresse__prix, .maitresse__cta', e.target), { opacity: 1, y: 0, duration: 1, stagger: 0.08, delay: 0.3 });
-    }), { threshold: 0.35 });
-    panneaux.forEach((el) => {
-      gsap.set($$('.maitresse__num, .maitresse__prix, .maitresse__cta', el), { opacity: 0, y: 14 });
-      voir.observe(el);
-    });
-    /* Films des pièces (vidéo verticale, sans son) : l'adresse n'est posée que lorsque l'écran approche, le film se joue
-       une fois quand sa pièce est à l'écran, se pose sur sa dernière image, et rejoue si l'on y revient.
-       Économie de données : aucun film, l'image d'attente reste. Lecture refusée (économie d'énergie) : pareil. */
+    const section = $('[data-maitresses]');
+    const piste = section && $('[data-maitresses-piste]', section);
+    const scene = piste && $('[data-maitresses-scene]', piste);
+    const pieces = scene ? $$('[data-maitresse]', scene) : [];
+    const n = pieces.length;
+    if (!n || !('IntersectionObserver' in window)) return;
+    section.classList.add('maitresses--scene');
+    piste.style.setProperty('--n', n);
     const econome = !!(navigator.connection && navigator.connection.saveData);
-    const films = panneaux.map((el) => (econome ? null : $('video[data-film]', el)));
-    films.forEach((v) => {
-      if (!v) return;
-      v.muted = true;
-      // une fois le film apparu (fondu d'une seconde), il couvre son image d'attente : elle s'efface, sinon elle
-      // se verrait en double quand le film s'assombrit sous la pièce suivante
-      v.addEventListener('playing', () => { v.classList.add('est-pret'); setTimeout(() => { v.dataset.couvre = '1'; }, 1100); }, { once: true });
+    const films = pieces.map((el) => {
+      const toile = $('canvas[data-sequence]', el);
+      const nb = toile ? parseInt(toile.dataset.images, 10) || 0 : 0;
+      return toile && nb > 1 && !econome ? { toile, nb, modele: toile.dataset.sequence, images: null, vu: -1 } : null;
     });
-    const film = (v, actif, proche) => {
-      if (proche && !v.getAttribute('src')) { v.preload = 'auto'; v.src = v.dataset.film; }
-      if (actif) {
-        if (!v.dataset.actif) { v.dataset.actif = '1'; if (v.ended) v.currentTime = 0; }
-        if (v.paused && !v.ended && v.getAttribute('src')) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-      } else {
-        delete v.dataset.actif;
-        if (!v.paused) v.pause();
-      }
-    };
-    let attente = false;
-    const mesurer = () => {
-      attente = false;
-      const vh = window.innerHeight;
-      const parti = window.scrollY > 8;                  // rien n'est chargé tant que le visiteur n'a pas commencé à descendre
-      panneaux.forEach((el, k) => {
-        const img = $('.maitresse__img', el);
-        const suivant = panneaux[k + 1];
-        if (!img) return;
-        const r = el.getBoundingClientRect();
-        const c = suivant ? Math.min(1, Math.max(0, 1 - (suivant.getBoundingClientRect().top - r.top) / el.offsetHeight)) : 0;
-        const v = films[k];
-        img.style.transform = 'scale(' + (1.08 - c * 0.08).toFixed(4) + ')';
-        img.style.opacity = v && v.dataset.couvre ? '0' : (1 - c * 0.5).toFixed(3);
-        if (!v) return;
-        v.style.transform = img.style.transform;
-        v.style.setProperty('--recul', c.toFixed(3));
-        // à l'écran : la pièce est montée d'au moins 40 % et la suivante ne la recouvre pas encore à 45 % (un seul film à la fois)
-        const visible = r.top < vh * 0.6 && r.bottom > vh * 0.3 && c < 0.45;
-        film(v, visible && !document.hidden, (parti || r.top < vh * 0.98) && r.top < vh * 1.6 && r.bottom > -vh * 0.5);
+    const adresse = (f, i) => f.modele.replace(/-\d+(\.\w+)(\?.*)?$/, (m, ext, fin) => '-' + String(i + 1).padStart(2, '0') + ext + (fin || ''));
+    // d'abord quelques images réparties (le film existe tout de suite, en gros), puis toutes les autres
+    const charger = (f) => {
+      if (!f || f.images) return;
+      f.images = new Array(f.nb).fill(null);
+      const pris = new Set();
+      [8, 4, 2, 1].forEach((pas) => {
+        for (let i = 0; i < f.nb; i += pas) {
+          if (pris.has(i)) continue;
+          pris.add(i);
+          const im = new Image();
+          im.decoding = 'async';
+          im.onload = () => { if (f.images) f.images[i] = im; };
+          im.src = adresse(f, i);
+        }
       });
     };
-    window.addEventListener('scroll', () => { if (!attente) { attente = true; requestAnimationFrame(mesurer); } }, { passive: true });
+    const liberer = (f) => { if (f && f.images) { f.images = null; f.vu = -1; } };
+    const dessiner = (f, x) => {
+      if (!f || !f.images) return;
+      const cible = Math.round(Math.min(1, Math.max(0, x)) * (f.nb - 1));
+      let i = -1;
+      for (let e = 0; e < f.nb && i < 0; e += 1) {
+        if (f.images[cible - e]) i = cible - e;
+        else if (f.images[cible + e]) i = cible + e;
+      }
+      if (i < 0 || i === f.vu) return;
+      f.vu = i;
+      if (!f.ctx) f.ctx = f.toile.getContext('2d');
+      f.ctx.drawImage(f.images[i], 0, 0, f.toile.width, f.toile.height);
+      f.toile.classList.add('est-pret');
+    };
+    const lisse = (x) => { const u = Math.min(1, Math.max(0, x)); return u * u * (3 - 2 * u); };
+    const AVANCE = 0.14;                 // l'écrin de la pièce suivante commence à s'ouvrir un peu avant son tour
+    let haut = 0;
+    let pas = 1;
+    let P = null;
+    let actif = -1;
+    let tourne = false;
+    let V = 0;                           // ouverture montrée (suit le doigt, puis s'ouvre en entier au repos)
+    let geste = 0;                       // heure du dernier défilement
+    const mesurer = () => {
+      haut = piste.getBoundingClientRect().top + window.scrollY;
+      pas = Math.max(1, (piste.offsetHeight - scene.offsetHeight) / n);
+    };
+    const image = () => {
+      const cible = (window.scrollY - haut) / pas;
+      P = P === null || Math.abs(cible - P) > 1.5 ? cible : P + (cible - P) * 0.16;
+      if (Math.abs(cible - P) < 0.0004) P = cible;
+      const k = Math.min(n - 1, Math.max(0, Math.floor(P + AVANCE)));
+      const u = P - k;
+      const ouvre = k === 0 ? lisse((P + 0.80) / 0.62) : lisse((u + AVANCE) / 0.26);
+      const ferme = k < n - 1 ? lisse((u - 0.70) / 0.16) : 0;
+      // au repos (plus de défilement depuis un instant), l'écrin de la pièce à l'écran s'ouvre toujours en entier :
+      // jamais d'écran noir à l'arrêt ; pendant le geste, les volets suivent le doigt
+      const repos = performance.now() - geste > 170 && P > -0.45 && P < n - 0.35;
+      const vise = repos ? 1 : ouvre * (1 - ferme);
+      V += (vise - V) * (repos ? 0.075 : 0.5);
+      if (Math.abs(vise - V) < 0.0005) V = vise;
+      const ouvert = V;
+      if (k !== actif) {
+        actif = k;
+        pieces.forEach((el, i) => el.classList.toggle('est-active', i === k));
+        liberer(films[k - 2]);
+        liberer(films[k + 2]);
+      }
+      // rien n'est téléchargé tant que le visiteur n'a pas commencé à descendre ; puis le film de la pièce qui
+      // arrive, et celui de la suivante une fois la scène en place
+      if (window.scrollY > 8 && P > -1.1) charger(films[k]);
+      if (P > -0.25) charger(films[k + 1]);
+      scene.style.setProperty('--ouvert', ouvert.toFixed(4));
+      const el = pieces[k];
+      el.style.setProperty('--zoom', (1.12 - 0.12 * ouvre + 0.03 * Math.max(0, u)).toFixed(4));
+      el.style.setProperty('--monte', (26 * (1 - lisse((ouvert - 0.5) / 0.5))).toFixed(1) + 'px');
+      dessiner(films[k], k === 0 ? (P + 0.80) / 1.66 : (u + AVANCE) / 1.0);
+      if (tourne) requestAnimationFrame(image);
+    };
+    new IntersectionObserver((entrees) => {
+      const proche = entrees.some((e) => e.isIntersecting);
+      if (proche === tourne) return;
+      tourne = proche;
+      if (tourne) { mesurer(); requestAnimationFrame(image); }
+    }, { rootMargin: '120% 0px' }).observe(section);
+    window.addEventListener('scroll', () => { geste = performance.now(); }, { passive: true });
     window.addEventListener('resize', mesurer);
-    document.addEventListener('visibilitychange', mesurer);
+    window.addEventListener('load', mesurer);
+    // au clavier : la pièce qui reçoit le focus vient à l'écran
+    pieces.forEach((el, i) => el.addEventListener('focusin', () => {
+      if (i === actif) return;
+      mesurer();
+      window.scrollTo(0, Math.round(haut + (i + 0.3) * pas));
+    }));
     mesurer();
+    image();
+  }
+
+  /* ---------- Téléphone : à l'accueil, les pièces et les catégories se font glisser de côté ; sur une fiche, les photos.
+     Un filet or suit le geste. ---------- */
+  function rails() {
+    $$('.catalogue--accueil .catalogue__grid, .catalogue--accueil .categories, .product__track').forEach((liste) => {
+      if (liste.dataset.rail || liste.children.length < 2) return;
+      liste.dataset.rail = '1';
+      const jauge = document.createElement('div');
+      jauge.className = 'rail__jauge';
+      jauge.setAttribute('aria-hidden', 'true');
+      jauge.appendChild(document.createElement('span'));
+      liste.insertAdjacentElement('afterend', jauge);
+      const suivre = () => {
+        const max = liste.scrollWidth - liste.clientWidth;
+        const vu = liste.clientWidth / Math.max(1, liste.scrollWidth);
+        jauge.style.setProperty('--avance', max > 4 ? (vu + (1 - vu) * Math.min(1, Math.abs(liste.scrollLeft) / max)).toFixed(3) : '1');
+      };
+      liste.addEventListener('scroll', suivre, { passive: true });
+      window.addEventListener('resize', suivre);
+      suivre();
+    });
   }
 
   /* ---------- Cartes : au survol (souris seulement), fondu vers la deuxième photo, chargée à ce moment-là ---------- */
@@ -214,7 +287,7 @@
   const effacer = () => $$('[data-vt]').forEach((x) => { x.style.viewTransitionName = ''; x.removeAttribute('data-vt'); });
   document.addEventListener('click', (e) => {
     const lien = e.target.closest ? e.target.closest('a.card__link, a.maitresse__lien') : null;
-    const img = lien && (lien.querySelector('video[data-couvre]') || lien.querySelector('img'));   // le film, s'il est à l'écran
+    const img = lien && (lien.querySelector('canvas.est-pret') || lien.querySelector('img'));   // le film, s'il est à l'écran
     if (!img) return;
     effacer();
     img.style.viewTransitionName = 'piece';
@@ -227,6 +300,7 @@
     histoire();
     apparitions();
     maitresses();
+    rails();
     survol();
     const filet = document.createElement('div');
     filet.className = 'progression';

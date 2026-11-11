@@ -1,14 +1,15 @@
-/* Breslev Gang — thème Shopify. Direction artistique du 11 novembre 2026 (qa/refonte-luxe/DIRECTION.md) :
-   blanc et noir, un seul accent or vieilli (--or) en filets et états actifs, titres en Cormorant Garamond.
+/* Breslev Gang — thème Shopify. Direction artistique du 11 novembre 2026 (qa/refonte-luxe/DIRECTION.md), passée au
+   noir le soir même (décision du propriétaire) : noir et ivoire, un seul accent or vieilli (--or) en filets et états
+   actifs, titres en Cormorant Garamond.
 
    VARIABLES GLOBALES (à utiliser dans cart.css, product.css et les sections) :
-     --bg        fond de page            #FFFFFF (le site est toujours blanc)
-     --surface   surfaces (tiroir, menu, champs, nuancier)   #FFFFFF
-     --text      texte                   #000000
-     --grey      texte secondaire        #767676   (AA sur blanc)
-     --line      filets 1 px             #E4E0D8
-     --veil      voile blanc derrière un tiroir ou un menu
-     --media-bg  fond des photos produit : #FFFFFF
+     --bg        fond de page            #000000 (le site est toujours noir : les films et les photos s'y fondent)
+     --surface   surfaces (tiroir, menu, champs, nuancier)   #0D0D0C
+     --text      texte                   #F4F1EA (ivoire)
+     --grey      texte secondaire        #9B958B   (AA sur noir)
+     --line      filets 1 px             #2A2724
+     --veil      voile noir derrière un tiroir ou un menu
+     --media-bg  fond des photos produit : #000000
      --or        accent or vieilli       #A8894F   (filets, numéros, survols : jamais en aplat)
      --font-display  Cormorant Garamond 300 (titres, classe .display, bas de casse ; 500 pour les petits noms)
      --font-text     Inter Tight 300/400 (textes, menus, prix)   alias : --font-body
@@ -24,18 +25,18 @@
      .label        petites capitales Inter Tight (menus, légendes)
      .btn .btn--primary .btn--ghost .btn--block  boutons fins ; .link-btn  lien souligné
      .section .section__head .section__title (.section__title--md)
-     .media .media--square .media--landscape  cadre photo sur fond blanc
+     .media .media--square .media--landscape  cadre photo
 
-   Le site est toujours blanc : html[data-theme="blanc"] (7 novembre : plus de mode Noir ni de fond de soie). */
+   Le site est toujours noir : html[data-theme="noir"] (11 novembre, soir : décision du propriétaire ; il a été blanc du 7 au 11). */
 
 :root {
-  --bg: #FFFFFF;
-  --surface: #FFFFFF;
-  --text: #0A0A0A;
-  --grey: #6E6A64;
-  --line: #E4E0D8;
-  --veil: rgba(255, 255, 255, 0.86);
-  --media-bg: #FFFFFF;
+  --bg: #000000;
+  --surface: #0D0D0C;
+  --text: #F4F1EA;
+  --grey: #9B958B;
+  --line: #2A2724;
+  --veil: rgba(0, 0, 0, 0.78);
+  --media-bg: #000000;
   --or: #A8894F;
 
   --white: var(--bg);
@@ -53,7 +54,7 @@
   --dur: 0.6s;
   --space-section: clamp(104px, 11vw, 184px);
   --buy-h: 0px;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 @media (min-width: 750px) {
@@ -205,10 +206,42 @@ legend { padding: 0; }
 }
 @media (hover: hover) { .link-btn:hover { text-decoration-color: var(--or); } }
 
-/* ---------- Médias : photos jamais inversées, sur le blanc de la page ---------- */
-.media { position: relative; overflow: hidden; background: var(--media-bg); }
+/* ---------- Pièces maîtresses de l'accueil : styles de base (liste simple : mouvement réduit, sans JavaScript).
+   La scène animée est dans motion.css. Téléphone d'abord : le film (4:5, le collier dans son halo sur noir pur) en
+   pleine largeur, le nom centré juste dessous, sur le noir du bas de l'image. ---------- */
+.maitresses { background: var(--bg); }
+.maitresses__liste { margin: 0; padding: 0; list-style: none; }
+.maitresses__volet { display: none; }
+.maitresse { position: relative; padding-bottom: 72px; }
+.maitresse__lien { display: block; color: inherit; text-decoration: none; }
+.maitresse__media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #000; }
+.maitresse__img, .maitresse__toile { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.maitresse__toile { opacity: 0; }
+.maitresse__toile.est-pret { opacity: 1; }
+.maitresse__texte { position: relative; display: grid; justify-items: center; gap: 6px; margin-top: -18%; padding: 0 var(--gutter); text-align: center; }
+.maitresse__num { margin: 0; color: var(--or); }
+.maitresse__sur { color: var(--grey); }
+.maitresse__nom { margin: 0; max-width: 11em; font-size: clamp(38px, 12.4vw, 60px); line-height: 1; letter-spacing: -0.02em; text-wrap: balance; }
+.maitresse__prix { margin: 6px 0 0; color: var(--grey); font-size: 13px; letter-spacing: .04em; }
+.maitresse__cta { margin-top: 0; }
+@media (min-width: 990px) {
+  .maitresse { padding-bottom: 0; }
+  .maitresse__lien { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  .maitresse__media { aspect-ratio: auto; height: min(100vh, 62.5vw); }
+  .maitresse__texte { justify-items: start; align-content: center; gap: 14px; margin: 0; padding: 0 clamp(48px, 7vw, 128px); text-align: left; }
+  .maitresse__nom { font-size: clamp(64px, 6.6vw, 132px); max-width: none; }
+}
+
+/* ---------- Filet de progression sous une rangée qui se fait glisser de côté (téléphone ; posé par motion.js) ---------- */
+.rail__jauge { position: relative; height: 1px; margin: 28px 0 0; background: var(--line); }
+.product__media .rail__jauge { margin: 14px var(--gutter) 0; }
+.rail__jauge span { position: absolute; inset: 0; background: var(--or); transform-origin: 0 50%; transform: scaleX(var(--avance, .2)); }
+[dir='rtl'] .rail__jauge span { transform-origin: 100% 50%; }
+@media (min-width: 750px) { .rail__jauge { display: none; } }
+
+/* ---------- Médias : photos jamais inversées, sur le noir de la page ---------- */
+.media { position: relative; overflow: hidden; background: transparent; }
 .media img { width: 100%; height: 100%; object-fit: contain; }
-:root[data-theme='blanc'] .media { background: transparent; }
 /* (fusion « multiply » retirée le 3 nov. : coûteuse au défilement, et les photos sont sur cuir sombre) */
 .media--square { aspect-ratio: 1 / 1; }
 .media--landscape { aspect-ratio: 3 / 2; }
@@ -402,10 +435,10 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .hero__lien { color: inherit; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; }
 /* téléphone : le logo et la phrase en bas de l'écran, les bijoux de la vidéo restent dégagés au centre (jury n°2) */
 @media (max-width: 749px) {
-  .hero__overlay { justify-content: flex-end; padding-bottom: calc(var(--gutter) + 92px); }
-  .hero__veil { background: rgba(10, 9, 8, 0.4); }   /* voile uni : aucun dégradé (direction du 11 novembre) */
+  .hero__overlay { justify-content: flex-end; padding-bottom: calc(var(--gutter) + 56px); }
+  .hero__brand { gap: 14px; }
 }
-.hero__gothique svg { width: min(44vw, 220px); height: auto; }
+.hero__gothique svg { width: min(38vw, 200px); height: auto; }
 .hero__phrase {
   font-size: clamp(42px, 11.5vw, 112px);
   letter-spacing: -0.015em;
@@ -461,7 +494,10 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 }
 
 .card__link, .collections__link { display: block; }
-/* 11 nov. : case au format des photos (4:5, écrin noir) ; les vêtements, carrés, restent entiers sur le blanc */
+/* le lien d'ajout se pose en bas de la carte : dans une rangée, tous les « Ajouter » sont à la même hauteur */
+.card { display: flex; flex-direction: column; }
+.card__add { margin-top: auto; align-self: flex-start; }
+/* 11 nov. : case au format des photos (4:5, écrin noir ; les vêtements aussi depuis le soir) */
 .card__media { margin-bottom: 18px; aspect-ratio: 4 / 5; }
 .card__media img { transition: transform 1.2s var(--ease), opacity 0.8s var(--ease); }
 @media (hover: hover) {
@@ -513,7 +549,7 @@ body:not(:has(.hero__poster)):not(:has(.hero__video.is-playing)) .header--home.i
 .swatch--lg::after { inset: 0; }
 .swatch.is-unavailable img { opacity: 0.5; }
 /* Pastilles en couleur (nom de la couleur ou réglage Shopify) : un disque net au lieu de la photo du collier */
-.swatch__teinte { position: absolute; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.16); }
+.swatch__teinte { position: absolute; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22); }
 .swatch--lg .swatch__teinte { inset: 6px; }
 .swatch--sm .swatch__teinte { inset: 8px; }
 .is-unavailable > .swatch__teinte { opacity: 0.4; }

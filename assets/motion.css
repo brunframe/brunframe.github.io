@@ -47,44 +47,56 @@ html.anim .hero__poster, html.anim .hero__video { animation: zoom-lent 24s linea
 html.anim-js [data-reveal]:not(.card) { transition: none !important; }
 html.anim-js [data-reveal]:not(.card).reveal-pending { opacity: 1; transform: none; }
 
-/* ---------- 5. Cartes : la photo se dévoile ; au survol, fondu vers la deuxième photo et léger zoom ---------- */
+/* ---------- 5. Cartes : l'écrin s'ouvre sur chaque photo (11 novembre, soir). Deux volets noirs à filet or
+   s'écartent, comme dans la scène des pièces maîtresses ; la photo sort de l'ombre et se pose ; puis le nom monte.
+   Décalage par colonne (--rang). Les volets sont des pseudo-éléments sans prise au toucher : une carte pas encore
+   apparue reste cliquable et atteignable au clavier. Sur téléphone, à l'accueil, les cartes se dévoilent aussi en
+   glissant de côté. ---------- */
 html.anim .card.reveal-pending { opacity: 1; transform: none; }
-html.anim .card.reveal-pending .card__media { clip-path: inset(100% 0 0 0); }
-html.anim .card.reveal-pending .card__media img { transform: scale(1.16); }
+html.anim .card__media::before, html.anim .card__media::after { content: ''; position: absolute; left: 0; right: 0; z-index: 2; height: 50.4%; background: #000; pointer-events: none; transition: transform 1.3s var(--ease-film) var(--rang, 0s); }
+html.anim .card__media::before { top: 0; border-bottom: 1px solid var(--or); transform: translate3d(0, -101%, 0); }
+html.anim .card__media::after { bottom: 0; border-top: 1px solid var(--or); transform: translate3d(0, 101%, 0); }
+html.anim .card.reveal-pending .card__media::before, html.anim .card.reveal-pending .card__media::after { transform: none; transition: none; }
+html.anim .card.reveal-pending .card__media img { transform: scale(1.14); opacity: .2; }
+html.anim .card.reveal-in .card__media img { transition: transform 1.9s var(--ease-film) var(--rang, 0s), opacity 1.5s var(--ease-film) var(--rang, 0s); }
 html.anim .card.reveal-pending .card__name, html.anim .card.reveal-pending .card__price,
-html.anim .card.reveal-pending .card__swatches, html.anim .card.reveal-pending .card__add { opacity: 0; transform: translateY(16px); }
-html.anim .card.reveal-in .card__media { clip-path: inset(0 0 0 0); transition: clip-path 1.2s var(--ease-film); }
+html.anim .card.reveal-pending .card__swatches, html.anim .card.reveal-pending .card__add { opacity: 0; transform: translateY(18px); }
 html.anim .card.reveal-in .card__name, html.anim .card.reveal-in .card__price,
-html.anim .card.reveal-in .card__swatches, html.anim .card.reveal-in .card__add { transition: opacity 1s .25s var(--ease-film), transform 1s .25s var(--ease-film); }
-html.anim .card.reveal-in:nth-child(3n + 2) .card__media { transition-delay: .08s; }
-html.anim .card.reveal-in:nth-child(3n) .card__media { transition-delay: .16s; }
+html.anim .card.reveal-in .card__swatches, html.anim .card.reveal-in .card__add { transition: opacity 1s var(--ease-film) calc(var(--rang, 0s) + .45s), transform 1s var(--ease-film) calc(var(--rang, 0s) + .45s); }
+html.anim .card.reveal-in .card__price { transition-delay: calc(var(--rang, 0s) + .53s); }
+html.anim .card.reveal-in .card__swatches, html.anim .card.reveal-in .card__add { transition-delay: calc(var(--rang, 0s) + .61s); }
+html.anim .card:nth-child(2n) { --rang: .12s; }
+@media (min-width: 750px) {
+  html.anim .card:nth-child(n) { --rang: 0s; }
+  html.anim .card:nth-child(3n + 2) { --rang: .1s; }
+  html.anim .card:nth-child(3n) { --rang: .2s; }
+}
+@media (hover: hover) { html.anim .card.reveal-in .card__link:hover img { transition-delay: 0s; } }
 .card__img2 { position: absolute; inset: 0; opacity: 0; transition: opacity .8s var(--ease-film), transform 1.2s var(--ease-film); }
 @media (hover: hover) {
   .card__link:hover .card__img2.est-pret { opacity: 1; }
 }
 
-/* ---------- 6. Pièces maîtresses : chaque écran reste en place, le suivant glisse par-dessus ---------- */
-.maitresses__liste { margin: 0; padding: 0; list-style: none; }
-.maitresse { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); overflow: hidden; background: var(--bg); }
-.maitresse + .maitresse { margin-top: 22vh; margin-top: 22svh; }
-.maitresse__lien { display: grid; grid-template-rows: minmax(0, 1fr) auto; height: 100%; color: inherit; text-decoration: none; }
-.maitresse__media { position: relative; overflow: hidden; background: #0A0A0A; }
-.maitresse__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
-.maitresse__texte { display: grid; gap: 6px; padding: 22px var(--gutter) max(26px, env(safe-area-inset-bottom)); }
-.maitresse__num { margin: 0; color: var(--or); }
-.maitresse__nom { margin: 0; font-size: clamp(46px, 13vw, 132px); line-height: .98; letter-spacing: -0.02em; }
-.maitresse__prix { margin: 4px 0 0; color: var(--grey); font-size: 13px; letter-spacing: .04em; }
-.maitresse__cta { justify-self: start; margin-top: 4px; }
-/* Film d'une pièce maîtresse (vertical, 9:16) : il recouvre son image d'attente dès qu'il joue ; cadré vers le bas, où
-   est le pendentif (sur ordinateur, la moitié d'écran montre les deux tiers bas du film : le pendentif en très grand) */
-.maitresse__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 85%; opacity: 0; transition: opacity 1s var(--ease); pointer-events: none; }
-.maitresse__film.est-pret { opacity: calc(1 - var(--recul, 0) * .5); }
-.maitresse--film .maitresse__img { object-position: 50% 85%; }
+/* ---------- Pièces maîtresses : la scène (styles de base dans theme.css).
+   La piste est haute, la scène y reste collée ; motion.js lit le défilement et règle :
+   --ouvert (0 fermé … 1 ouvert) sur la scène, --zoom et --monte sur la pièce active.
+   Deux volets noirs à filet or se séparent à hauteur du pendentif : l'écrin s'ouvre. ---------- */
+.maitresses--scene .maitresses__piste { height: calc(100vh + var(--n, 6) * 105vh); height: calc(100svh + var(--n, 6) * 105svh); }
+.maitresses--scene .maitresses__scene { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; --film-h: calc(100svh - 96px); --couture: calc(var(--film-h) * .5); }
+.maitresses--scene .maitresses__liste { position: absolute; inset: 0; }
+.maitresses--scene .maitresse { position: absolute; inset: 0; padding: 0; opacity: 0; pointer-events: none; }
+.maitresses--scene .maitresse.est-active { opacity: 1; pointer-events: auto; }
+.maitresses--scene .maitresse__lien { position: absolute; inset: 0; display: block; }
+.maitresses--scene .maitresse__media { position: absolute; top: 0; left: 0; right: 0; height: var(--film-h); aspect-ratio: auto; }
+.maitresses--scene .maitresse__img, .maitresses--scene .maitresse__toile { transform: scale(var(--zoom, 1)); will-change: transform; }
+.maitresses--scene .maitresse__texte { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding-bottom: max(20px, env(safe-area-inset-bottom)); transform: translate3d(0, var(--monte, 0px), 0); will-change: transform; }
+.maitresses--scene .maitresses__volet { display: block; position: absolute; left: 0; right: 0; z-index: 3; background: #000; pointer-events: none; will-change: transform; }
+.maitresses--scene .maitresses__volet--haut { top: 0; height: var(--couture); border-bottom: 1px solid var(--or); transform: translate3d(0, calc(var(--ouvert, 0) * -100.5%), 0); }
+.maitresses--scene .maitresses__volet--bas { top: var(--couture); bottom: 0; border-top: 1px solid var(--or); transform: translate3d(0, calc(var(--ouvert, 0) * 100.5%), 0); }
 @media (min-width: 990px) {
-  .maitresse__lien { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .maitresse__texte { align-content: center; gap: 14px; padding: 0 clamp(48px, 7vw, 128px); }
-  .maitresse__nom { font-size: clamp(68px, 7.4vw, 148px); }
-  .maitresse:nth-child(even) .maitresse__media { order: 2; }
+  .maitresses--scene .maitresses__scene { --film-h: 100svh; --couture: 50svh; }
+  .maitresses--scene .maitresse__media { right: 50%; height: 100%; }
+  .maitresses--scene .maitresse__texte { left: 50%; top: 0; padding-bottom: 0; }
 }
 
 /* ---------- 7. Histoire épinglée : la scène reste en place, une étape à la fois (classe posée par motion.js) ---------- */
