@@ -1,0 +1,119 @@
+/* Breslev Gang — le mouvement du site (11 novembre 2026). Chargé sur toutes les pages, sans bibliothèque.
+   Tout est derrière html.anim (posé par motion.js) ou derrière prefers-reduced-motion : sans script ou si l'appareil
+   demande moins d'animations, la page s'affiche entière et fixe. Seules opacity, transform et clip-path bougent.
+     1. passage d'une page à l'autre        4. photos qui se dévoilent
+     2. ouverture de l'accueil              5. pièces maîtresses (un bijou par écran)
+     3. titres mot à mot, entrée du héros   6. grilles bord à bord, filet de progression, boutons */
+
+:root { --ease-film: cubic-bezier(.22, .8, .2, 1); --ease-rideau: cubic-bezier(.76, 0, .24, 1); }
+
+/* ---------- 1. D'une page à l'autre : fondu, et la photo de la carte devient celle de la fiche ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition { pointer-events: none; }
+  ::view-transition-old(root) { animation: .26s ease both vt-sortie; }
+  ::view-transition-new(root) { animation: .55s var(--ease-film) both vt-entree; }
+  ::view-transition-group(piece) { animation-duration: .6s; animation-timing-function: var(--ease-film); }
+  .product__track > .product__slide:first-child img { view-transition-name: piece; }
+}
+@keyframes vt-sortie { to { opacity: 0; } }
+@keyframes vt-entree { from { opacity: 0; transform: translateY(16px); } }
+
+/* ---------- 2. Ouverture de l'accueil : rideau blanc, logo, filet, puis le rideau se lève ---------- */
+.intro { position: fixed; inset: 0; z-index: 2000; display: none; place-items: center; background: var(--bg); pointer-events: none; }
+html.intro-joue { --intro-d: 1.45s; }
+html.intro-joue .intro { display: grid; }
+html.intro-vue .intro { display: none; }
+.intro__logo { width: min(66vw, 440px); animation: intro-logo 1.15s var(--ease-film) both; }
+.intro__logo svg, .intro__logo img { display: block; width: 100%; height: auto; }
+.intro::after {
+  content: ''; position: absolute; left: 50%; top: calc(50% + min(16vw, 110px)); width: min(34vw, 200px); height: 1px;
+  background: var(--text); transform: translateX(-50%) scaleX(0); animation: intro-filet 1.15s .15s var(--ease-rideau) both;
+}
+html.intro-fin .intro { transform: translateY(-100%); transition: transform .85s var(--ease-rideau); }
+@keyframes intro-logo { from { opacity: 0; transform: scale(1.07); filter: blur(8px); } }
+@keyframes intro-filet { to { transform: translateX(-50%) scaleX(1); } }
+
+/* ---------- 3. Entrée du héros, titres mot à mot ---------- */
+html.anim .hero__gothique, html.anim .hero__phrase, html.anim .hero__lien {
+  animation: monte 1s var(--ease-film) both; animation-delay: calc(var(--intro-d, 0s) + var(--d, .1s));
+}
+html.anim .hero__phrase { --d: .28s; }
+html.anim .hero__lien { --d: .46s; }
+html.anim .hero__poster, html.anim .hero__video { animation: hero-zoom 2.6s var(--ease-film) both; animation-delay: var(--intro-d, 0s); }
+/* au défilement : la vidéo avance, le logo s'efface (valeur --hero-p posée par motion.js sur la section) */
+html.anim .hero__media { transform: scale(calc(1 + var(--hero-p, 0) * .12)); }
+html.anim .hero__overlay { transform: translateY(calc(var(--hero-p, 0) * -64px)); opacity: calc(1 - var(--hero-p, 0) * 1.5); }
+@keyframes monte { from { opacity: 0; transform: translateY(30px); } }
+@keyframes hero-zoom { from { transform: scale(1.14); } }
+
+html.anim .mots .mot { display: inline-block; overflow: hidden; vertical-align: top; padding: .14em 0 .08em; margin: -.14em 0 -.08em; }
+html.anim .mots .mot > span { display: inline-block; transform: translateY(112%); transition: transform .95s var(--ease-film); transition-delay: calc(var(--i, 0) * 50ms); }
+html.anim .mots.vu .mot > span { transform: none; }
+
+/* ---------- 4. Photos qui se dévoilent (rideau qui monte, léger recul) ---------- */
+html.anim .card.reveal-pending { opacity: 1; transform: none; }
+html.anim .card.reveal-pending .card__media { clip-path: inset(100% 0 0 0); }
+html.anim .card.reveal-pending .card__media img { transform: scale(1.2); }
+html.anim .card.reveal-pending .card__name, html.anim .card.reveal-pending .card__price,
+html.anim .card.reveal-pending .card__swatches, html.anim .card.reveal-pending .card__add { opacity: 0; transform: translateY(14px); }
+html.anim .card.reveal-in .card__media { clip-path: inset(0 0 0 0); transition: clip-path 1.05s var(--ease-film); }
+html.anim .card.reveal-in .card__media img { transition: transform 1.4s var(--ease-film), opacity .4s var(--ease); }
+html.anim .card.reveal-in .card__name, html.anim .card.reveal-in .card__price,
+html.anim .card.reveal-in .card__swatches, html.anim .card.reveal-in .card__add { transition: opacity .7s .3s var(--ease-film), transform .7s .3s var(--ease-film); }
+html.anim .card.reveal-in:nth-child(even) .card__media { transition-delay: .09s; }
+
+html.anim .voile { clip-path: inset(100% 0 0 0); }
+html.anim .voile img, html.anim .voile video { transform: scale(1.16); }
+html.anim .voile.vu { clip-path: inset(0 0 0 0); transition: clip-path 1.1s var(--ease-film); }
+html.anim .voile.vu img, html.anim .voile.vu video { transform: none; transition: transform 1.5s var(--ease-film); }
+
+/* ---------- 5. Pièces maîtresses : chaque écran reste en place, le suivant glisse par-dessus ---------- */
+.maitresses__liste { margin: 0; padding: 0; list-style: none; }
+.maitresse { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); overflow: hidden; background: var(--bg); }
+/* un temps d'arrêt entre deux pièces : la pièce reste entière à l'écran avant que la suivante ne monte */
+.maitresse + .maitresse { margin-top: 22vh; margin-top: 22svh; }
+.maitresse__lien { display: grid; grid-template-rows: minmax(0, 1fr) auto; height: 100%; color: inherit; text-decoration: none; }
+.maitresse__media { position: relative; overflow: hidden; background: #000; }
+.maitresse__img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%;
+  transform: scale(calc(1.08 - var(--couvert, 0) * .08)); opacity: calc(1 - var(--couvert, 0) * .45);
+}
+.maitresse__texte { display: grid; gap: 8px; padding: 18px var(--gutter) max(22px, env(safe-area-inset-bottom)); }
+.maitresse__num { margin: 0; color: var(--grey); }
+.maitresse__nom { margin: 0; font-size: clamp(44px, 13.5vw, 128px); line-height: .92; }
+.maitresse__prix { margin: 0; color: var(--grey); font-size: 15px; }
+.maitresse__cta { justify-self: start; margin-top: 6px; }
+/* (html.anim-js : posé par motion.js, pour ne rien cacher si le script ne se charge pas) */
+html.anim-js .maitresse__num, html.anim-js .maitresse__prix, html.anim-js .maitresse__cta { opacity: 0; transform: translateY(12px); transition: opacity .7s .35s var(--ease-film), transform .7s .35s var(--ease-film); }
+html.anim-js .maitresse.vu .maitresse__num, html.anim-js .maitresse.vu .maitresse__prix, html.anim-js .maitresse.vu .maitresse__cta { opacity: 1; transform: none; }
+@media (min-width: 990px) {
+  .maitresse__lien { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .maitresse__texte { align-content: center; gap: 14px; padding: 0 clamp(40px, 6vw, 110px); }
+  .maitresse__nom { font-size: clamp(64px, 7.6vw, 150px); }
+  .maitresse:nth-child(even) .maitresse__media { order: 2; }
+}
+
+/* ---------- 6. Grilles bord à bord, filet de progression, boutons ---------- */
+html .catalogue__grid { column-gap: 2px; row-gap: 38px; margin-inline: calc(-1 * var(--gutter)); }
+html .catalogue__grid .card__media { margin-bottom: 14px; }
+html .catalogue__grid .card__name, html .catalogue__grid .card__price, html .catalogue__grid .card__swatches { padding-inline: 14px; }
+html .catalogue__grid .card__add { margin-inline: 14px; }
+@media (min-width: 750px) {
+  html .catalogue__grid { column-gap: 2px; row-gap: 64px; }
+  html .catalogue__grid .card__name, html .catalogue__grid .card__price, html .catalogue__grid .card__swatches { padding-inline: 20px; }
+  html .catalogue__grid .card__add { margin-inline: 20px; }
+}
+
+.progression { position: fixed; inset: 0 0 auto 0; z-index: 50; height: 1px; background: var(--text); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
+[dir='rtl'] .progression { transform-origin: 100% 50%; }
+html.anim .btn { transition: transform .25s var(--ease-film), background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+html.anim .btn:active { transform: scale(.975); }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none !important; }
+  .maitresse__img { transform: none; opacity: 1; }
+}
+
+/* ---------- 7. Fiche produit : la photo principale arrive en léger recul ---------- */
+html.anim .product__track > .product__slide:first-child img { animation: hero-zoom 1.5s var(--ease-film) backwards; }
