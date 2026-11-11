@@ -1,5 +1,5 @@
 /* Breslev Gang — catalogue : sélection de l'accueil, catégories, liste paginée, filtres (panneau mobile), « Voir plus ».
-   Complète theme.css (grille .catalogue__grid, .filters, .filter, .card). Couleurs : celles de theme.css (site noir). */
+   Complète theme.css (grille .catalogue__grid, .filters, .filter, .card). Fond blanc, texte noir, gris #767676. */
 
 /* Barre : compte à gauche, bouton « Filtrer » à droite (mobile) */
 .catalogue__bar {
@@ -126,19 +126,6 @@ a.filter:not(.is-active):hover { color: var(--black); }
 
 /* Accueil : sélection puis catégories */
 .catalogue--accueil .catalogue__grid { row-gap: 48px; }
-/* Téléphone d'abord (11 novembre, soir) : à l'accueil, les pièces et les catégories se font glisser de côté, en grand
-   (une carte et le bord de la suivante), au lieu de petites vignettes sur deux colonnes ; un filet or suit le geste. */
-@media (max-width: 749px) {
-  .catalogue--accueil .catalogue__grid,
-  .catalogue--accueil .categories {
-    display: flex; gap: 2px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
-    scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  }
-  .catalogue--accueil .catalogue__grid::-webkit-scrollbar, .catalogue--accueil .categories::-webkit-scrollbar { display: none; }
-  .catalogue--accueil .catalogue__grid > .card { flex: 0 0 78vw; scroll-snap-align: start; }
-  .catalogue--accueil .categories > li { flex: 0 0 62vw; scroll-snap-align: start; }
-  .catalogue--accueil .catalogue__grid > .card:last-child, .catalogue--accueil .categories > li:last-child { scroll-snap-align: end; }
-}
 .catalogue__subtitle {
   margin-top: clamp(96px, 16vw, 200px);
   margin-bottom: clamp(24px, 5vw, 48px);

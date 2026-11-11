@@ -195,10 +195,7 @@
 /* Téléphone : le nom et le prix dès le premier écran (jury n°2) — photo limitée à 56 % de la hauteur, vignettes
    retirées (on fait glisser les photos ; la barre d'achat ne les cache plus), fil d'Ariane resserré. */
 @media (max-width: 749px) {
-  /* 11 novembre, soir (téléphone d'abord) : la photo occupe toute la largeur, sans marges noires ; elle est cadrée sur
-     la pièce (le haut de la chaîne et le bas du socle sortent du cadre) ; le nom et le prix restent au premier écran */
-  .product__slide { max-height: 58svh; }
-  .product__slide img { object-fit: cover; object-position: 50% 60%; }
+  .product__slide { max-height: 52svh; }
   .product__details { padding-bottom: 104px; }        /* rien ne reste sous la barre d'achat */
   .product__thumbs { display: none; }
   .product__details .breadcrumb { margin-bottom: 8px; }
