@@ -145,8 +145,11 @@
      En attendant, et sur un appareil sans carte graphique utilisable, les faces en image font le travail. */
   var tel3d = null, finesse = 0, haut3d = w.BFTelephone ? w.BFTelephone.cotes.H + 14 : 76.59;
   function demarrer3d() {
+    /* Page chargée dans un cadre encore fermé (taille nulle) : on attend la première vraie mesure. */
+    if (!svh || !em) { S.attente3d = true; return; }
+    S.attente3d = false;
     S.pret3d = true;                   // le téléphone peut apparaître : 3D ou faces en image, le choix est fait
-    if (tel3d || !w.BFTelephone || !$('#tel3d') || !em) return;
+    if (tel3d || !w.BFTelephone || !$('#tel3d')) return;
     var t3 = w.BFTelephone.creer($('#tel3d'));
     if (!t3) return;
     /* Finesse du dessin : celle de l'écran (jusqu'à 3), réduite si une image coûte plus de 9 ms sur cet appareil. */
@@ -289,9 +292,10 @@
   sonde.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
   d.body.appendChild(sonde);
   function mesurer() {
-    var y = w.scrollY;
-    svh = sonde.offsetHeight || w.innerHeight;
-    vw = root.clientWidth;
+    var y = w.scrollY, h0 = sonde.offsetHeight || w.innerHeight, l0 = root.clientWidth;
+    if (!h0 || !l0) return;            // cadre de taille nulle (page pas encore affichée) : on remesurera à l'ouverture
+    svh = h0;
+    vw = l0;
     bureau = vw >= 900;
     stageH = stage.offsetHeight;
     pin = parseFloat(w.getComputedStyle(beats[1].inner).top) || (bureau ? svh * .27 : stageH + 20);
@@ -314,6 +318,7 @@
     rouleFiche = Math.min(rouleMax, (srListe.offsetTop - 6) / em);
     mesurerScenes();
     sale = true;
+    if (S.attente3d) demarrer3d();
   }
 
   /* État du téléphone. */
@@ -457,6 +462,7 @@
      pour que le téléphone suive le doigt de la même façon à 30, 60 ou 120 images/s. */
   var horloge = { t: 0, raf: 0, rafMoy: 16.7, relais: 0, actif: true };
   function avancer() {
+    if (!svh) return;                  // pas encore mesuré : la page est dans un cadre de taille nulle
     var t = w.performance.now(), dt = horloge.t ? t - horloge.t : 16.7;
     if (horloge.t && dt < (horloge.relais ? 12 : 6)) return;   // déjà calculé pour cette image
     horloge.t = t;
@@ -477,6 +483,10 @@
     S.pyC += (S.py - S.pyC) * kp;
     var zCible = bureau ? 1 : Math.max(s0, S.z);
     if (!S.pret) S.zC = zCible;
+    /* Filet de sécurité : une valeur invalide ne doit jamais rester bloquée dans les lissages. */
+    if (S.rotC !== S.rotC || S.tiltC !== S.tiltC || S.zC !== S.zC || S.pxC !== S.pxC) {
+      S.rotC = S.rot === S.rot ? S.rot : 0; S.tiltC = 0; S.rollC = 0; S.pxC = 0; S.pyC = 0; S.px = 0; S.py = 0; S.zC = zCible;
+    }
     S.zC += (zCible - S.zC) * kz;
     if (Math.abs(zCible - S.zC) < .0006) S.zC = zCible;
     var zTxt = S.zC.toFixed(4);
