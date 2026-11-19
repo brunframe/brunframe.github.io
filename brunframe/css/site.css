@@ -630,3 +630,8 @@ html[data-head="light"] .head__cta{background:#111111;color:#FAFAF7}
   .wk-img--b{display:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* Rendez-vous de 15 minutes : bouton secondaire sous le bouton WhatsApp de la section Contact. */
+.cta--rdv{margin-top:28px}
+.cta--rdv .btn{min-height:52px;padding:12px 24px;font-size:16px}
+@media (max-width:480px){.cta--rdv .btn{width:100%}}
