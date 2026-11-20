@@ -1,0 +1,538 @@
+/* Breslev Gang — vitrine des colliers (20 novembre 2026, sections/vitrine-colliers.liquid).
+   Une scène photographique : l'image du mur découpée en cinq bandes (une niche par bande), posées côte à côte.
+   Toutes les mesures partent de --u, la taille à l'écran d'un pixel de l'image (1672 x 941, plus 92 lignes de pierre
+   ajoutées en haut pour passer sous l'en-tête du site).
+     ligne   (600 px et plus) : les niches sur une seule rangée, le mur entier visible sous l'en-tête ;
+     étages  (moins de 600 px) : deux niches, puis les autres, chacune cadrée sur son spot, son buste et son pendentif ;
+     colonnes (moins de 350 px) : deux par rangée, la dernière centrée.
+   Le détail est un dialogue plein écran : le mur lui-même s'avance (transform posé par vitrine-colliers.js), la fiche
+   arrive à gauche (écran large) ou sous le bijou (écran en hauteur). Seule exception au fond blanc du site, voulue
+   par le propriétaire : cette section reprend le noir de l'image. */
+
+.template-index .main > .shopify-section.section-vitrine,
+.section-vitrine { background: #070605; }
+/* fiche ouverte : au-dessus des sections voisines, sous l'en-tête du site (40) qui reste visible et utilisable */
+.template-index .main > .shopify-section.section-vitrine.vitrine-ouverte,
+.section-vitrine.vitrine-ouverte { position: relative; z-index: 35; }
+/* gros plan sur les photos d'origine : plein écran, au-dessus de l'en-tête */
+.template-index .main > .shopify-section.section-vitrine.vitrine-loupe,
+.section-vitrine.vitrine-loupe { position: relative; z-index: 60; }
+
+.vitrine {
+  --vit-noir: #070605;
+  --vit-texte: #F2EFEA;
+  --vit-gris: #A8A195;
+  --vit-filet: rgba(242, 239, 234, 0.24);
+  --vit-courbe: cubic-bezier(0.22, 1, 0.36, 1);
+  --mur-l: 1672;
+  --mur-h: min(calc(100vw * 941 / var(--mur-l)), calc(100vh - var(--header-h)));
+  --mur-h: min(calc(100vw * 941 / var(--mur-l)), calc(100svh - var(--header-h)));
+  --u: calc(var(--mur-h) / 941);
+  --pad: max(0px, calc(var(--header-h) + 8px - 100 * var(--u)));
+  display: block;
+  position: relative;
+  background: var(--vit-noir);
+  color: var(--vit-texte);
+}
+
+/* ---------- La scène et le mur ---------- */
+.vitrine__scene {
+  position: relative;
+  height: calc(var(--pad) + var(--mur-h));
+  overflow: hidden;
+  background: var(--vit-noir);
+}
+/* pierre des bords, quand l'écran est plus large que le mur : le bord du mur en miroir, qui se perd dans l'ombre */
+.vitrine__scene::before,
+.vitrine__scene::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--pad) - 92 * var(--u));
+  height: calc(1033 * var(--u));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+.vitrine__scene::before {
+  right: calc(50% + var(--mur-l) * var(--u) / 2 - 0.5px);
+  width: calc(72 * var(--u));
+  background-image: linear-gradient(to left, rgba(7, 6, 5, 0) 0%, rgba(7, 6, 5, 0.55) 45%, #070605 100%), var(--pierre-g);
+}
+.vitrine__scene::after {
+  left: calc(50% + var(--mur-l) * var(--u) / 2 - 0.5px);
+  width: calc(56 * var(--u));
+  background-image: linear-gradient(to right, rgba(7, 6, 5, 0) 0%, rgba(7, 6, 5, 0.55) 45%, #070605 100%), var(--pierre-d);
+}
+/* le gabarit garde la place du mur : c'est lui qu'on mesure pour partir de la bonne place et y revenir */
+.vitrine__gabarit,
+.vitrine__mur {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--pad) - 92 * var(--u));
+  width: calc(var(--mur-l) * var(--u));
+  height: calc(1033 * var(--u));
+  margin: 0 0 0 calc(var(--mur-l) * var(--u) / -2);
+}
+.vitrine__gabarit { visibility: hidden; pointer-events: none; }
+.vitrine__mur { transform-origin: 0 0; backface-visibility: hidden; }
+
+.vitrine__niches {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vitrine__niche {
+  --wx0: 0;
+  --wy0: 0;
+  --ww: var(--l);
+  --wh: 1033;
+  position: relative;
+  flex: 0 0 auto;
+  width: calc(var(--ww) * var(--u));
+  height: calc(var(--wh) * var(--u));
+  overflow: hidden;
+  background: var(--vit-noir);
+}
+.vitrine__cible {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.vitrine__cible:focus { outline: none; }
+.vitrine__cible:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--or);
+  pointer-events: none;
+}
+.vitrine__image {
+  position: absolute;
+  left: calc(var(--wx0) * var(--u) * -1);
+  top: calc(var(--wy0) * var(--u) * -1);
+  width: calc(var(--l) * var(--u) + 0.6px);            /* une demi-ligne de recouvrement : jamais de jour entre deux bandes */
+  height: calc(1033 * var(--u));
+}
+.vitrine__image img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+
+/* lumière de la niche, reflet du métal sous le pointeur, ombre des voisines */
+.vitrine__lueur,
+.vitrine__reflet,
+.vitrine__ombre {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 190ms ease-out;
+}
+.vitrine__lueur {
+  background: radial-gradient(
+    ellipse calc(190 * var(--u)) calc(460 * var(--u)) at calc((var(--ax) - var(--wx0)) * var(--u)) calc((350 - var(--wy0)) * var(--u)),
+    rgba(255, 210, 150, 0.26), rgba(255, 210, 150, 0.1) 45%, rgba(255, 210, 150, 0) 72%
+  );
+  mix-blend-mode: screen;
+}
+.vitrine__reflet {
+  background: radial-gradient(circle calc(58 * var(--u)) at var(--px, 50%) var(--py, 62%), rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.12) 55%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: color-dodge;        /* éclaircit le métal, presque pas le velours */
+}
+.vitrine__ombre { background: #070605; }
+.vitrine__nom {
+  position: absolute;
+  left: calc((var(--ax) - var(--wx0)) * var(--u));
+  top: calc((866 - var(--wy0)) * var(--u));
+  width: max-content;
+  max-width: calc(var(--ww) * var(--u) - 12px);
+  transform: translate(-50%, -50%) translateY(4px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(12px, calc(19 * var(--u)), 17px);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  color: var(--vit-texte);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 190ms ease-out, transform 190ms ease-out;
+}
+.vitrine__secours { display: none; }
+.vitrine__invite {
+  position: absolute;
+  right: max(var(--gutter), env(safe-area-inset-right), calc(50% - var(--mur-l) * var(--u) / 2 + 28px));
+  bottom: max(20px, calc(22 * var(--u)));
+  z-index: 1;
+  margin: 0;
+  color: var(--vit-gris);
+  pointer-events: none;
+  transition: opacity 240ms ease-out;
+}
+
+/* survol (souris) et focus clavier : la niche gagne en lumière, ses voisines en perdent un peu, son nom apparaît */
+@media (hover: hover) and (pointer: fine) {
+  .vitrine:not(.est-ouverte) .vitrine__niches:has(.vitrine__cible:hover) .vitrine__niche:not(:hover) .vitrine__ombre { opacity: 0.36; }
+  .vitrine:not(.est-ouverte) .vitrine__niche:hover .vitrine__lueur,
+  .vitrine:not(.est-ouverte) .vitrine__niche:hover .vitrine__reflet { opacity: 1; }
+  .vitrine:not(.est-ouverte) .vitrine__niche:hover .vitrine__nom { opacity: 1; transform: translate(-50%, -50%); }
+}
+.vitrine:not(.est-ouverte) .vitrine__niches:has(.vitrine__cible:focus-visible) .vitrine__niche:not(:focus-within) .vitrine__ombre { opacity: 0.36; }
+.vitrine:not(.est-ouverte) .vitrine__niche:focus-within .vitrine__cible:focus-visible .vitrine__lueur { opacity: 1; }
+.vitrine:not(.est-ouverte) .vitrine__niche:focus-within .vitrine__cible:focus-visible .vitrine__nom { opacity: 1; transform: translate(-50%, -50%); }
+/* au doigt, pas de survol : les noms restent lisibles sous chaque niche */
+@media (hover: none) {
+  .vitrine__nom { opacity: 0.86; transform: translate(-50%, -50%); }
+}
+
+/* ---------- Étages : deux niches, puis les autres (téléphone en hauteur) ---------- */
+@media (max-width: 599px) {
+  .vitrine {
+    --u1: calc(100vw / var(--vitrine-rang-1) / 306);
+    --u2: calc(100vw / var(--vitrine-rang-2) / 306);
+    --etages-h: calc(812 * var(--u1) + 881 * var(--u2));
+  }
+  .vitrine--n1, .vitrine--n2, .vitrine--n3 { --etages-h: calc(941 * var(--u2)); }
+  .vitrine__scene { height: var(--etages-h); }
+  .vitrine__scene::before, .vitrine__scene::after { content: none; }
+  .vitrine__gabarit,
+  .vitrine__mur { left: 0; top: 0; width: 100vw; height: var(--etages-h); margin: 0; }
+  .vitrine__niches { flex-wrap: wrap; align-content: flex-start; }
+  .vitrine__niche { --wx0: calc(var(--ax) - 153); --ww: 306; }
+  .vitrine__niche--rang-1 { --u: var(--u1); --wy0: 80; --wh: 812; }
+  .vitrine__niche--rang-2 { --u: var(--u2); --wy0: 152; --wh: 881; }
+  .vitrine--n1 .vitrine__niche--rang-2, .vitrine--n2 .vitrine__niche--rang-2, .vitrine--n3 .vitrine__niche--rang-2 { --wy0: 92; --wh: 941; }
+  .vitrine__invite { right: auto; left: 50%; bottom: 14px; transform: translateX(-50%); white-space: nowrap; }
+  .vitrine__nom { font-size: 13px; }
+}
+/* Colonnes : sous 350 px de large, deux niches par rangée, la dernière centrée */
+@media (max-width: 349px) {
+  .vitrine { --u1: calc(100vw / 612); --u2: var(--u1); --etages-h: calc((832 + 740 + 881) * var(--u1)); }
+  .vitrine--n4 { --etages-h: calc((832 + 881) * var(--u1)); }
+  .vitrine--n1, .vitrine--n2, .vitrine--n3 { --u1: calc(100vw / var(--vitrine-rang-2) / 306); --etages-h: calc(941 * var(--u1)); }
+  .vitrine__niche--rang-1 { --wy0: 60; --wh: 832; }
+  .vitrine__niche--rang-2 { --u: var(--u1); --wy0: 152; --wh: 740; }
+  .vitrine--n5 .vitrine__niche--derniere { --wh: 881; margin: 0 auto; }
+  .vitrine--n4 .vitrine__niche--rang-2 { --wh: 881; }
+  .vitrine--n1 .vitrine__niche--rang-2, .vitrine--n2 .vitrine__niche--rang-2, .vitrine--n3 .vitrine__niche--rang-2 { --wy0: 92; --wh: 941; }
+}
+
+/* ---------- Détail : le mur s'avance, la fiche arrive ---------- */
+.vitrine.est-ouverte .vitrine__mur {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 2;
+}
+.vitrine.est-ouverte .vitrine__cible { cursor: default; }
+.vitrine.est-ouverte .vitrine__nom,
+.vitrine.est-ouverte .vitrine__invite { opacity: 0; }
+.vitrine.est-en-detail .vitrine__niche .vitrine__ombre { opacity: 1; transition-duration: 620ms; transition-timing-function: var(--vit-courbe); }
+/* la niche choisie garde sa lumière : son ombre n'est qu'un fondu sur ses bords, à l'aller comme au retour */
+.vitrine.est-ouverte .vitrine__niche.est-choisie .vitrine__ombre {
+  background: linear-gradient(90deg, #070605 0%, rgba(7, 6, 5, 0.74) 9%, rgba(7, 6, 5, 0) 26%, rgba(7, 6, 5, 0) 74%, rgba(7, 6, 5, 0.74) 91%, #070605 100%);
+}
+.vitrine:not(.est-en-detail).est-ouverte .vitrine__ombre { transition-duration: 480ms; }
+
+.vitrine__fond {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: var(--vit-noir);
+  opacity: 0;
+  transition: opacity 480ms ease-out;
+}
+.vitrine.est-en-detail .vitrine__fond { opacity: 1; transition-duration: 380ms; }
+
+.vitrine__panneau {
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: clamp(280px, 27vw, 430px);
+  padding: calc(var(--header-h) + 24px) 16px max(28px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--vit-texte);
+  pointer-events: none;
+}
+.vitrine.est-en-detail .vitrine__panneau { pointer-events: auto; }
+/* la fiche et le retour sont centrés en hauteur par des marges automatiques : si la place manque (écran bas), elles
+   tombent à zéro et le panneau défile depuis le haut, sans rien couper */
+.vitrine__fiche { display: grid; gap: 14px; justify-items: start; flex: 0 0 auto; margin-top: auto; }
+.vitrine__fiche[hidden] { display: none; }
+.vitrine__fiche > *,
+.vitrine__retour {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 150ms ease-in, transform 150ms ease-in;
+}
+.vitrine__fiche.est-visible > *,
+.vitrine__fiche.est-visible ~ .vitrine__retour {
+  opacity: 1;
+  transform: none;
+  transition: opacity 230ms ease-out, transform 230ms var(--vit-courbe);
+}
+.vitrine__fiche.est-visible > :nth-child(2) { transition-delay: 40ms; }
+.vitrine__fiche.est-visible > :nth-child(n + 3) { transition-delay: 110ms; }
+.vitrine__fiche.est-visible > .vitrine__actions { transition-delay: 180ms; }
+.vitrine__fiche.est-visible ~ .vitrine__retour { transition-delay: 240ms; }
+
+.vitrine__numero { margin: 0; color: var(--vit-gris); }
+.vitrine__numero-or { color: var(--or); }
+.vitrine__titre {
+  margin: 0;
+  font-size: clamp(34px, 3.5vw, 56px);
+  color: var(--vit-texte);
+  text-wrap: balance;
+  outline: none;
+}
+.vitrine__texte {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 300;
+  color: #CFC9BD;
+}
+.vitrine__faits { margin: 4px 0 0; display: grid; gap: 6px; font-size: 13px; }
+.vitrine__faits > div { display: flex; gap: 14px; align-items: baseline; }
+.vitrine__faits dt {
+  min-width: 92px;
+  font-family: var(--font-text);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vit-gris);
+}
+.vitrine__faits dd { margin: 0; color: var(--vit-texte); font-weight: 300; }
+.vitrine__prix { margin: 4px 0 0; display: flex; gap: 14px; align-items: baseline; font-size: 16px; font-weight: 300; }
+.vitrine__prix .price__compare { color: var(--vit-gris); margin-right: 8px; }
+.vitrine__epuise { color: var(--vit-gris); }
+.vitrine__actions { display: grid; gap: 4px; justify-items: start; margin-top: 10px; }
+.vitrine .vitrine__bouton {
+  border-color: var(--vit-texte);
+  background: var(--vit-texte);
+  color: #0A0A0A;
+}
+@media (hover: hover) {
+  .vitrine .vitrine__bouton:hover { background: transparent; color: var(--vit-texte); }
+}
+.vitrine .link-btn { color: var(--vit-texte); text-decoration-color: var(--vit-filet); background: none; border: 0; padding: 0; cursor: pointer; }
+.vitrine a, .vitrine button { -webkit-tap-highlight-color: transparent; }
+.vitrine__retour { flex: 0 0 auto; margin-top: 26px; margin-bottom: auto; align-self: flex-start; color: var(--vit-gris); }
+
+/* écran en hauteur : le bijou en haut, la fiche dessous, dans le sens de lecture ; le retour reste sous le pouce.
+   Si la fiche est plus longue que la place (petit téléphone), elle défile seule au-dessus du retour. */
+@media (orientation: portrait), (max-width: 699px) and (min-height: 521px) {
+  .vitrine__panneau {
+    top: var(--vit-zone, 50vh);
+    width: auto;
+    right: 0;
+    overflow: visible;
+    padding: 0;
+  }
+  /* le fond de la fiche arrive en fondu, avec l'ombre des autres niches : rien ne coupe le mur d'un coup */
+  .vitrine__panneau::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--vit-noir);
+    opacity: 0;
+    transition: opacity 480ms ease-out;
+    pointer-events: none;
+  }
+  .vitrine.est-en-detail .vitrine__panneau::after { opacity: 1; transition-duration: 380ms; }
+  .vitrine__panneau::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 56px;
+    background: linear-gradient(rgba(7, 6, 5, 0), var(--vit-noir));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 380ms ease-out;
+  }
+  .vitrine.est-en-detail .vitrine__panneau::before { opacity: 1; }
+  .vitrine__fiche {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    padding: 12px max(20px, env(safe-area-inset-right)) 8px max(20px, env(safe-area-inset-left));
+    gap: 10px;
+    align-content: start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .vitrine__titre { font-size: clamp(28px, 8.4vw, 40px); }
+  .vitrine__actions { width: 100%; margin-top: 6px; }
+  .vitrine .vitrine__bouton { width: 100%; }
+  .vitrine .vitrine__retour.link-btn {
+    flex: 0 0 auto;
+    align-self: stretch;
+    justify-content: center;
+    margin: 0;
+    min-height: 48px;
+    padding: 4px 20px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(242, 239, 234, 0.1);
+  }
+}
+/* très petit téléphone debout (moins de 600 px de haut) : la fiche se resserre pour tenir sans défiler */
+@media (orientation: portrait) and (max-height: 600px) {
+  .vitrine__fiche { gap: 6px; padding-top: 8px; }
+  .vitrine__titre { font-size: 28px; }
+  .vitrine__texte { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+  .vitrine__faits { gap: 2px; margin-top: 0; }
+  .vitrine__prix { margin-top: 0; }
+  .vitrine .vitrine__bouton { min-height: 46px; }
+  .vitrine__actions { margin-top: 4px; gap: 2px; }
+}
+/* paysage bas (téléphone couché) : la fiche à côté du bijou, serrée, et qui défile si besoin */
+@media (orientation: landscape) and (max-height: 520px) {
+  .vitrine__panneau { width: clamp(250px, 36vw, 340px); padding-top: calc(var(--header-h) + 6px); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .vitrine__fiche { gap: 8px; }
+  .vitrine__titre { font-size: 26px; }
+  .vitrine__texte { display: none; }
+  .vitrine .vitrine__bouton { min-height: 44px; padding: 0 18px; }
+  .vitrine__actions { margin-top: 4px; }
+  .vitrine__faits { gap: 2px; }
+  /* le retour reste visible en bas du panneau, même si la fiche défile */
+  .vitrine .vitrine__retour.link-btn {
+    position: sticky;
+    bottom: calc(-1 * max(12px, env(safe-area-inset-bottom)));
+    align-self: stretch;
+    margin: 6px 0 0 calc(-1 * max(var(--gutter), env(safe-area-inset-left)));
+    padding: 0 0 max(12px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+    background: var(--vit-noir);
+  }
+}
+
+/* ---------- Gros plan : les photos d'origine ---------- */
+.vitrine__loupe {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  background: var(--vit-noir);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+.vitrine__loupe[hidden] { display: none; }
+.vitrine__loupe.est-visible { opacity: 1; }
+.vitrine__loupe-piste {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  outline: none;
+}
+.vitrine__loupe-piste::-webkit-scrollbar { display: none; }
+.vitrine__loupe-vue {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  scroll-snap-align: center;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+  background: var(--vit-noir);
+}
+.vitrine__loupe-vue img { display: block; flex: 0 0 auto; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.vitrine__loupe-vue.est-agrandie { cursor: zoom-out; align-items: flex-start; justify-content: flex-start; }
+.vitrine__loupe-vue.est-agrandie img { max-width: none; max-height: none; width: 200%; height: auto; }
+@media (min-width: 900px) and (orientation: landscape) {
+  .vitrine__loupe-piste { justify-content: center; scroll-snap-type: none; }
+  .vitrine__loupe-vue { flex: 0 1 50%; }
+  .vitrine__loupe-vue:only-child { flex-basis: 100%; }
+}
+.vitrine__loupe-compte {
+  position: absolute;
+  left: max(20px, env(safe-area-inset-left));
+  top: calc(env(safe-area-inset-top) + 18px);
+  margin: 0;
+  padding: 6px 10px;
+  background: rgba(7, 6, 5, 0.6);
+  color: var(--vit-texte);
+}
+.vitrine .vitrine__loupe-fermer {
+  position: absolute;
+  right: max(12px, env(safe-area-inset-right));
+  top: calc(env(safe-area-inset-top) + 8px);
+  min-width: 44px;
+  padding: 0 12px;
+  background: rgba(7, 6, 5, 0.6);
+}
+
+/* ---------- En-tête du site posé sur la pierre ---------- */
+.header.is-sur-vitrine:not(.is-over-hero) {
+  background: linear-gradient(rgba(7, 6, 5, 0.78), rgba(7, 6, 5, 0));
+  color: #F2EFEA;
+}
+.header.is-sur-vitrine:not(.is-over-hero)::after { opacity: 0; }
+.header.is-sur-vitrine:not(.is-over-hero) .header__count { color: inherit; }
+/* fiche ouverte : le logo reste visible, même si la page est encore sur la vidéo d'accueil */
+.header.is-vitrine-ouverte { background: linear-gradient(rgba(7, 6, 5, 0.78), rgba(7, 6, 5, 0)); color: #F2EFEA; }
+.header.is-vitrine-ouverte::after { opacity: 0; }
+.header.is-vitrine-ouverte .header__logo { opacity: 1; pointer-events: auto; }
+.header.is-vitrine-ouverte .header__count { color: inherit; }
+
+/* ---------- Sans JavaScript : une galerie lisible, un lien par niche ---------- */
+.no-js .vitrine__cible { pointer-events: none; }
+.no-js .vitrine__nom { display: none; }
+.no-js .vitrine__secours {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc((846 - var(--wy0)) * var(--u));
+  padding: 10px 6px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--vit-texte);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--vit-filet);
+}
+.no-js .vitrine__invite { display: none; }
+
+/* ---------- Moins d'animations : fondu bref à la place du travelling ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .vitrine__lueur, .vitrine__reflet, .vitrine__ombre, .vitrine__nom, .vitrine__fond, .vitrine__loupe,
+  .vitrine__fiche > *, .vitrine__retour, .vitrine__panneau::before, .vitrine__panneau::after { transition-duration: 120ms !important; transition-delay: 0ms !important; }
+  .vitrine__fiche > *, .vitrine__retour { transform: none !important; }
+}

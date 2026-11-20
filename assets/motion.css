@@ -103,7 +103,9 @@ html.anim .card.reveal-in:nth-child(3n) .card__media { transition-delay: .16s; }
 .histoire--epingle .histoire__steps::after { background: var(--or); transform: scaleX(var(--avance, 0)); transform-origin: 0 50%; }
 [dir='rtl'] .histoire--epingle .histoire__steps::after { transform-origin: 100% 50%; }
 @media (min-width: 750px) {
-  .histoire--epingle .histoire__figure { max-height: 70vh; justify-self: center; height: 70vh; aspect-ratio: 4 / 5; width: auto; }
+  /* 20 novembre : la largeur ne dépasse plus sa colonne (sur tablette debout, 70 % de la hauteur d'écran donnaient une
+     photo plus large que la page, qui défilait de côté) ; sur ordinateur le résultat est le même qu'avant */
+  .histoire--epingle .histoire__figure { justify-self: center; width: min(100%, 56vh); height: auto; max-height: 70vh; aspect-ratio: 4 / 5; }
 }
 
 /* ---------- 8. Grilles bord à bord, filet de progression, boutons ---------- */
