@@ -1,14 +1,14 @@
 {
   "name": "LIFE OS",
   "short_name": "LIFE OS",
-  "description": "Journal, habitudes, stats et plan sur 90 jours.",
+  "description": "Tâches, sport, argent et plan sur 90 jours. Tout reste sur ton iPhone.",
   "lang": "fr",
   "start_url": "./#aujourdhui",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFFFFF",
-  "theme_color": "#FFFFFF",
+  "background_color": "#EEEEF1",
+  "theme_color": "#EEEEF1",
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },

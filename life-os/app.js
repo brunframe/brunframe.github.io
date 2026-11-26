@@ -1,8 +1,7 @@
-/* LIFE OS · Maison — registre personnel.
-   Code public, aucune donnée personnelle ici. Deux stockages possibles, même structure :
-   - dans claude.ai : la base privée de l'artefact (documents systeme/plan, jours/AAAA-MM, semaines/AAAA) ;
-   - sur GitHub Pages : un dépôt GitHub privé (plan.json, jours/AAAA-MM.json, semaines/AAAA.json),
-     lu et écrit avec une clé gardée sur l'appareil. */
+/* LIFE OS — registre personnel. Code public, aucune donnée personnelle ici.
+   - App installée depuis Safari : tout est enregistré sur l'iPhone (localStorage), aucun compte, aucune clé.
+     Le plan arrive une seule fois, chiffré (plan.enc.json), ouvert par le code donné par Claude.
+   - Dans claude.ai : la base privée de l'artefact (systeme/plan, jours/AAAA-MM, semaines/AAAA…). */
 (function () {
   "use strict";
 
@@ -39,55 +38,32 @@
   function avg(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; }
   var COCHE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.8"/></svg>';
 
-  /* ================= Stockage local ================= */
+  /* ================= Stockage ================= */
   var LS = {
     get: function (k) { try { var v = localStorage.getItem("los:" + k); return v ? JSON.parse(v) : null; } catch (e) { return null; } },
-    set: function (k, v) { try { localStorage.setItem("los:" + k, JSON.stringify(v)); return true; } catch (e) { return false; } }
+    set: function (k, v) { try { localStorage.setItem("los:" + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+    del: function (k) { try { localStorage.removeItem("los:" + k); } catch (e) { /* rien */ } }
   };
-  var cfg = LS.get("cfg") || { token: "", repo: "brunframe/BRUNFRAME-STUDION", dir: "life-os-data" };
-  if (cfg.dir == null) cfg.dir = cfg.repo === "brunframe/life-os-data" ? "" : "life-os-data";
-  function ghPath(p) { var d = (cfg.dir || "").replace(/^\/+|\/+$/g, ""); return d ? d + "/" + p : p; }
+  LS.del("cfg"); /* ancienne connexion GitHub : aucune clé n'est gardée sur l'appareil */
   var FKEY = "files";
   var files = LS.get(FKEY) || {};
-  var saveTimer = null;
-  function persist() { clearTimeout(saveTimer); saveTimer = setTimeout(function () { LS.set(FKEY, files); }, 150); }
+  var saveTimer = null, saveOk = true;
+  function saveNow() { clearTimeout(saveTimer); saveOk = LS.set(FKEY, files); }
+  function persist() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 150); }
   function file(path) { if (!files[path]) files[path] = { sha: null, data: {}, dirty: {}, pulledAt: 0 }; return files[path]; }
 
-  /* ================= Stockages distants ================= */
+  /* Deux modes, même structure de données :
+     - "local" : l'app installée depuis Safari. Tout reste sur l'iPhone, rien à configurer.
+     - "db"    : la version claude.ai, qui enregistre dans la base privée de l'artefact. */
   var B = { kind: null, db: null };
-  function b64enc(str) { var bytes = new TextEncoder().encode(str), bin = ""; for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
-  function b64dec(b64) { var bin = atob(String(b64).replace(/\s/g, "")), bytes = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
   function httpErr(status) { var e = new Error("http " + status); e.status = status; return e; }
   function dbId(path) { return path === "plan.json" ? "systeme/plan" : path.replace(/\.json$/, ""); }
-  function gh(method, path, body) {
-    return fetch("https://api.github.com/repos/" + cfg.repo + "/contents/" + ghPath(path), {
-      method: method, cache: "no-store",
-      headers: Object.assign({ "Authorization": "Bearer " + cfg.token, "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" }, body ? { "Content-Type": "application/json" } : {}),
-      body: body ? JSON.stringify(body) : undefined
-    });
-  }
-  function remoteGet(path) {
-    if (B.kind === "db") return B.db.doc(dbId(path)).get().then(function (s) { return s.exists ? { data: clone(s.data()), sha: "db" } : null; });
-    return gh("GET", path).then(function (r) {
-      if (r.status === 404) return null;
-      if (!r.ok) throw httpErr(r.status);
-      return r.json().then(function (j) { var d = {}; try { d = JSON.parse(b64dec(j.content)); } catch (e) { d = {}; } return { data: d, sha: j.sha }; });
-    });
-  }
-  function remotePut(path, data, sha) {
-    if (B.kind === "db") return B.db.doc(dbId(path)).set(clone(data)).then(function () { return { sha: "db" }; }, function (e) { throw httpErr(e && e.code === "invalid_argument" ? 403 : 503); });
-    var body = { message: "LIFE OS · " + path, content: b64enc(JSON.stringify(data, null, 1) + "\n") };
-    if (sha) body.sha = sha;
-    return gh("PUT", path, body).then(function (r) {
-      if (r.status === 409 || r.status === 422) throw httpErr(409);
-      if (!r.ok) throw httpErr(r.status);
-      return r.json().then(function (j) { return { sha: j.content && j.content.sha }; });
-    });
-  }
+  function remoteGet(path) { return B.db.doc(dbId(path)).get().then(function (s) { return s.exists ? { data: clone(s.data()), sha: "db" } : null; }); }
+  function remotePut(path, data) { return B.db.doc(dbId(path)).set(clone(data)).then(function () { return { sha: "db" }; }, function (e) { throw httpErr(e && e.code === "invalid_argument" ? 403 : 503); }); }
 
-  /* ================= Synchronisation ================= */
+  /* ================= Synchronisation (version claude.ai seulement) ================= */
   var SYNC = { state: "idle", error: null, timer: null, running: false, lastOk: null };
-  function ready() { return B.kind === "db" || (B.kind === "gh" && !!cfg.token); }
+  function ready() { return !!B.kind; }
   function pull(path) {
     return remoteGet(path).then(function (res) {
       var f = file(path);
@@ -100,27 +76,24 @@
       return changed;
     });
   }
-  function push(path, retried) {
+  function push(path) {
     var f = file(path);
     if (!Object.keys(f.dirty).length) return Promise.resolve();
     var sent = clone(f.dirty);
-    return remotePut(path, f.data, f.sha).then(function (res) {
+    return remotePut(path, f.data).then(function (res) {
       f.sha = res.sha;
       Object.keys(sent).forEach(function (k) { if (f.dirty[k] === sent[k]) delete f.dirty[k]; });
       persist();
-    }, function (e) {
-      if (e.status === 409 && !retried) return pull(path).then(function () { return push(path, true); });
-      throw e;
     });
   }
   function dirtyPaths() { return Object.keys(files).filter(function (p) { return Object.keys(files[p].dirty).length > 0; }); }
   function paintSync() {
-    var el = $("#etat"), t = $("#etat-t"), n = dirtyPaths().length;
+    var el = $("#etat"), t = $("#etat-t");
     if (!B.kind) { el.setAttribute("data-s", "wait"); t.textContent = "Ouverture"; return; }
-    if (!ready()) { el.setAttribute("data-s", "off"); t.textContent = "Non connecté"; return; }
+    if (B.kind === "local") { el.setAttribute("data-s", saveOk ? "ok" : "bad"); t.textContent = saveOk ? "Enregistré" : "Mémoire pleine"; return; }
     if (SYNC.state === "bad") { el.setAttribute("data-s", "bad"); t.textContent = SYNC.error === "auth" ? "Accès refusé" : "Erreur"; return; }
     if (navigator.onLine === false) { el.setAttribute("data-s", "off"); t.textContent = "Hors ligne"; return; }
-    if (SYNC.running || n) { el.setAttribute("data-s", "wait"); t.textContent = "Enregistrement"; return; }
+    if (SYNC.running || dirtyPaths().length) { el.setAttribute("data-s", "wait"); t.textContent = "Enregistrement"; return; }
     el.setAttribute("data-s", "ok");
     t.textContent = SYNC.lastOk ? "Enregistré " + pad(SYNC.lastOk.getHours()) + ":" + pad(SYNC.lastOk.getMinutes()) : "Synchronisé";
   }
@@ -137,7 +110,12 @@
     return list.filter(function (p, i) { return list.indexOf(p) === i; });
   }
   function runSync(force) {
-    if (!ready() || SYNC.running) return Promise.resolve();
+    if (B.kind === "local") {
+      Object.keys(files).forEach(function (p) { files[p].dirty = {}; });
+      saveNow(); SYNC.lastOk = new Date(); paintSync();
+      return Promise.resolve();
+    }
+    if (B.kind !== "db" || SYNC.running) return Promise.resolve();
     if (navigator.onLine === false) { paintSync(); return Promise.resolve(); }
     SYNC.running = true; paintSync();
     var changed = false, chain = Promise.resolve();
@@ -155,11 +133,10 @@
       if (changed) refresh();
     }, function (e) {
       SYNC.running = false;
-      if (e && (e.status === 401 || e.status === 403)) { SYNC.state = "bad"; SYNC.error = "auth"; }
-      else if (e && e.status === 404) { SYNC.state = "bad"; SYNC.error = "repo"; }
+      if (e && e.status === 403) { SYNC.state = "bad"; SYNC.error = "auth"; }
       else { SYNC.state = "idle"; scheduleSync(15000); }
       paintSync();
-      if (UI.view === "acces") renderAcces();
+      if (UI.view === "reglages") renderReglages();
     });
   }
 
@@ -355,9 +332,10 @@
     var html = '<div class="entete"><p class="sur">' + esc(cap(longDate(d))) + (d === t ? "" : (d < t ? " · jour passé" : " · à venir")) + "</p>" +
       "<h1>" + (j < 1 ? "Départ lundi" : (j > 90 ? "Après le plan" : "Jour " + j + " <span>sur 90</span>")) + "</h1>" +
       '<div class="jours"><button type="button" class="petit-btn" data-day="-1">← Veille</button>' + (d === t ? "" : '<button type="button" class="petit-btn" data-day="0">Aujourd\'hui</button>') + '<button type="button" class="petit-btn" data-day="1">Lendemain →</button></div></div>';
-    if (!plan()) html += '<p class="note">Ton plan n\'est pas encore chargé.</p>';
+    if (!plan()) html += B.kind === "local" ? '<a class="rappel" href="#reglages"><b>Débloque ton plan</b><span>Colle le code que Claude t\'a donné →</span></a>' : '<p class="note">Ton plan n\'est pas encore chargé.</p>';
     var next = !matinOk ? ["matin", "Remplir le matin"] : (!soirOk ? ["soir", "Remplir l'après-midi"] : (isSun && d === t && !semOk ? ["semaine", "Faire le bilan de la semaine"] : null));
     html += next ? '<button type="button" class="principal" data-flow="' + next[0] + '">' + esc(next[1]) + " →</button>" : '<p class="note">Journée complète. Rien d\'autre à remplir aujourd\'hui.</p>';
+    if (rappelSauvegarde(d)) html += '<a class="rappel" href="#reglages"><b>Sauvegarde ta semaine</b><span>Dix secondes, dans Fichiers →</span></a>';
     html += '<section class="bloc"><h2>Deux passages par jour</h2><div class="etapes">' +
       etape(1, "Le matin", "1 minute : ta nuit et tes 3 priorités.", matinOk, "matin") +
       etape(2, "L'après-midi", "1 minute, après le travail : ce que tu as tenu et tes chiffres.", soirOk, "soir") +
@@ -439,7 +417,7 @@
   /* ================= Plan ================= */
   function renderPlan() {
     var p = plan();
-    if (!p) { $("#v-plan").innerHTML = '<p class="note">Ton plan n\'est pas encore chargé.</p>'; return; }
+    if (!p) { $("#v-plan").innerHTML = B.kind === "local" ? '<a class="rappel" href="#reglages"><b>Débloque ton plan</b><span>Colle le code que Claude t\'a donné →</span></a>' : '<p class="note">Ton plan n\'est pas encore chargé.</p>'; return; }
     var t = today(), cw = weekOf(t) || (jOf(t) < 1 ? p.semaines[0] : null), v = p.vision;
     function wd(w) { var s = addDays(p.debut, (w.n - 1) * 7); return shortDate(s) + " – " + shortDate(w.n === p.semaines.length ? addDays(p.debut, 89) : addDays(s, 6)); }
     var html = '<div class="entete"><p class="sur">Programme de 90 jours</p><h1>Ton plan</h1></div>';
@@ -456,36 +434,185 @@
     $("#v-plan").innerHTML = html;
   }
 
-  /* ================= Connexion (version GitHub) ================= */
-  function renderAcces() {
-    if (ready()) {
-      var err = SYNC.state === "bad" ? (SYNC.error === "auth" ? "Accès refusé. Crée une nouvelle clé et reconnecte-toi." : "Dépôt introuvable ou erreur.") : "";
-      $("#v-acces").innerHTML = '<div class="entete"><p class="sur">Réglages</p><h1>Enregistrement</h1></div>' + (err ? '<p class="note ko">' + tx(err) + "</p>" : "") +
-        '<section class="bloc"><p>' + (B.kind === "db" ? "Tes données sont dans ton espace privé claude.ai." : "Tes données sont dans " + esc(cfg.repo) + ".") + "</p><p class=\"aide\">En attente d'envoi : " + dirtyPaths().length + ".</p>" +
-        '<button type="button" class="principal" id="sync-now">Enregistrer maintenant</button>' + (B.kind === "gh" ? '<button type="button" class="secondaire" id="logout">Se déconnecter</button>' : "") + "</section>";
-      return;
-    }
-    var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-    $("#v-acces").innerHTML = '<div class="entete"><p class="sur">Bienvenue</p><h1>LIFE OS</h1></div>' +
-      (standalone ? "" : '<p class="note">Étape 0 : dans Safari, touche Partager puis « Sur l\'écran d\'accueil ». Ouvre ensuite LIFE OS depuis l\'icône.</p>') +
-      '<section class="bloc"><h2>Connexion, une seule fois</h2><ol class="regles"><li>Ouvre <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">ce lien GitHub</a>.</li><li>Nom : LIFE OS. Expiration : 1 an. Accès : <b>Only select repositories</b> › <b>BRUNFRAME-STUDION</b>.</li><li>Permissions : <b>Contents</b> › <b>Read and write</b>. Rien d\'autre.</li><li>Génère la clé, copie-la, colle-la ici. Tes données iront dans le dossier life-os-data de ce dépôt privé.</li></ol>' +
-      '<input class="champ-l" id="tok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Colle ta clé ici">' +
-      '<input class="champ-l" id="repo" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="' + esc(cfg.repo) + '" aria-label="Dépôt">' +
-      '<p class="aide" id="msg" role="status"></p><button type="button" class="principal" id="connect">Se connecter</button></section>';
+  /* ================= Bienvenue, code du plan, sauvegarde, résumé ================= */
+  function toast(t) { var el = document.createElement("div"); el.className = "toast"; el.textContent = t; el.setAttribute("role", "status"); document.body.appendChild(el); setTimeout(function () { el.remove(); }, 2100); }
+  function normCode(c) { return String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  function b64bytes(s) { var bin = atob(s), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
+  function estInstallee() { return window.navigator.standalone === true || (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches); }
+  /* Le plan est publié chiffré (plan.enc.json, AES-GCM). Seul le code donné par Claude l'ouvre. */
+  function dechiffre(code) {
+    if (!(window.crypto && crypto.subtle)) return Promise.reject(new Error("crypto"));
+    return fetch("plan.enc.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error("absent"); return r.json(); })
+      .catch(function () { throw new Error("absent"); })
+      .then(function (enc) {
+        return crypto.subtle.importKey("raw", new TextEncoder().encode(normCode(code)), "PBKDF2", false, ["deriveKey"]).then(function (base) {
+          return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64bytes(enc.salt), iterations: enc.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+        }).then(function (key) {
+          return crypto.subtle.decrypt({ name: "AES-GCM", iv: b64bytes(enc.iv) }, key, b64bytes(enc.data));
+        }).then(function (buf) { return JSON.parse(new TextDecoder().decode(buf)); });
+      });
   }
-  function connect() {
-    var tok = ($("#tok").value || "").trim(), repo = ($("#repo").value || "").trim(), msg = $("#msg");
-    if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { msg.textContent = "Nom de dépôt invalide."; return; }
-    if (tok.length < 20) { msg.textContent = "Colle la clé complète."; return; }
-    msg.textContent = "Vérification…";
-    fetch("https://api.github.com/repos/" + repo, { cache: "no-store", headers: { "Authorization": "Bearer " + tok, "Accept": "application/vnd.github+json" } }).then(function (r) {
-      if (r.status === 401) { msg.textContent = "Clé refusée."; return; }
-      if (r.status === 404 || r.status === 403) { msg.textContent = "Cette clé n'a pas accès à " + repo + "."; return; }
-      if (!r.ok) { msg.textContent = "GitHub ne répond pas."; return; }
-      cfg = { token: tok, repo: repo, dir: cfg.dir == null ? "life-os-data" : cfg.dir }; LS.set("cfg", cfg); location.hash = "#aujourdhui"; runSync(true).then(route);
-    }, function () { msg.textContent = "Pas de connexion."; });
+  function installePlan(bundle) {
+    file("plan.json").data = bundle.plan;
+    Object.keys(bundle.fichiers || {}).forEach(function (p) {
+      var f = file(p), src = bundle.fichiers[p];
+      Object.keys(src).forEach(function (k) { if (f.data[k] === undefined) f.data[k] = src[k]; });
+    });
+    saveNow();
+  }
+  function debloque() {
+    var input = $("#code-in"), msg = $("#code-msg"), btn = $("[data-unlock]");
+    if (!input || !btn) return;
+    var code = normCode(input.value);
+    if (code.length < 12) { msg.textContent = "Colle le code en entier : 12 caractères."; input.focus(); return; }
+    msg.textContent = "Ouverture…"; btn.disabled = true;
+    dechiffre(code).then(function (bundle) {
+      installePlan(bundle); LS.del("plus-tard"); toast("Plan débloqué"); location.hash = "#aujourdhui"; route();
+    }, function (e) {
+      btn.disabled = false;
+      var m = e && e.message;
+      msg.textContent = m === "absent" ? "Impossible de joindre ton plan. Vérifie ta connexion et réessaie." : (m === "crypto" ? "Ouvre LIFE OS depuis l'icône de l'écran d'accueil, puis réessaie." : "Ce code ne marche pas. Vérifie-le et réessaie.");
+    });
+  }
+  function champCode() {
+    return '<input class="champ-l code" id="code-in" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" maxlength="24" placeholder="XXXX-XXXX-XXXX" aria-label="Code du plan">' +
+      '<p class="aide" id="code-msg" role="status"></p><button type="button" class="principal" data-unlock>Débloquer mon plan</button>';
+  }
+  var INSTALLER = '<ol class="regles"><li>Touche <b>Partager</b> en bas de Safari.</li><li>Choisis <b>Sur l\'écran d\'accueil</b>, puis <b>Ajouter</b>.</li><li>Ouvre LIFE OS depuis l\'icône.</li></ol>';
+  function renderBienvenue() {
+    var inst = estInstallee();
+    $("#v-bienvenue").innerHTML =
+      '<div class="accueil-b entre"><img class="logo-b" src="icons/icon-192.png" alt="" width="76" height="76"><h1>LIFE OS</h1><p class="aide">Tout reste sur ton iPhone. Aucun compte, aucune clé.</p></div>' +
+      (inst ? "" : '<section class="carte"><p class="etape-n">1</p><h2>Installe l\'app</h2>' + INSTALLER + '<p class="aide">Tes données sont rangées dans l\'app installée, pas dans Safari : fais l\'étape 2 depuis l\'icône.</p></section>') +
+      '<section class="carte">' + (inst ? "" : '<p class="etape-n">2</p>') + '<h2>Débloque ton plan</h2><p class="aide">Colle le code que Claude t\'a donné. Une seule fois.</p>' + champCode() + "</section>" +
+      '<button type="button" class="lien-discret" data-later>Plus tard</button>';
+  }
+  function joursDepuis(s) { return s ? Math.floor((Date.now() - new Date(s).getTime()) / 86400000) : null; }
+  function ilYa(s) { var d = joursDepuis(s); if (d == null) return "jamais"; return d <= 0 ? "aujourd'hui" : (d === 1 ? "hier" : "il y a " + d + " jours"); }
+  function rappelSauvegarde(d) {
+    if (B.kind !== "local" || !plan() || d !== today()) return false;
+    var s = LS.get("sauvegarde");
+    return s ? joursDepuis(s) >= 7 : jOf(d) >= 6;
+  }
+  function renderReglages() {
+    var html = '<div class="entete"><p class="sur">Réglages</p><h1>Tes données</h1></div>';
+    if (B.kind === "db") {
+      html += '<section class="carte"><h2>Enregistrement</h2><p>Tes données sont dans ton espace privé claude.ai.</p><button type="button" class="principal" data-sync>Enregistrer maintenant</button></section>';
+    } else {
+      if (!estInstallee()) html += '<section class="carte"><h2>Tu es dans Safari</h2><p class="aide">Installe l\'app pour garder tes données au même endroit :</p>' + INSTALLER + "</section>";
+      html += '<section class="carte"><h2>Ton plan</h2>' + (plan() ? "<p>Débloqué et enregistré sur cet iPhone.</p>" : '<p class="aide">Colle le code que Claude t\'a donné.</p>' + champCode()) + "</section>" +
+        '<section class="carte"><h2>Sauvegarde</h2><p>Dernière sauvegarde : <b>' + ilYa(LS.get("sauvegarde")) + '</b></p><p class="aide">Tout reste sur cet iPhone. Si tu supprimes l\'app de l\'écran d\'accueil, ses données partent avec. Sauvegarde chaque dimanche dans Fichiers ou iCloud Drive : dix secondes.</p>' +
+        '<button type="button" class="principal" data-export>Sauvegarder maintenant</button><button type="button" class="secondaire" data-import>Restaurer une sauvegarde</button></section>';
+    }
+    html += '<section class="carte"><h2>Faire le point avec Claude</h2><p class="aide">Tes 7 derniers jours en texte, à coller dans une conversation avec Claude.</p><button type="button" class="secondaire" data-resume>Partager mon résumé</button><p class="aide" id="resume-msg" role="status"></p></section>';
+    $("#v-reglages").innerHTML = html;
+  }
+  function exporte() {
+    var data = { app: "LIFE OS", version: 1, exporte: new Date().toISOString(), fichiers: {} };
+    Object.keys(files).forEach(function (p) { data.fichiers[p] = files[p].data; });
+    var nom = "life-os-" + today() + ".json", txt = JSON.stringify(data);
+    function ok() { LS.set("sauvegarde", new Date().toISOString()); toast("Sauvegardé"); if (UI.view === "reglages") renderReglages(); }
+    function telecharge() {
+      var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([txt], { type: "application/json" })); a.download = nom;
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); ok();
+    }
+    try {
+      var f = new File([txt], nom, { type: "application/json" });
+      if (navigator.canShare && navigator.canShare({ files: [f] })) {
+        navigator.share({ files: [f], title: "Sauvegarde LIFE OS" }).then(ok, function (e) { if (!e || e.name !== "AbortError") telecharge(); });
+        return;
+      }
+    } catch (e) { /* on passe au téléchargement */ }
+    telecharge();
+  }
+  var CHEMIN_OK = /^(plan|listes\/taches|(jours|sport|argent)\/\d{4}-\d{2}|semaines\/\d{4})\.json$/;
+  function importe(fichier) {
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        var d = JSON.parse(r.result);
+        if (!d || d.app !== "LIFE OS" || !d.fichiers || typeof d.fichiers !== "object") throw new Error("format");
+        var chemins = Object.keys(d.fichiers).filter(function (p) { return CHEMIN_OK.test(p) && d.fichiers[p] && typeof d.fichiers[p] === "object"; });
+        if (!chemins.length) throw new Error("vide");
+        chemins.forEach(function (p) { var f = file(p); f.data = d.fichiers[p]; f.dirty = {}; Object.keys(f.data).forEach(function (k) { f.dirty[k] = ++rev; }); });
+        saveNow(); scheduleSync(0); toast("Sauvegarde restaurée"); location.hash = "#aujourdhui"; route();
+      } catch (e) { toast("Ce fichier n'est pas une sauvegarde LIFE OS"); }
+    };
+    r.readAsText(fichier);
+  }
+  function resumeTexte() {
+    var t = today(), m = mondayOf(t), a = agg(m), L = [], j = jOf(t);
+    L.push("LIFE OS · résumé du " + longDate(t) + (plan() && j >= 1 && j <= 90 ? " (jour " + j + " sur 90)" : ""));
+    L.push("");
+    L.push("Semaine du " + shortDate(m) + " : " + a.noted + "/7 jours notés · sommeil moyen " + (a.sleepAvg != null ? dur(a.sleepAvg) : "—") + " · nuits à l'heure " + (a.bedN ? a.onTime + "/" + a.bedN : "—") +
+      " · salle " + a.salle + " · écran " + (a.ecranAvg != null ? fr(a.ecranAvg, 1) + " h/j" : "—") + " · pas " + (a.pasAvg != null ? fr(a.pasAvg, 0) + "/j" : "—") +
+      " · business " + dur(a.biz) + " · prospects " + a.contacts + " · études " + dur(a.etudes) + " · fast-food " + a.fast + " · dépenses " + fr(a.dep, 0) + " €");
+    L.push(""); L.push("7 derniers jours :");
+    for (var i = 6; i >= 0; i--) {
+      var d = addDays(t, -i), x = day(d), p = [];
+      if (x.coucher || x.reveil) p.push("nuit " + (x.coucher || "?") + " → " + (x.reveil || "?"));
+      if (x.tel_loin === true || x.tel_loin === false) p.push("téléphone loin du lit : " + (x.tel_loin ? "oui" : "non"));
+      if (x.salle === true) p.push("salle");
+      if (x.fastfood === true) p.push("fast-food");
+      if (num(x.ecran) != null) p.push("écran " + fr(num(x.ecran), 1) + " h");
+      if (num(x.pas) != null) p.push(fr(num(x.pas), 0) + " pas");
+      if (num(x.business) != null) p.push("business " + fr(num(x.business), 0) + " min");
+      if (num(x.contacts) != null) p.push(fr(num(x.contacts), 0) + " prospects");
+      if (num(x.etudes) != null) p.push("études " + fr(num(x.etudes), 0) + " min");
+      var pr = ["1", "2", "3"].filter(function (k) { return x["p" + k]; });
+      if (pr.length) p.push("priorités " + pr.filter(function (k) { return x["p" + k + "_ok"] === true; }).length + "/" + pr.length);
+      var dj = depensesDuJour(d).reduce(function (s, y) { return s + (num(y.montant) || 0); }, 0);
+      if (dj) p.push("dépenses " + euros(dj));
+      if (x.difficultes) p.push("coincé : " + x.difficultes);
+      L.push("- " + shortDate(d) + " : " + (p.length ? p.join(", ") : "rien noté"));
+    }
+    var ss = seances(1).filter(function (s) { return s.date >= addDays(t, -13); });
+    if (ss.length) {
+      L.push(""); L.push("Sport (14 jours) :");
+      ss.forEach(function (s) { L.push("- " + shortDate(s.date) + " " + (s.type || "") + " : " + (s.exos || []).map(function (e) { return (e.nom || "?") + " " + resumeSeries(e.series || []); }).join(" ; ")); });
+    }
+    var ym = t.slice(0, 7), b = bilanMois(ym), cats = Object.keys(b.cats).sort(function (x, y) { return b.cats[y] - b.cats[x]; });
+    L.push(""); L.push("Argent " + nomMois(ym) + " : entrées " + euros(b.entrees) + ", sorties " + euros(b.sorties) + ", mis de côté " + euros(b.epargne) + ", reste " + euros(b.reste) + (cats.length ? " · " + cats.slice(0, 5).map(function (c) { return c + " " + euros(b.cats[c]); }).join(", ") : ""));
+    var tt = taches(), ouv = tt.filter(function (x) { return !x.fait; });
+    L.push("Tâches : " + ouv.length + " à faire (" + ouv.filter(function (x) { return x.date && x.date < t; }).length + " en retard), " + tt.filter(function (x) { return x.fait && x.faitLe && x.faitLe.slice(0, 10) >= m; }).length + " faites cette semaine.");
+    return L.join("\n");
+  }
+  function envoieResume(btn) {
+    var txt = resumeTexte(), msg = $("#resume-msg");
+    function dit(m) { if (msg) msg.textContent = m; }
+    function montre() {
+      if ($("#resume-txt")) return;
+      var ta = document.createElement("textarea"); ta.id = "resume-txt"; ta.className = "champ-l"; ta.value = txt; ta.rows = 8; ta.readOnly = true;
+      btn.insertAdjacentElement("afterend", ta); ta.focus(); ta.select(); dit("Sélectionne le texte, copie-le et colle-le dans ta conversation avec Claude.");
+    }
+    function copie() { try { navigator.clipboard.writeText(txt).then(function () { dit("Copié. Colle-le dans ta conversation avec Claude."); toast("Résumé copié"); }, montre); } catch (e) { montre(); } }
+    if (navigator.share && B.kind === "local") { navigator.share({ text: txt }).then(function () { dit("Partagé."); }, function (e) { if (!e || e.name !== "AbortError") copie(); }); return; }
+    copie();
   }
 
+  /* Retour tactile : vibration légère sur iPhone (iOS 18 et plus) et Android, ignorée ailleurs. */
+  function haptic() {
+    try {
+      if (navigator.vibrate) { navigator.vibrate(8); return; }
+      var l = document.createElement("label"), i = document.createElement("input");
+      l.setAttribute("aria-hidden", "true"); l.style.display = "none";
+      i.type = "checkbox"; i.setAttribute("switch", ""); l.appendChild(i);
+      document.head.appendChild(l); l.click(); document.head.removeChild(l);
+    } catch (e) { /* rien */ }
+  }
+  var TOUCHE = "button, .nav a, a.principal, a.secondaire, a.petit-btn";
+  var ONDE = ".principal, .secondaire, .opt, .puce, .etape, .petit-btn, .seance-l, .rond, .nav a, .etat";
+  var CALME = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
+  document.addEventListener("touchstart", function () { /* active l'état :active sur iPhone */ }, { passive: true });
+  document.addEventListener("pointerdown", function (e) {
+    if (CALME.matches || !e.target.closest) return;
+    var b = e.target.closest(ONDE); if (!b || b.disabled) return;
+    var r = b.getBoundingClientRect();
+    b.style.setProperty("--x", (e.clientX - r.left) + "px"); b.style.setProperty("--y", (e.clientY - r.top) + "px");
+    b.classList.remove("onde"); void b.offsetWidth; b.classList.add("onde");
+  }, { passive: true });
+  document.addEventListener("animationend", function (e) { if (e.animationName === "onde" && e.target.classList) e.target.classList.remove("onde"); });
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(TOUCHE); if (b && !b.disabled) haptic(); }, true);
 
   /* ================= Données génériques (tâches, sport, argent) ================= */
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -737,16 +864,17 @@
   });
 
   /* ================= Navigation ================= */
-  var VIEWS = { aujourdhui: renderAujourdhui, taches: renderTaches, sport: renderSport, seance: renderSeance, argent: renderArgent, ajout: renderAjout, progres: renderProgres, plan: renderPlan, acces: renderAcces };
+  var VIEWS = { aujourdhui: renderAujourdhui, taches: renderTaches, sport: renderSport, seance: renderSeance, argent: renderArgent, ajout: renderAjout, progres: renderProgres, plan: renderPlan, reglages: renderReglages, bienvenue: renderBienvenue };
   var ONGLET = { seance: "sport", ajout: "argent", plan: "progres" };
   function show(v) {
     UI.flow = null; $("#v-flow").hidden = true;
-    if (B.kind && !ready()) v = "acces";
     if (!VIEWS[v]) v = "aujourdhui";
+    if (B.kind === "local" && !plan() && !LS.get("plus-tard") && v !== "reglages") v = "bienvenue";
+    if (v === "bienvenue" && (plan() || B.kind !== "local")) v = "aujourdhui";
     UI.view = v;
     Object.keys(VIEWS).forEach(function (k) { $("#v-" + k).hidden = k !== v; });
     $$("#nav a").forEach(function (a) { if (a.getAttribute("data-v") === (ONGLET[v] || v)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
-    $("#nav").hidden = !ready() || v === "ajout";
+    $("#nav").hidden = !ready() || v === "ajout" || v === "bienvenue";
     VIEWS[v](); paintSync();
   }
   function route() { var h = location.hash.replace("#", ""); show(h || "aujourdhui"); }
@@ -768,8 +896,8 @@
     var w = el.getAttribute && el.getAttribute("data-w");
     if (w) setReview(UI.week, w, el.value);
   });
-  document.addEventListener("change", function (e) { var el = e.target, k = el.getAttribute && el.getAttribute("data-d"); if (k === "coucher" || k === "reveil") setDay(UI.day, k, el.value); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Enter" && UI.flow && e.target.tagName === "INPUT") { e.preventDefault(); var ins = $$("#v-flow input"), i = ins.indexOf(e.target); if (i >= 0 && i < ins.length - 1) ins[i + 1].focus(); else nextStep(); } });
+  document.addEventListener("change", function (e) { var el = e.target, k = el.getAttribute && el.getAttribute("data-d"); if (el.id === "import-f" && el.files && el.files[0]) { importe(el.files[0]); return; } if (k === "coucher" || k === "reveil") setDay(UI.day, k, el.value); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.id === "code-in") { e.preventDefault(); debloque(); return; } if (e.key === "Enter" && UI.flow && e.target.tagName === "INPUT") { e.preventDefault(); var ins = $$("#v-flow input"), i = ins.indexOf(e.target); if (i >= 0 && i < ins.length - 1) ins[i + 1].focus(); else nextStep(); } });
   document.addEventListener("click", function (e) {
     var t = e.target, b;
     if ((b = t.closest("[data-flow]"))) { var ty = b.getAttribute("data-flow"); if (ty === "semaine") UI.week = mondayOf(today()); startFlow(ty); return; }
@@ -789,33 +917,37 @@
     if (t.closest("[data-home]")) { UI.flow = null; location.hash = "#aujourdhui"; show("aujourdhui"); window.scrollTo(0, 0); return; }
     if ((b = t.closest("[data-day]"))) { var n = +b.getAttribute("data-day"); UI.day = n === 0 ? today() : addDays(UI.day, n); UI.navigated = n !== 0; renderAujourdhui(); scheduleSync(0); return; }
     if ((b = t.closest("[data-reg]"))) { UI.reg = addDays(UI.reg, +b.getAttribute("data-reg")); renderProgres(); scheduleSync(0); return; }
-    if (t.closest("#etat")) { if (B.kind) { location.hash = "#acces"; } return; }
-    if (t.closest("#connect")) { connect(); return; }
-    if (t.closest("#sync-now")) { runSync(true).then(function () { renderAcces(); }); return; }
-    if (t.closest("#logout")) { cfg = { token: "", repo: cfg.repo, dir: cfg.dir }; LS.set("cfg", cfg); route(); return; }
+    if (t.closest("#etat")) { if (B.kind) location.hash = "#reglages"; return; }
+    if (t.closest("[data-unlock]")) { debloque(); return; }
+    if (t.closest("[data-later]")) { LS.set("plus-tard", true); location.hash = "#aujourdhui"; route(); return; }
+    if (t.closest("[data-export]")) { exporte(); return; }
+    if (t.closest("[data-import]")) { var fi = $("#import-f"); if (fi) { fi.value = ""; fi.click(); } return; }
+    if ((b = t.closest("[data-resume]"))) { envoieResume(b); return; }
+    if (t.closest("[data-sync]")) { runSync(true).then(function () { toast("Enregistré"); if (UI.view === "reglages") renderReglages(); }); return; }
   });
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") { LS.set(FKEY, files); runSync(); return; }
+    if (document.visibilityState === "hidden") { saveNow(); runSync(); return; }
     var t = today(); if (UI.day !== t && !UI.navigated && !UI.flow) UI.day = t;
     runSync().then(refresh);
   });
   window.addEventListener("online", function () { runSync(true); });
   window.addEventListener("offline", paintSync);
-  window.addEventListener("pagehide", function () { LS.set(FKEY, files); });
+  window.addEventListener("pagehide", saveNow);
 
   /* ================= Démarrage ================= */
   function start(kind, db) {
     B.kind = kind; B.db = db || null;
     if (kind === "db") { FKEY = "files-db"; files = LS.get(FKEY) || {}; }
     route();
-    if (ready()) runSync(true);
+    runSync(true);
   }
   route();
   var c = window.claude;
   if (c && typeof c.use === "function") {
-    Promise.resolve().then(function () { return c.use("db"); }).catch(function () { return null; }).then(function (db) { start(db ? "db" : "gh", db); });
+    Promise.resolve().then(function () { return c.use("db"); }).catch(function () { return null; }).then(function (db) { start(db ? "db" : "local", db); });
   } else {
-    start("gh");
+    start("local");
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () { /* rien */ }); } catch (e) { /* rien */ }
     if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () { /* l'app marche sans */ });
   }
 })();
